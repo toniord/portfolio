@@ -29,6 +29,17 @@ pattern = '\b[A-Za-z0-9._-]{16,}@(group|import)\.calendar\.google\.com\b'
 replace = 'calendar-id@example.com'
 scan = false
 
+[[redact]]
+# SerpAPI search IDs in recorded API responses (test fixtures).
+pattern = '(serpapi\.com/searches/)[A-Za-z0-9_-]{43}/[0-9a-f]{24}'
+replace = '\1XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX'
+scan = false
+
+[[redact]]
+pattern = '("id": ")[0-9a-f]{24}(")'
+replace = '\1XXXXXXXXXXXXXXXXXXXXXXXX\2'
+scan = false
+
 # Standing instructions written for a coding assistant, not for readers of this repo. These
 # sentences describe how to explain changes and say nothing about what the code does.
 [[redact]]
