@@ -1,0 +1,168 @@
+# Life Dashboard config. No secrets here; those go in .env.
+# `section` is "personal" or "work". Work items stay in their own card
+# and never enter Pressing actions.
+
+owner_name: Alex
+timezone: America/Chicago
+
+location:
+  name: Chicago
+  latitude: 41.8781
+  longitude: -87.6298
+
+# An inbox is fetched only when it names a google_account (token in data/tokens/).
+# Work is not read.
+inboxes:
+  - id: personal
+    label: Personal
+    provider: gmail
+    section: personal
+    google_account: personal
+  - id: uchicago
+    label: UChicago
+    provider: gmail
+    section: personal
+    google_account: uchicago
+
+# Primary-tab threads in the last lookback_days, at most max_threads per inbox.
+# model triages them (sender, subject, snippet only) down to pressing school,
+# work and internship email.
+email:
+  lookback_days: 3
+  max_threads: 60
+  model: claude-haiku-4-5
+
+# Google account used for Calendar and personal Gmail. Token lives in
+# data/tokens/google-<account>.json. UChicago, Work and Canvas are calendars
+# subscribed into this account, so only the personal account is authorized.
+google_account: personal
+
+# google_id: "primary" or the ID from `uv run scripts/google_auth.py calendars`.
+# Calendars with no google_id are skipped. kind: deadlines marks each event as due.
+calendars:
+  - id: personal
+    label: Personal
+    section: personal
+    google_id: primary
+  - id: uchicago
+    label: UChicago
+    section: personal
+    google_id: owner@example.edu
+  - id: family
+    label: Family
+    section: personal
+    google_id: family-calendar-id@example.com
+  - id: canvas
+    label: Canvas due dates
+    section: personal
+    kind: deadlines
+    google_id: calendar-id@example.com
+  - id: work
+    label: Work
+    section: work
+    google_id: owner@example.com
+
+# Recurring coursework no calendar holds (connectors/coursework.py).
+# Assignments posted on Canvas come from the Canvas feed.
+coursework:
+  - title: Course A homework
+    weekly: Fri            # due that weekday
+    from: 2026-10-09       # optional first due date
+    finish_early_days: 1   # remind a day before the deadline
+  - title: Seminar reading
+    before_class: seminar
+
+# Events after today, up to lookahead_days, are rated for lead time (M5).
+calendar:
+  lookahead_days: 14
+
+# NYT Top Stories. `home` (the headlines) is always fetched; `sections` adds
+# the feeds searched for course stories. cap counts all NYT items together.
+news:
+  sections: [business, upshot]
+  cap: 5
+  # Stories for my classes, matched on NYT's topic tags (des_facet and
+  # org_facet, exact names, any case). Courses take turns, newest first.
+  courses:
+    cap: 3
+    max_age_hours: 48
+    list:
+      - id: course_a
+        label: Course A
+        topics:
+          - Federal Reserve System
+          - Interest Rates
+          - Inflation (Economics)
+          - Consumer Price Index
+          - Banking and Financial Institutions
+          - Banks and Banking
+          - Bank Failures
+          - Currency
+          - Dollar (US)
+          - Virtual Currency
+          - Credit and Debt
+          - Mortgages
+          - Treasury Bonds
+          - European Central Bank
+          - Bank of England
+          - Bank of Japan
+          - Federal Deposit Insurance Corp
+      - id: course_b
+        label: Course B
+        topics:
+          - United States Economy
+          - Economic Conditions and Trends
+          - Recession and Depression
+          - Customs (Tariff)
+          - International Trade and World Market
+          - Federal Taxes (US)
+          - Federal Budget (US)
+          - National Debt (US)
+          - Government Shutdowns (US)
+          - Labor and Jobs
+          - Unemployment
+          - Wages and Salaries
+          - Minimum Wage
+          - Social Security (US)
+          - Economics (Theory and Philosophy)
+
+ai_daily_brief:
+  feed_url: https://aidailybrief.ai/agent.json
+  cap: 5
+
+# Pressing actions: model ranks personal candidates (never Work) and rates
+# upcoming events for lead time, using the last feedback_limit feedback entries.
+actions:
+  cap: 7
+  model: claude-opus-5-5
+  effort: high
+  feedback_limit: 60
+
+agent_reports_dir: agent-reports
+# A report older than this shows as an error (the chore exporter runs daily at 05:45).
+agent_report_max_age_hours: 30
+
+# Written by the portfolio sync (~/portfolio/tools/sync.py). A blocked publish
+# becomes a Pressing actions candidate.
+portfolio_status_file: ~/.config/portfolio-sync/status.json
+
+# Daily build time (local). launchd also re-runs on wake/login if this was missed.
+# Keep the pmset wake a few minutes earlier (see README, Scheduling).
+schedule:
+  hour: 6
+  minute: 0
+  # If today's build had failing connectors, the 30-minute catch-up rebuilds
+  # up to this many times (each rebuild makes one ranking call).
+  retries: 3
+
+# Morning email digest: the top of the brief, from and to the user's Gmail
+# (GMAIL_ADDRESS, GMAIL_APP_PASSWORD, and optional DASHBOARD_URL in .env).
+# Sent at hour:minute, or on wake until until_hour; once a day.
+digest:
+  hour: 7
+  minute: 0
+  until_hour: 12
+
+server:
+  host: 127.0.0.1   # localhost only; phone access comes via Tailscale in M6
+  port: 8000
