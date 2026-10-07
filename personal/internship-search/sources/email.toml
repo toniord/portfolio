@@ -19,11 +19,17 @@
 # An item is a collapsed group, not a row: one role posted in four cities is one
 # item. See [collapse] below.
 #
-# Nothing over the cap is lost or stamped. The overflow is reported as a count
-# and leads the next digest, because a posting is only ever marked alerted when
-# an email actually carried it. Raising this raises how much arrives at once;
-# it does not change what is eventually surfaced.
-max_items = 8
+# Nothing over the cap is stamped. The overflow is reported as a count and
+# leads the next digest, because a posting is only ever marked alerted when an
+# email actually carried it. But the digest only looks back 36 hours (the
+# carryover in sources/schedule.toml), so overflow that waits longer than that
+# reaches no email at all.
+#
+# 36, raised from the PRD's 8 on 2026-10-07 at the owner's instruction. Giving
+# feed postings their descriptions moved dozens into tier 1 at once (32 sat in
+# one night's window against 8 slots), and at 8 a day most of them would have
+# aged out of the window unsent.
+max_items = 36
 
 # A board that has failed, or answered with nothing, on every run for this many
 # days gets its own section near the top of the digest and a line in

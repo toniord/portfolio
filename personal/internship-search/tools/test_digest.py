@@ -124,20 +124,25 @@ def test_split_holds_back_the_right_things():
 
 
 def test_cap_does_not_consume_what_it_hides():
-    """The trap: capping the digest at 8 must not stamp the 9th as alerted.
+    """The trap: capping the digest must not stamp the item past the cap.
 
     A stamped posting is never offered again, so a cap that stamped its overflow
-    would silently destroy coverage for everything past the eighth item.
+    would silently destroy coverage for everything past the last item shown.
+
+    The cap is read from sources/email.toml rather than written here, because it
+    is the owner's setting (8 in the PRD, 36 since 2026-10-07) and the property
+    under test is the same at any value.
     """
+    cap = int(delivery.rules().get("daily", {}).get("max_items", 8))
     conn = make_db()
-    for i in range(12):
+    for i in range(cap + 4):
         add(conn, n=i, hash=f"h{i}", identity=f"i{i}", tier=1, fit_score=9,
             title=f"Role {i}")
     split = delivery.split_daily(rows(conn))
-    check("cap holds at eight", len(split["shown"]), 8)
+    check("cap holds at the configured value", len(split["shown"]), cap)
     check("overflow is reported", split["overflow"], 4)
     shown_hashes = {r["hash"] for g in split["shown"] for r in g.rows}
-    check("overflow is not in the shown rows", len(shown_hashes), 8)
+    check("overflow is not in the shown rows", len(shown_hashes), cap)
 
 
 def test_collapse_groups_one_role_across_cities():
