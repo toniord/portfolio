@@ -352,12 +352,24 @@ def test_a_rescore_clears_only_the_score():
         since = None
         include_closed = False
         include_killed = False
+        no_description = False
     clause, _ = rescore.build_filter(Args())
     check("an overridden posting is excluded from the filter",
           "fit_override IS NULL" in clause and "reach_override IS NULL" in clause,
           True)
     check("and only already-scored rows are selected",
           "fit_score IS NOT NULL" in clause, True)
+
+    # 2026-10-07. --no-description selects blind scores, and never a posting
+    # whose board said the job was taken down, which is money for nothing.
+    class Blind(Args):
+        all = False
+        no_description = True
+    blind, _ = rescore.build_filter(Blind())
+    check("--no-description selects postings with no text",
+          "TRIM(COALESCE(description, '')) = ''" in blind, True)
+    check("and skips jobs taken down", "detail_unavailable_at IS NULL" in blind, True)
+    check("and still spares overrides", "fit_override IS NULL" in blind, True)
 
 
 def test_a_bare_date_does_not_crash_the_watcher():

@@ -133,7 +133,8 @@ def feed_detail_pass(conn, max_fetches=None, client=None, verbose=False) -> dict
 
     Follows only links that `fetchers.locate_job` can place on a Greenhouse,
     Lever, Ashby or (since 2026-10-04) Workday board, the same public APIs the
-    watcher reads. Anything else
+    watcher reads, or (since 2026-10-07) an Oracle Recruiting Cloud or
+    SmartRecruiters job through those platforms' public posting APIs. Anything else
     is left exactly as it was.
 
     Three outcomes per posting, and the second is the one to keep straight:

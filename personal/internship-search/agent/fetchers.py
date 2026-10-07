@@ -530,6 +530,24 @@ def _ref_from_url(url: str) -> JobRef | None:
             return JobRef("ashby", parts[0], parts[1].lower())
         return None
 
+    if host.endswith(".oraclecloud.com"):
+        # Oracle Recruiting Cloud: <host>/hcmUI/CandidateExperience/<locale>/
+        # sites/<site>/job/<id>. The site number is part of the address the API
+        # needs, so it travels in the token beside the host. Added 2026-10-07.
+        if "sites" in parts and "job" in parts:
+            si, ji = parts.index("sites"), parts.index("job")
+            if ji == si + 2 and len(parts) > ji + 1 and parts[ji + 1].isdigit():
+                return JobRef("oracle", f"{host}/{parts[si + 1]}", parts[ji + 1])
+        return None
+
+    if host == "jobs.smartrecruiters.com":
+        # jobs.smartrecruiters.com/<company>/<posting id>[-slug]. Added 2026-10-07.
+        if len(parts) >= 2:
+            job_id = parts[1].split("-")[0]
+            if job_id.isdigit():
+                return JobRef("smartrecruiters", parts[0], job_id)
+        return None
+
     if host.endswith(".myworkdayjobs.com"):
         # <host>/[locale/]<site>/job/<location>/<slug>_<requisition>. The site
         # is whatever sits right before "job", which skips the locale without
@@ -615,11 +633,46 @@ def _workday_job(client, ref: JobRef, boards: dict) -> str:
     return _strip_html(info.get("jobDescription"))
 
 
+def _oracle_job(client, ref: JobRef, boards: dict) -> str:
+    """Oracle Recruiting Cloud's public candidate-experience API.
+
+    A requisition it no longer publishes comes back as 200 with no items, never
+    404, so an empty answer is read as taken down here. The job's own sections
+    come first; the employer's boilerplate is left out because it is the same on
+    every posting and would spend the characters the ranker reads.
+    """
+    host, site = ref.token.split("/", 1)
+    url = (f"https://{host}/hcmRestApi/resources/latest/recruitingCEJobRequisitionDetails"
+           f'?expand=all&onlyData=true&finder=ById;Id="{ref.job_id}",siteNumber={site}')
+    items = _get(client, url).get("items") or []
+    if not items:
+        raise NotFound(f"oracle site {ref.token} no longer publishes job {ref.job_id}")
+    job = items[0]
+    return _strip_html(" ".join(
+        job.get(k) or "" for k in
+        ("ExternalDescriptionStr", "ExternalResponsibilitiesStr", "ExternalQualificationsStr")
+    ))
+
+
+def _smartrecruiters_job(client, ref: JobRef, boards: dict) -> str:
+    """SmartRecruiters' public posting API. The job's own sections first, the
+    company description last, so a truncated description keeps the job."""
+    data = _get(client, f"https://api.smartrecruiters.com/v1/companies/{ref.token}"
+                        f"/postings/{ref.job_id}")
+    sections = (data.get("jobAd") or {}).get("sections") or {}
+    return _strip_html(" ".join(
+        (sections.get(k) or {}).get("text") or "" for k in
+        ("jobDescription", "qualifications", "additionalInformation", "companyDescription")
+    ))
+
+
 _JOB_DESCRIPTIONS = {
     "greenhouse": _greenhouse_job,
     "lever": _lever_job,
     "ashby": _ashby_job,
     "workday": _workday_job,
+    "oracle": _oracle_job,
+    "smartrecruiters": _smartrecruiters_job,
 }
 
 

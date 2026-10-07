@@ -141,6 +141,10 @@ def test_links_are_read_by_shape():
          ("workday", "marmon.wd501.myworkdayjobs.com/Marmon_Internships", "/job/Milwaukee-WI/Data-Intern_JR37")),
         ("https://acme.wd1.myworkdayjobs.com/en-US/Campus/job/Boston/Quant-Intern_R15", "",
          ("workday", "acme.wd1.myworkdayjobs.com/Campus", "/job/Boston/Quant-Intern_R15")),
+        ("https://egug.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/26013191", "",
+         ("oracle", "egug.fa.us2.oraclecloud.com/CX_1", "26013191")),
+        ("https://jobs.smartrecruiters.com/BoschGroup/744000145507908-ai-security-intern", "",
+         ("smartrecruiters", "BoschGroup", "744000145507908")),
         # A company's own careers page wrapping a board: the link names nothing,
         # the feed's id still does.
         ("https://www.acme.com/careers?gh_jid=55", "greenhouse:acme:55", ("greenhouse", "acme", "55")),
@@ -159,6 +163,8 @@ def test_unreadable_links_are_left_alone():
         ("https://acme.wd1.myworkdayjobs.com/en-US/job/Boston/Intern_R1", ""),  # locale, no site
         ("https://acme.wd1.myworkdayjobs.com/en-US/Careers/details/Intern_R1?q=R1", ""),
         ("https://acme.wd1.myworkdayjobs.com/Careers", ""),
+        ("https://acme.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/jobs", ""),
+        ("https://jobs.smartrecruiters.com/Acme", ""),
         ("", ""),
     ]:
         check(f"ignores {url or '(empty)'}", fetchers.locate_job(url, ext), None)
@@ -358,6 +364,32 @@ def test_a_403_elsewhere_is_retried():
     check("a Greenhouse 403 leaves it queued", get(conn, pid)["detail_unavailable_at"], None)
 
 
+def test_oracle_and_smartrecruiters():
+    conn = make_db()
+    ora = add(conn, "https://acme.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/101")
+    ora_gone = add(conn, "https://acme.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/job/102")
+    sr = add(conn, "https://jobs.smartrecruiters.com/Acme/744000001")
+    oapi = ("https://acme.fa.us2.oraclecloud.com/hcmRestApi/resources/latest/"
+            "recruitingCEJobRequisitionDetails?expand=all&onlyData=true&finder=ById;Id=\"{}\",siteNumber=CX_1")
+    fake = FakeBoards({
+        oapi.format(101): {"items": [{"ExternalDescriptionStr": "<p>Agents.</p>",
+                                      "ExternalQualificationsStr": "<p>Python.</p>",
+                                      "CorporateDescriptionStr": "<p>Boilerplate.</p>"}]},
+        oapi.format(102): {"items": [], "count": 0},
+        "https://api.smartrecruiters.com/v1/companies/Acme/postings/744000001": {"jobAd": {"sections": {
+            "companyDescription": {"text": "We are Acme."},
+            "jobDescription": {"text": "<p>Build models.</p>"}}}},
+    })
+    triage.feed_detail_pass(conn, max_fetches=10, client=fake)
+    check("oracle: the job's own sections, not the boilerplate",
+          get(conn, ora)["description"], "Agents. Python.")
+    check("oracle: an empty answer is taken down, not closed",
+          (bool(get(conn, ora_gone)["detail_unavailable_at"]), get(conn, ora_gone)["closed_detected_at"]),
+          (True, None))
+    check("smartrecruiters: the job first, the company last",
+          get(conn, sr)["description"], "Build models. We are Acme.")
+
+
 def test_company_board_postings_are_not_this_pass():
     conn = make_db()
     pid = add(conn, GH.format(14), ats_platform="greenhouse", source="greenhouse:acme")
@@ -391,6 +423,7 @@ def main() -> int:
         test_lever_and_its_eu_host,
         test_workday_links_ask_the_tenant_detail_api,
         test_a_403_elsewhere_is_retried,
+        test_oracle_and_smartrecruiters,
         test_company_board_postings_are_not_this_pass,
         test_the_shipped_cap_is_in_data,
     ]:
