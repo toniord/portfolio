@@ -16,6 +16,23 @@ QofAI today.
 
 ## Projects
 
+### QofAI internship
+
+Three agents built during my 2026 internship at QofAI. The code is held back while QofAI
+reviews a sanitized copy; each folder describes the agent and shows real output on invented
+data.
+
+- [deck-generator](qofai/deck-generator/) writes proposal and status decks from live project
+  data pulled over MCP or from an uploaded PRD, guards every value against its sources, and
+  gives reviewers a studio that turns plain-language edits into exact text swaps. 2,447 tests
+  and about 38,000 lines of application code.
+- [content-calendar](qofai/content-calendar/) sequences a month of posts per author with one
+  schema-constrained Claude call under a YAML policy, and routes every post through a human
+  approval queue. I took it over from a teammate and wrote 98% of the current code. 171 tests.
+- [pe-research-agent](qofai/pe-research-agent/) writes a sourced dossier on a private equity
+  firm with eight Claude Code skills and parallel subagents, labeling every claim with a
+  confidence band and source type.
+
 <!-- projects:start -->
 
 ### Personal projects
@@ -79,23 +96,6 @@ Python 3.12, uv, launchd, Gmail and Google Calendar APIs, Open-Meteo, NYT API, C
 (Haiku 4.5, Opus 5.5), Tailscale.
 
 <!-- projects:end -->
-
-### QofAI internship
-
-Three agents built during my 2026 internship at QofAI. The code is held back while QofAI
-reviews a sanitized copy; each folder describes the agent and shows real output on invented
-data.
-
-- [deck-generator](qofai/deck-generator/) writes proposal and status decks from live project
-  data pulled over MCP or from an uploaded PRD, guards every value against its sources, and
-  gives reviewers a studio that turns plain-language edits into exact text swaps. 2,447 tests
-  and about 38,000 lines of application code.
-- [content-calendar](qofai/content-calendar/) sequences a month of posts per author with one
-  schema-constrained Claude call under a YAML policy, and routes every post through a human
-  approval queue. I took it over from a teammate and wrote 98% of the current code. 171 tests.
-- [pe-research-agent](qofai/pe-research-agent/) writes a sourced dossier on a private equity
-  firm with eight Claude Code skills and parallel subagents, labeling every claim with a
-  confidence band and source type.
 
 ## How this repo is maintained
 
