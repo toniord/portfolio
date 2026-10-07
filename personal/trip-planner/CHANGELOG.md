@@ -88,3 +88,9 @@ email; the repo now uses the GitHub account's email.
 `README.md`, `PRD.md`, `CLAUDE.md`, this file, and `INDEX.md`, with screenshots
 from production. Traveler notes are now wrapped in tags and marked as data in
 both Claude prompts (prompt version 2).
+
+## 7. README and portfolio entry (Oct 7, 2026)
+
+`README.md` and `PORTFOLIO.md` lead with the measured result (22 seconds and $0.05 for the
+sample group), the origin story is two sentences, and the known limits are the three that
+matter most.

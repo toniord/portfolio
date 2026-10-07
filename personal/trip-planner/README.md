@@ -1,23 +1,17 @@
 # Group Trip Planner
 
-An agent that plans a trip for a group of friends. The organizer sends one link,
-everyone answers a two-minute form on their phone (dates, budget, home airport,
-interests, anything else in their own words), and the agent picks the dates,
-the destination that works for the most people, and a day-by-day itinerary. It
-checks real weather for those dates and live flight and hotel prices from each
-person's own airport, and it explains what the group traded away.
+An agent that plans a trip for a group of friends. The organizer sends one link, everyone
+answers a two-minute form on their phone, and the agent picks the dates, the destination that
+works for the most people, and a day-by-day itinerary, using real weather for those dates and
+live flight and hotel prices from each person's own airport. For the six-person sample group,
+flying from five airports, a first plan takes 22 seconds and $0.05 of Claude calls. A
+deterministic planner picks the destination and dates, Claude handles the two language tasks,
+and 69 tests run without network or spend.
 
 Live: https://grouptrip-planner.vercel.app (click "Try a sample trip" for a
 group that has already answered)
 
 ![The plan for the sample group](docs/screenshots/plan.jpg)
-
-This was the first agent I built, in the winter of 2026 for the University of
-Chicago AI integration program. The original was a single-page scoring script
-over a CSV file. I have since refined it: the core is the same deterministic
-planner that filters and ranks destinations, with edits that fix its scoring
-and extend it into a shareable product with Claude and live data.
-[What changed](#where-it-started) is at the end.
 
 ## How a trip works
 
@@ -105,42 +99,19 @@ Measured on the sample trip (six people, five home airports):
 
 Known limits, stated plainly.
 
-- The 61 destinations and their tags are hand-curated. Each has about four
-  activity tags, so a city can look worse at food than it is.
-- Flight time is estimated from distance until real prices are checked, and the
-  estimate is short for trips with a connection.
-- Daily spending ($80 a person) and two people per hotel room are assumptions,
-  shown in the UI.
-- Prices come from Google Flights through SerpApi and can change by the time
-  someone books. The app links to the search and never books anything.
-- The itinerary names real places from Claude's knowledge. It says so and asks
-  people to check details before booking.
+- The 61 destinations and their tags are hand-curated, about four activity tags each, so a
+  city can look worse at food than it is.
+- Flight time is estimated from distance until real prices are checked, and the estimate is
+  short for trips with a connection.
+- Prices come from Google Flights through SerpApi and can change by the time someone books.
+  The app links to the search and never books anything.
 
 ## Where it started
 
-The original (January to February 2026, built in Replit) took a CSV of survey
-answers in the browser, found the shared dates, filtered 61 destinations by home
-city, passport, and the lowest budget, scored the rest, and filled a few days
-from random activity templates. The brief it was built against is in
-[`docs/original-brief.md`](docs/original-brief.md).
-
-What stayed is the core idea and its shape: shared dates with a 4 to 3 to 2 day
-fallback, hard filters, scoring, a winner and a runner-up, and must-pass checks
-on the output.
-
-What changed:
-
-- Scoring bugs fixed. The crowd penalty checked ids that did not exist, a 0%
-  budget flex was read as 10%, trip end dates used the whole shared window, and
-  every $100 saved outweighed half of what people asked for, so the cheapest
-  place usually won.
-- The CSV upload became a shareable trip with a mobile form, a database, and an
-  API.
-- The evaluation harness, which nothing called, became the checks that every
-  plan and every Claude draft must pass.
-- Claude was added for the two language jobs, and live weather, travel time, and
-  prices replaced static guesses.
-- Zero tests became 69.
+I first built it in the winter of 2026 for the University of Chicago AI integration program, as
+a scoring script over a CSV of survey answers ([the original brief](docs/original-brief.md)).
+It has since become a shareable product with Claude, live weather and live prices, and its
+tests went from 0 to 69.
 
 ## Run it locally
 
