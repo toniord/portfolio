@@ -1,7 +1,7 @@
 # QofAI internship
 
-Three agents I built as an intern at QofAI in 2026. Each folder describes what the agent does
-and how it is built, with screenshots of real output.
+Three agents I built as an intern at QofAI in 2026. I still work with QofAI today. Each folder
+describes what the agent does and how it is built, with screenshots of real output.
 
 - [`deck-generator/`](deck-generator/) generates proposal and status decks and gives a reviewer
   a studio to finish them.

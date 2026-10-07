@@ -1,7 +1,8 @@
 # Antonio Rodriguez Diaz
 
 I love building AI agents. I study physics and economics at the University of Chicago (class of
-2028). In summer 2026 I built AI agents as an intern at QofAI.
+2028). In summer 2026 I built AI agents as an intern at QofAI, and I still work with
+QofAI today.
 
 [LinkedIn](https://www.linkedin.com/in/antonio-rodriguez-diaz-76115632a)
 
