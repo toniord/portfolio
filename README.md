@@ -9,8 +9,9 @@ I love building AI agents. I study physics and economics at the University of Ch
 
 - [`personal/`](personal/) holds my personal projects. Each folder is a published copy of a
   working project.
-- [`qofai/`](qofai/) covers my internship work. The code is not public, and a walkthrough is
-  available on request.
+- [`qofai/`](qofai/) covers my internship work: what each agent does, how it is built, and
+  screenshots of its output. The code is under review by QofAI and not yet public, and a
+  walkthrough is available on request.
 
 ## Projects
 
@@ -77,6 +78,22 @@ Python 3.12, uv, launchd, Gmail and Google Calendar APIs, Open-Meteo, NYT API, C
 (Haiku 4.5, Opus 5.5), Tailscale.
 
 <!-- projects:end -->
+
+### QofAI internship
+
+Three agents built during my 2026 internship at QofAI. The code is held back while QofAI
+reviews a sanitized copy; each folder describes the agent and shows real output on invented
+data.
+
+- [deck-generator](qofai/deck-generator/) writes proposal and status decks, guards every value
+  against its sources, and gives reviewers a studio that turns plain-language edits into exact
+  text swaps. 296 tests, about 19,000 lines.
+- [content-calendar](qofai/content-calendar/) sequences a month of posts per author with one
+  schema-constrained Claude call under a YAML policy, and routes every post through a human
+  approval queue. 171 tests.
+- [pe-research-agent](qofai/pe-research-agent/) writes a sourced dossier on a private equity
+  firm with eight Claude Code skills and parallel subagents, labeling every claim with a
+  confidence band and source type.
 
 ## How this repo is maintained
 

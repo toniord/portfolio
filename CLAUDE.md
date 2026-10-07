@@ -9,7 +9,7 @@ private repos. Treat everything here as visible to employers.
   deletes the folder and rebuilds it from the source repo, so any change made here is lost.
   To change a project, work in its source repo and commit there.
 - Edit these files here: `README.md` (outside the generated project list), `CLAUDE.md`,
-  `tools/sync.py`, `tools/rules.toml`, `tools/overlays/` and `qofai/README.md`.
+  `tools/sync.py`, `tools/rules.toml`, `tools/overlays/` and everything under `qofai/`.
 - The README project list between `<!-- projects:start -->` and `<!-- projects:end -->` is
   generated from each published folder's `PORTFOLIO.md`. To change a description, edit
   `PORTFOLIO.md` in the source repo. The grouping and order are the `[[readme_group]]` entries in `rules.toml`.
@@ -73,11 +73,13 @@ fake fixture. Anything real becomes a private redaction.
 
 ## QofAI work
 
-Nothing from QofAI is published here: no code, data, prompts, client or staff names, tool
-names, pricing or strategy. `qofai/` holds only a short note that the work is available on
-request. The QofAI code lives in a separate private repo, and it is shared with anyone only
-after QofAI approves. Do not add QofAI projects to `rules.toml` or the sync, and do not
-expand the note without the owner confirming QofAI signed off on the wording.
+No QofAI code, data, prompts, client or staff names, pricing or strategy is published here.
+`qofai/` holds a README per agent describing what it does and how it is built, plus
+screenshots rendered from invented data, copied from the sanitized private repo. The note
+says the code is under review by QofAI. The QofAI code lives in a separate private repo, and
+it is shared with anyone only after QofAI approves. Do not add QofAI projects to
+`rules.toml` or the sync, do not add code to `qofai/`, and update the review note once QofAI
+decides.
 
 Personal projects must not name QofAI or describe its internal setup either. The redactions
 that enforce this live in the private config, never in `rules.toml`.
