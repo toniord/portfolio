@@ -2,11 +2,11 @@
 
 An agent that runs my internship search. Four times a day it polls 180 company job boards and
 three aggregator feeds, works out what is new and what has closed, filters out what I cannot
-apply to, and scores the rest against a written rubric with Claude. Since August 7, 2026 it has
-completed 231 runs unattended and tracked 41,980 postings. Its rules filter cuts the 28,361
-open ones to 2,646 (9.3%), and Claude has scored 3,197 of those. Total model spend to date is
-$11.98, under half a cent per scored posting including tagging, and $3.80 in September, its
-first full month.
+apply to, and scores the rest against a written rubric with Claude. Between August 7 and October
+7, 2026 it completed 231 runs unattended and tracked 41,980 postings. Its rules filter cuts the
+28,361 open ones to 2,646 (9.3%), and Claude has scored 3,422 postings that passed it. Total
+model spend is $13.12, under half a cent per scored posting including tagging, and $3.80 in
+September, its first full month.
 
 ![A sample daily digest, rendered from invented postings](docs/screenshots/digest.png)
 
@@ -43,8 +43,8 @@ a flag (UNCLEAR TERM, UNCLEAR LOCATION) rather than dying, and `tools.prefilter_
 prints real postings each rule killed so a bad rule becomes visible.
 
 Two models, routed by the cheap one's answer. Haiku scores everything. Only postings whose
-Haiku score clears a threshold in `rubric.md` go to Sonnet, whose answer replaces it; 957 of
-the 3,197 scored postings went that far. The threshold is the cost dial. My 54 labelled
+Haiku score clears a threshold in `rubric.md` go to Sonnet, whose answer replaces it; 1,022 of
+the 3,422 scored postings went that far. The threshold is the cost dial. My 54 labelled
 postings go into every scoring prompt as few-shot examples, which teaches the ranker my taste
 and also pushed the prompt past Haiku's 4,096-token caching minimum, so cached calls read it at
 a tenth of the input price.
