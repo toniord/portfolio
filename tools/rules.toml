@@ -127,6 +127,10 @@ path = "README.md"
 from = "tools/overlays/internship-search/README.md"
 
 [[projects.internship-search.overlay]]
+path = "docs/screenshots/digest.png"
+from = "tools/overlays/internship-search/digest.png"
+
+[[projects.internship-search.overlay]]
 path = "sources/contacts.toml"
 from = "tools/overlays/internship-search/contacts.toml"
 

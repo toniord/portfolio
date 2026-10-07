@@ -1,12 +1,10 @@
 # life-dashboard
 
 My morning brief. At 6 AM it builds one page from my calendars, inboxes, coursework, chores, job
-search, weather and news, with a short ranked list of what to do today at the top. At 7 it
-emails me a plain-text digest. It runs locally on my laptop, reads everything and changes
-nothing.
-
-This is a sanitized copy. Calendar IDs and addresses are replaced, and the README is written for
-this public copy. The code is unchanged.
+search, weather and news, with Claude ranking a short list of what to do today at the top, and
+at 7 it emails me a plain-text digest. It is read-only by construction: code refuses any Google
+token with a scope beyond read-only Calendar and Gmail, the model sees email metadata and never
+bodies, every model call falls back to rules, and 126 offline tests cover it.
 
 ## How a build works
 
@@ -85,3 +83,5 @@ a Google OAuth client, and the model calls need `ANTHROPIC_API_KEY`, all in `.en
 
 Python 3.12, uv, launchd, Gmail and Google Calendar APIs, Open-Meteo, NYT API, Claude API
 (Haiku 4.5, Opus 5.5), Tailscale.
+
+This is a sanitized copy. Calendar IDs and addresses are replaced, and the code is unchanged.
