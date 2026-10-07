@@ -1,20 +1,62 @@
 # Antonio Rodriguez Diaz
 
-I love building AI agents. I study physics and economics at the University of Chicago (class of
-2028). In summer 2026 I built AI agents as an intern at QofAI, and I still work with
-QofAI today.
+I build AI agents that run on real data, with deterministic code around the model so the
+output can be trusted. I study physics and economics at the University of Chicago (class of
+2028). In summer 2026 I built AI agents as an intern at QofAI, and I still work with QofAI
+today.
 
 [LinkedIn](https://www.linkedin.com/in/antonio-rodriguez-diaz-76115632a)
 
-## Layout
+## At a glance
 
-- [`personal/`](personal/) holds my personal projects. Each folder is a published copy of a
-  working project.
-- [`qofai/`](qofai/) covers my internship work: what each agent does, how it is built, and
-  screenshots of its output. The code is under review by QofAI and not yet public, and a
-  walkthrough is available on request.
+- Seven agents built for real use: three at QofAI and four of my own.
+- About 3,700 automated tests across them, including 2,447 on a single agent.
+- The largest, a slide-deck agent built at QofAI, is about 38,000 lines of application code.
+  It builds from live project data pulled over MCP or from an uploaded PRD, and eight
+  deterministic guards check every deck before a person sees it.
+- Measured, not assumed. Giving the PE research agent a one-line source summary per claim
+  raised its labeling accuracy on a 50-claim eval from 50% to 79.6%, against 86% for a human.
+- Running today. The group trip planner is live on Vercel, and the internship tracker scans
+  180 company job boards four times a day.
 
-## Projects
+## How I build
+
+The model proposes and code decides. Each agent keeps the model to the work only a model can
+do, such as reading a messy email, ranking a posting or drafting a slide, and plain code checks
+the result. The deck agent proves no number or name changed during a style pass. The chore
+agent confirms the quoted sentence really appears in the landlord's email. The trip planner
+accepts only constraint tags its planner recognizes.
+
+Failures are visible. A missing value becomes a marked gap on the slide, not a plausible guess.
+An unreadable upload comes back with a named reason. A failed model call says so instead of
+producing thinner output.
+
+People stay in control of what matters. A person approves every deck and every scheduled post
+before it goes anywhere, and no landlord email changes the chore schedule until a roommate
+confirms it.
+
+## Work at QofAI
+
+Three agents built during my 2026 internship. The code belongs to QofAI and is held back while
+QofAI reviews a sanitized copy. Each folder describes the agent and shows real output on
+invented data, and I am happy to walk through the code live.
+
+- [deck-generator](qofai/deck-generator/) writes proposal and status decks from live project
+  data pulled over MCP or from an uploaded PRD, guards every value against its sources, and
+  gives reviewers a studio that turns plain-language edits into exact text swaps. 2,447 tests
+  and about 38,000 lines of application code.
+- [content-calendar](qofai/content-calendar/) sequences a month of posts per author with one
+  schema-constrained Claude call under a YAML policy, and routes every post through a human
+  approval queue. I took it over from a teammate and wrote 98% of the current code. 171 tests.
+- [pe-research-agent](qofai/pe-research-agent/) writes a sourced dossier on a private equity
+  firm with eight Claude Code skills and parallel subagents, labeling every claim with a
+  confidence band and source type. Source context raised labeling accuracy from 50% to 79.6%,
+  closing 82% of the gap to a human scorer.
+
+## Personal work
+
+Each folder under [`personal/`](personal/) is a published copy of a working project, updated
+automatically from its private repo.
 
 <!-- projects:start -->
 
@@ -79,23 +121,6 @@ Python 3.12, uv, launchd, Gmail and Google Calendar APIs, Open-Meteo, NYT API, C
 (Haiku 4.5, Opus 5.5), Tailscale.
 
 <!-- projects:end -->
-
-### QofAI internship
-
-Three agents built during my 2026 internship at QofAI. The code is held back while QofAI
-reviews a sanitized copy; each folder describes the agent and shows real output on invented
-data.
-
-- [deck-generator](qofai/deck-generator/) writes proposal and status decks from live project
-  data pulled over MCP or from an uploaded PRD, guards every value against its sources, and
-  gives reviewers a studio that turns plain-language edits into exact text swaps. 2,447 tests
-  and about 38,000 lines of application code.
-- [content-calendar](qofai/content-calendar/) sequences a month of posts per author with one
-  schema-constrained Claude call under a YAML policy, and routes every post through a human
-  approval queue. I took it over from a teammate and wrote 98% of the current code. 171 tests.
-- [pe-research-agent](qofai/pe-research-agent/) writes a sourced dossier on a private equity
-  firm with eight Claude Code skills and parallel subagents, labeling every claim with a
-  confidence band and source type.
 
 ## How this repo is maintained
 
