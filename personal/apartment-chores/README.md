@@ -1,12 +1,9 @@
 # apartment-chores
 
-Runs the chores in my three-person apartment. It assigns every shared chore on a rotation that
-comes out exactly even over the quarter, emails a weekly digest, privately nudges whoever is
-overdue, and reads the landlord's emails for cleaner visits. It has run on GitHub Actions since
-September 2026.
-
-This is a sanitized copy. Roommates and the landlord are renamed, and the README is written for
-this public copy. The code is unchanged.
+Runs the chores in my three-person apartment on GitHub Actions, unattended since September 22,
+2026. It splits the quarter's 57 chore assignments exactly 19 each, emails a weekly digest,
+privately nudges whoever is overdue, and reads the landlord's emails with Claude into proposals
+that plain code checks against the email and a roommate confirms.
 
 ## The scheduler
 
@@ -18,8 +15,7 @@ interesting part is the check around it. Over 9 active weeks with 3 people, a we
 occurs 9 times and an every-third-week chore occurs 3 times, so both divide evenly and everyone
 does everything the same number of times. A cadence that does not divide by the roster size,
 such as biweekly (5 occurrences), is rejected when the term is generated instead of rounded
-off. The dry run prints the term's totals, and the current chore list must produce 57
-assignments, 19 each.
+off, and the dry run prints the term's totals.
 
 Other rules the code enforces:
 
@@ -82,3 +78,5 @@ The reader also needs `ANTHROPIC_API_KEY` and a mailbox. In production both run 
 `.github/workflows/` with credentials in Actions secrets.
 
 Python, Airtable API, Gmail SMTP and IMAP, Claude API (Sonnet 5), GitHub Actions.
+
+This is a sanitized copy. Roommates and the landlord are renamed, and the code is unchanged.
