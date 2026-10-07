@@ -1,9 +1,10 @@
 # content-calendar
 
 Built during my internship at QofAI. A teammate started this agent and I took it over and
-rebuilt it, so most of the code is mine. It plans a posting calendar for the company's
-authors. It does not write posts. It reads finished drafts plus a weekly news scan, and decides
-which post goes on which day for each author, one month at a time. Nothing is published by the
+rebuilt it. By git blame, I wrote 98% of the code in the repo today (25,220 of 25,626 lines).
+It plans a posting calendar for the company's authors. It does not write posts. It reads
+finished drafts plus a weekly news scan, and decides which post goes on which day for each
+author, one month at a time. Nothing is published by the
 agent; a person approves every post and records when it went out.
 
 A daily job ingests each source and flags any that go quiet or arrive late. Once a month a

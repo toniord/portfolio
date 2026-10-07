@@ -88,10 +88,10 @@ data.
 
 - [deck-generator](qofai/deck-generator/) writes proposal and status decks, guards every value
   against its sources, and gives reviewers a studio that turns plain-language edits into exact
-  text swaps. 296 tests, about 19,000 lines.
+  text swaps. 2,447 tests and about 38,000 lines of application code.
 - [content-calendar](qofai/content-calendar/) sequences a month of posts per author with one
   schema-constrained Claude call under a YAML policy, and routes every post through a human
-  approval queue. 171 tests.
+  approval queue. I took it over from a teammate and wrote 98% of the current code. 171 tests.
 - [pe-research-agent](qofai/pe-research-agent/) writes a sourced dossier on a private equity
   firm with eight Claude Code skills and parallel subagents, labeling every claim with a
   confidence band and source type.

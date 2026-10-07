@@ -1,8 +1,15 @@
 # deck-generator
 
-Built during my internship at QofAI. This agent writes two kinds of slide deck: a proposal
-deck before a project starts, and a status check-in deck while it runs. A person reviews every
-deck before it goes anywhere. The agent never sends anything.
+Built during my internship at QofAI, and the largest thing I have built. This agent writes two
+kinds of slide deck: a proposal deck before a project starts, and a status check-in deck while
+it runs. A person reviews every deck before it goes anywhere. The agent never sends anything.
+
+- 2,447 automated tests in the production repo, about 40,000 lines of test code against
+  38,000 lines of application code.
+- Seven deterministic guards between the model and the reviewer, built so a deck never states
+  a value its sources do not support.
+- Two re-runnable eval harnesses, one of which proves that a packet missing required data
+  escalates to a human and writes nothing.
 
 It generates both decks and gives reviewers a studio to finish them without touching HTML.
 Built so the founders could have an in-house alternative to Claude Design. Claude Opus renders
@@ -82,10 +89,8 @@ the page instead of producing a silently thinner deck.
 
 ## Testing and evals
 
-296 tests that run without an API key. Two re-runnable eval harnesses: the first checks
-coverage, slide count and cross-company leakage across a set of status packets, and the second
-proves that a packet missing required data escalates to a human and writes no files at all.
-
-About 19,000 lines of application code.
+2,447 tests in the production repo. Two re-runnable eval harnesses sit beside the suite: the first checks coverage, slide count and cross-company
+leakage across a set of status packets, and the second proves that a packet missing required
+data escalates to a human and writes no files at all.
 
 Python, Claude API, Flask, Playwright, SQLite.
