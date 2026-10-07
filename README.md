@@ -86,9 +86,10 @@ Three agents built during my 2026 internship at QofAI. The code is held back whi
 reviews a sanitized copy; each folder describes the agent and shows real output on invented
 data.
 
-- [deck-generator](qofai/deck-generator/) writes proposal and status decks, guards every value
-  against its sources, and gives reviewers a studio that turns plain-language edits into exact
-  text swaps. 2,447 tests and about 38,000 lines of application code.
+- [deck-generator](qofai/deck-generator/) writes proposal and status decks from live project
+  data pulled over MCP or from an uploaded PRD, guards every value against its sources, and
+  gives reviewers a studio that turns plain-language edits into exact text swaps. 2,447 tests
+  and about 38,000 lines of application code.
 - [content-calendar](qofai/content-calendar/) sequences a month of posts per author with one
   schema-constrained Claude call under a YAML policy, and routes every post through a human
   approval queue. I took it over from a teammate and wrote 98% of the current code. 171 tests.
