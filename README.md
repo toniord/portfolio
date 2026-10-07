@@ -83,13 +83,13 @@ Python, Airtable API, Gmail SMTP/IMAP, Claude API, GitHub Actions.
 
 #### [life-dashboard](personal/life-dashboard/)
 
-A personal morning brief that builds one local page at 6 AM and emails a digest at 7. Live
-sources: Open-Meteo weather, five Google calendars including Canvas due dates, two Gmail
-inboxes, chore and internship reports from my other agents, NYT, and the AI Daily Brief. Claude
-Haiku 4.5 triages email in batches of 10. Claude Opus 5.5 rates each upcoming event's lead
-time, then ranks up to seven Pressing actions using my feedback. Code rejects non-read-only
-Google scopes, fetches email metadata and never bodies, and falls back to rules when a model
-call fails. Work meetings reach only the lead-time call, never the ranking. 126 offline tests.
+A personal morning brief that is read-only by construction: code rejects any Google token with a
+scope beyond read-only Calendar and Gmail, Claude sees email metadata and never bodies, and every
+model call falls back to rules. At 6 AM it builds one local page from weather, five calendars,
+two Gmail inboxes, reports from my other agents and the news, and at 7 it emails a digest.
+Claude Haiku 4.5 triages email in batches of 10, and Claude Opus 5.5 rates each event's lead
+time, then ranks up to seven Pressing actions using my feedback. Work meetings reach only the
+lead-time call, never the ranking. 126 offline tests.
 
 Python 3.12, uv, launchd, Gmail and Google Calendar APIs, Open-Meteo, NYT API, Claude API
 (Haiku 4.5, Opus 5.5), Tailscale.
