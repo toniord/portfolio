@@ -173,7 +173,7 @@ fetch_body = true
 
 # Words that say nothing about which role a title is, dropped before two titles are compared.
 # Boards disagree about them constantly: one writes "2027 Summer Intern - Software Engineer,
-# AV/AI Platform" and another "Software Engineer Intern - AV/AI Platform" for one role. Every
+# Perception Platform" and another "Software Engineer Intern - Perception Platform" for one role. Every
 # other word counts, so a title with a word the other lacks is a different role.
 title_noise_words = [
   "intern", "interns", "internship", "internships",

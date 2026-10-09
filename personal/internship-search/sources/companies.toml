@@ -732,7 +732,7 @@ name = "Walleye Capital"
 ats = "greenhouse"
 token = "walleyecapital-external-students"
 category = "finance-ai"
-notes = "Student board, separate from the main walleyecapital board (0 postings). Added 2026-10-03, verified at 6 postings, after its Special Projects Developer Intern (AI-native tools, custom agents) sat in tier 4 because the feeds carry no description."
+notes = "Student board, separate from the main walleyecapital board (0 postings). Added 2026-10-03, verified at 6 postings."
 
 # ------------------------------------------------------ quant firms, second wave
 # Polled for their AI and software roles only. Quant trading and quant research

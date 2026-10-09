@@ -623,8 +623,8 @@ def title_words(title: str, noise=()) -> frozenset[str]:
 
     The noise words in sources/inbox.toml (intern, summer, a year) are dropped,
     because two listings of one role disagree about them constantly: one board
-    writes "2027 Summer Intern - Software Engineer, AV/AI Platform" and another
-    "Software Engineer Intern - AV/AI Platform". Order is ignored for the same
+    writes "2027 Summer Intern - Software Engineer, Perception Platform" and another
+    "Software Engineer Intern - Perception Platform". Order is ignored for the same
     reason. Nothing else is: a word one title has and the other lacks makes
     them different roles.
     """

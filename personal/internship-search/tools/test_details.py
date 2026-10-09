@@ -128,8 +128,8 @@ def get(conn, pid) -> dict:
 
 def test_links_are_read_by_shape():
     cases = [
-        ("https://job-boards.greenhouse.io/walleyecapital-external-students/jobs/4716166006", "",
-         ("greenhouse", "walleyecapital-external-students", "4716166006")),
+        ("https://job-boards.greenhouse.io/acme-students/jobs/4700000001", "",
+         ("greenhouse", "acme-students", "4700000001")),
         ("https://boards.greenhouse.io/acme/jobs/123?gh_src=x", "", ("greenhouse", "acme", "123")),
         ("https://boards.greenhouse.io/embed/job_app?for=acme&token=123", "",
          ("greenhouse", "acme", "123")),

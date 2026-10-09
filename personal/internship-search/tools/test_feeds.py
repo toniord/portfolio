@@ -66,14 +66,14 @@ MAPPED = Feed(
 def test_simplify_shape_unchanged():
     """The regression that matters: the two live feeds must not move."""
     listing = {
-        "company_name": "Anduril", "title": "2027 Mechanical Engineer Intern",
+        "company_name": "Acme Robotics", "title": "2027 Example Engineer Intern",
         "locations": ["Costa Mesa, CA", "Seattle, WA"], "url": "https://x/1",
         "id": "abc", "active": True, "is_visible": True,
         "terms": ["Summer 2027"], "degrees": ["Bachelor's"],
     }
     posts, closed, dup = feeds.normalize(SIMPLIFY, [listing], {})
     check("an unmapped feed still parses", len(posts), 1)
-    check("company", posts[0].company, "Anduril")
+    check("company", posts[0].company, "Acme Robotics")
     check("locations join with a semicolon",
           posts[0].location, "Costa Mesa, CA; Seattle, WA")
     check("terms", posts[0].feed_terms, "Summer 2027")

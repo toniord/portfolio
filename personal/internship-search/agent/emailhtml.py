@@ -118,7 +118,7 @@ def split_item(text: str) -> tuple[str, list[str], list[str]]:
     """'Title (A; B)  [FLAG, FLAG]' into the title, its locations and its flags.
 
     Locations are the LAST balanced parenthesis group, because titles carry
-    parentheses of their own ("Mechanical Engineer Intern (Summer 2027)"). A
+    parentheses of their own ("Example Intern (Summer 2027)"). A
     line with no trailing group comes back whole, with no locations.
     """
     flags: list[str] = []
