@@ -32,7 +32,7 @@ import argparse
 import sqlite3
 import sys
 
-from agent import airtable, config, db
+from agent import airtable_sync, config, db
 
 STATUSES = ("applied", "interviewing", "rejected", "offer", "skipped", "missed",
             "not_applied")
@@ -72,30 +72,11 @@ def describe(row) -> str:
 def push_to_airtable(rows_and_status: list[tuple]) -> int:
     """Set Applied status on the Airtable rows, so the pull cannot undo it.
 
-    Returns how many records were written. Anything without a record id is
-    skipped here and relies on the SQLite write alone, which is correct for it.
+    Returns how many records were written. The work is in
+    `airtable_sync.push_applied_status`, shared with the inbox reader since
+    2026-10-08 so the two writers of this column cannot drift apart (rule 15).
     """
-    targets = [(r, s) for r, s in rows_and_status if r["airtable_record_id"]]
-    if not targets:
-        return 0
-    schema = airtable.load_schema()
-    table = schema.table("postings")
-    field = next(
-        (f for f in table.editable_fields if f.column == "applied_status"), None
-    )
-    if field is None:
-        raise SystemExit("no Applied status field in sources/airtable.toml")
-
-    records = []
-    for row, status in targets:
-        shown = field.to_airtable(status)
-        if shown is None:
-            continue
-        records.append({"id": row["airtable_record_id"], "fields": {field.name: shown}})
-    if not records:
-        return 0
-    with airtable.Client() as client:
-        return client.update_records(table.name, records)
+    return airtable_sync.push_applied_status(rows_and_status)["written"]
 
 
 def main() -> int:

@@ -56,9 +56,9 @@ SCHEDULE_PATH = ROOT / "sources" / "schedule.toml"
 # tier bands in rubric.md, per CLAUDE.md rule 3.
 EMAIL_RULES_PATH = ROOT / "sources" / "email.toml"
 
-# The mailbox, Milestone 6.5. The host, the folder, the lookback window, the
-# newsletter senders and the subject patterns are all data in that file. Only the
-# credentials are here, for the same reason SMTP's are: the TOML is committed.
+# The mailbox, revived 2026-10-08 for Milestone 7.5. The lookback window, the
+# sender domains and every phrase are data in that file. Only the credentials are
+# here, for the same reason SMTP's are: the TOML is committed.
 INBOX_PATH = ROOT / "sources" / "inbox.toml"
 
 # Google Calendar. Neither file is committed; see .gitignore.
@@ -191,20 +191,28 @@ def email_configured() -> bool:
     return bool(SMTP_USER and SMTP_PASSWORD and EMAIL_FROM)
 
 
-# Reading mail, Milestone 6.5. A separate credential from the sending one above,
-# even when both are app passwords on the same account, so revoking one cannot
-# silently break the other. Missing credentials skip the inbox and never crash a
-# run, the same rule email and Airtable already follow.
+# Reading mail, Milestone 7.5. Gmail API with the gmail.readonly scope, on the
+# UChicago account, through an OAuth client of the owner's choosing. It replaced
+# IMAP on 2026-10-08, when it turned out UChicago's Workspace does allow an
+# OAuth app to hold gmail.readonly once he accepts its policy prompt; the
+# life-dashboard project already reads this inbox that way.
 #
-# This is not owner@example.edu, and the reason is recorded in CHANGELOG.md
-# under 2026-08-16: UChicago's Workspace has app passwords turned off, so the
-# newsletter is forwarded to a mailbox that allows them and read from there.
-IMAP_USER = os.getenv("IMAP_USER")
-IMAP_PASSWORD = os.getenv("IMAP_PASSWORD")
+# Deliberately not the calendar's client or token. The calendar token carries the
+# full calendar scope, and a token is never shared between scopes or projects,
+# so revoking one cannot silently break the other. Missing values skip the inbox
+# and never crash a run, the same rule email and Airtable already follow.
+GMAIL_CLIENT_ID = os.getenv("GMAIL_CLIENT_ID")
+GMAIL_CLIENT_SECRET = os.getenv("GMAIL_CLIENT_SECRET")
+GMAIL_TOKEN_PATH = Path(os.getenv("GMAIL_TOKEN_PATH") or ROOT / ".gmail-token.json")
+
+# The one model call the inbox reader makes, for a confirmation the free
+# matching could not place. Same model and prices as Stage 0; the prompt is data.
+INBOX_PROMPT_PATH = ROOT / "sources" / "inbox_prompt.md"
+INBOX_MAX_TOKENS = int(os.getenv("INBOX_MAX_TOKENS", "300"))
 
 
-def inbox_configured() -> bool:
-    return bool(IMAP_USER and IMAP_PASSWORD)
+def gmail_client_configured() -> bool:
+    return bool(GMAIL_CLIENT_ID and GMAIL_CLIENT_SECRET)
 
 
 # Airtable, Milestone 5. An input surface for labels, never the state store.

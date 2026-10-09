@@ -23,6 +23,9 @@ logs/
 credentials.json
 .google-token.json
 
+# Gmail OAuth, read-only, its own token and never the calendar's
+.gmail-token.json
+
 # Editor and OS noise
 .DS_Store
 .Rhistory

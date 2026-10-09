@@ -144,12 +144,39 @@ description = "Poll, then send the digest covering everything found since the la
 # What one run does, in order.
 #
 # The watcher is the spine (PRD section 4). If it fails the run stops, because
-# everything after it operates on what it stored. The two syncs are not the
+# everything after it operates on what it stored. The inbox step runs before it
+# and is not required, so its failure never stops anything. The two syncs are not the
 # spine: a failure in either is logged and stepped over, so an expired Google
 # token or an Airtable outage cannot cost a day of polling.
 #
 # timeout_seconds is a hard ceiling per step. A hung HTTP read would otherwise
 # leave launchd believing the job is still running and skip the next fire.
+
+[[steps]]
+name = "inbox"
+module = "tools.inbox"
+args = []
+required = false
+timeout_seconds = 180
+# Added 2026-10-08, Milestone 7.5. Reads "thank you for applying" mail from the
+# UChicago inbox through Gmail's API, read-only, and sets Applied status on the
+# posting it names. See agent/inbox.py.
+#
+# First, before the watcher, so a status set here is already in SQLite when the
+# digest builds: the role leaves "Marked interested, not applied" the same
+# evening, and any question it raises is in that day's email rather than the
+# next one.
+#
+# Not required, and that is the whole design. A revoked token, a Gmail outage or
+# a typo in sources/inbox.toml is logged and stepped over, and the watcher runs
+# exactly as it would have (CLAUDE.md rules 11 and 12). The digest says so once
+# the reader has gone stale_after_days without a success, which is the only
+# place an optional step's failure becomes visible.
+#
+# Runs on every job rather than digest_only. Gmail calls are free, and Airtable
+# is touched only when an email actually confirms an application, so a quiet
+# run costs no metered calls at all (CLAUDE.md rule 8). Switched off by
+# [application] enabled in sources/inbox.toml, not here.
 
 [[steps]]
 name = "watcher"

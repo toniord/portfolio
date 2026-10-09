@@ -83,10 +83,10 @@ def by_oldest(row) -> tuple:
     to, which reads as the base having lost his answer. One such row existed: a
     listing he marked interested in a city that was not the oldest.
 
-    An application overrides age for the same reason. When he applied to one
-    city's listing of a role, the collapse led with an older row in another
-    city, so the base showed that role as not applied and his Applied view
-    could not find it. What he did to a posting outranks which city
+    An application overrides age for the same reason and was added 2026-09-25.
+    He applied to one city's listing of a role; the collapse led with an older
+    row in another city, so the base showed that role as not applied and his
+    Applied view could not find it. What he did to a posting outranks which city
     happened to be discovered first.
 
     Applied beats labelled beats age. Both exceptions are stable in practice

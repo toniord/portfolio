@@ -120,6 +120,28 @@ CREATE TABLE IF NOT EXISTS agent_state (
     updated_at TEXT
 );
 
+-- One row per message the inbox reader has looked at, Milestone 7.5, added
+-- 2026-10-08. It is what stops a run re-applying a status or re-asking a
+-- question it already asked, so a message with a row is never read again.
+-- message_id is Gmail's own id, which is stable within one mailbox and is what
+-- the API takes, rather than the RFC 822 Message-ID PRD section 13 named for an
+-- IMAP reader. candidates is a JSON list of posting ids, filled only when the
+-- outcome is a question for the owner. resolved_at is set when he answers one.
+CREATE TABLE IF NOT EXISTS inbox_messages (
+    message_id   TEXT PRIMARY KEY,
+    kind         TEXT NOT NULL,
+    outcome      TEXT NOT NULL,
+    sender       TEXT,
+    subject      TEXT,
+    received_at  TEXT,
+    company      TEXT,
+    posting_id   INTEGER,
+    candidates   TEXT,
+    reason       TEXT,
+    processed_at TEXT NOT NULL,
+    resolved_at  TEXT
+);
+
 CREATE TABLE IF NOT EXISTS runs (
     id              INTEGER PRIMARY KEY,
     timestamp       TEXT NOT NULL,
@@ -269,6 +291,16 @@ WHERE identity IS NULL;
 
 UPDATE postings SET content_hash = hash WHERE content_hash IS NULL;
 """
+
+
+# Discovery is news about a posting he has not acted on. Every query that offers
+# a posting as a find carries this, so a posting he already applied to, which
+# since 2026-10-08 includes ones the inbox reader created, never arrives in an
+# email as new. A posting he marked skipped or missed is not news either.
+NOT_APPLIED = "COALESCE(applied_status, 'not_applied') = 'not_applied'"
+# Re-filtering is narrower: only a posting he actually sent an application for
+# keeps its verdict, so 'skipped' and 'missed' are re-judged like any other.
+_UNAPPLIED = "'not_applied', 'skipped', 'missed'"
 
 
 def now() -> str:
@@ -719,9 +751,15 @@ def clear_verdicts(conn: sqlite3.Connection, owned_flags) -> int:
     Stage 0 tags are kept, so re-running costs nothing. Only the flags this
     filter owns are removed; anything a later milestone writes is left alone.
     """
+    # A posting he applied to keeps its verdict. Since 2026-10-08 the inbox
+    # reader stores applications the filter never saw, some of which the filter
+    # would kill (a city outside the US, say), and an application is a fact
+    # about him rather than a question for the rules. Killing it would drop it
+    # from Airtable, where his Applied view lives.
     rows = conn.execute(
         "SELECT id, flags FROM postings WHERE closed_detected_at IS NULL "
-        "AND prefilter_verdict IS NOT NULL"
+        "AND prefilter_verdict IS NOT NULL "
+        f"AND COALESCE(applied_status, 'not_applied') IN ({_UNAPPLIED})"
     ).fetchall()
     owned = set(owned_flags)
     conn.executemany(
@@ -910,7 +948,7 @@ def surfaced(conn: sqlite3.Connection, unalerted_only: bool = False) -> list[dic
         "AND COALESCE(closed_by_me, 0) = 0"
     )
     if unalerted_only:
-        sql += " AND alerted_at IS NULL"
+        sql += f" AND alerted_at IS NULL AND {NOT_APPLIED}"
     return [dict(r) for r in conn.execute(sql + " ORDER BY company, title")]
 
 
@@ -928,7 +966,7 @@ def carryover(conn: sqlite3.Connection, hours: float) -> list[dict]:
 
     "Recently" means found OR scored inside the window, since 2026-10-03. Keyed
     on discovery alone, a posting whose score arrived late never reached the
-    inbox: a Walleye Capital internship first seen 2026-10-02 was rescored from
+    inbox: an internship about building AI agents first seen 2026-10-02 was rescored from
     tier 4 to tier 1 once its description was fetched, and no email would ever
     have carried it, because it was already more than 36 hours old. A new
     posting is found and scored in the same run, so for it nothing changes. What
@@ -946,6 +984,7 @@ def carryover(conn: sqlite3.Connection, hours: float) -> list[dict]:
             "WHERE closed_detected_at IS NULL AND prefilter_verdict = 'surface' "
             "AND COALESCE(closed_by_me, 0) = 0 "
             "AND alerted_at IS NULL AND (first_seen >= ? OR scored_at >= ?) "
+            f"AND {NOT_APPLIED} "
             "ORDER BY company, title",
             (cutoff, cutoff),
         )
@@ -1045,7 +1084,7 @@ def roundup_candidates(
             "SELECT * FROM postings "
             "WHERE closed_detected_at IS NULL AND prefilter_verdict = 'surface' "
             "AND COALESCE(closed_by_me, 0) = 0 "
-            f"AND alerted_at IS NULL AND {clause} "
+            f"AND alerted_at IS NULL AND {clause} AND {NOT_APPLIED} "
             "AND (first_seen >= ? OR scored_at >= ?) "
             "ORDER BY tier, fit_score DESC, company, title",
             params + [cutoff, cutoff],
@@ -1071,7 +1110,7 @@ def urgent_by_deadline(
             "SELECT * FROM postings "
             "WHERE closed_detected_at IS NULL AND prefilter_verdict = 'surface' "
             "AND COALESCE(closed_by_me, 0) = 0 "
-            f"AND {clause} AND urgent_deadline_alerted_at IS NULL "
+            f"AND {clause} AND urgent_deadline_alerted_at IS NULL AND {NOT_APPLIED} "
             "AND stated_deadline IS NOT NULL AND TRIM(stated_deadline) <> '' "
             "AND substr(stated_deadline, 1, 10) >= ? "
             "AND substr(stated_deadline, 1, 10) <= ? "
@@ -1099,7 +1138,8 @@ def urgent_by_age(
         "SELECT * FROM postings "
         "WHERE closed_detected_at IS NULL AND prefilter_verdict = 'surface' "
         "AND COALESCE(closed_by_me, 0) = 0 "
-        f"AND {clause} AND urgent_stale_alerted_at IS NULL AND first_seen <= ?"
+        f"AND {clause} AND urgent_stale_alerted_at IS NULL AND first_seen <= ? "
+        f"AND {NOT_APPLIED}"
     )
     if needs_action:
         sql += (
@@ -1159,6 +1199,135 @@ def action_items(
         ]
 
     return {"to_apply": to_apply, "waiting": waiting}
+
+
+# ------------------------------------------------------------------ the inbox
+
+def inbox_seen(conn: sqlite3.Connection, message_ids: list[str]) -> set[str]:
+    """Which of these messages the reader has already handled."""
+    if not message_ids:
+        return set()
+    marks = ",".join("?" for _ in message_ids)
+    return {
+        r["message_id"]
+        for r in conn.execute(
+            f"SELECT message_id FROM inbox_messages WHERE message_id IN ({marks})",
+            list(message_ids),
+        )
+    }
+
+
+def record_inbox(conn: sqlite3.Connection, row: dict, commit: bool = True) -> None:
+    """Record one handled message. A message is recorded once and never again."""
+    conn.execute(
+        "INSERT OR IGNORE INTO inbox_messages (message_id, kind, outcome, sender, "
+        "subject, received_at, company, posting_id, candidates, reason, "
+        "processed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        (
+            row["message_id"], row.get("kind", "application"), row["outcome"],
+            row.get("sender"), row.get("subject"), row.get("received_at"),
+            row.get("company"), row.get("posting_id"),
+            json.dumps(row["candidates"]) if row.get("candidates") else None,
+            row.get("reason"), now(),
+        ),
+    )
+    if commit:
+        conn.commit()
+
+
+def mark_applied(conn: sqlite3.Connection, posting_id: int, applied_at: str) -> None:
+    """Applied, for a posting still not applied, and back in front of him if killed.
+
+    An application is a fact about him and not a question for the filter. The
+    case that made this a rule: he applied to an internship abroad that the
+    location rule had killed, and a killed posting can never reach Airtable, so
+    his Applied view could not show it. The filter's reason is kept, prefixed,
+    so the row still says why the rules disliked it. No commit; the caller
+    commits with the ledger row.
+    """
+    _mark_sent(conn, posting_id, "applied", applied_at, ("not_applied",), overwrite_date=True)
+
+
+# What a rejection may replace. Everything except a final answer: a posting he
+# was offered stays offered, and one already rejected stays as it was. Not
+# applied, skipped and missed are in it because a rejection proves he applied.
+REJECTABLE = ("not_applied", "applied", "interviewing", "skipped", "missed")
+
+
+def mark_rejected(conn: sqlite3.Connection, posting_id: int, rejected_at: str) -> None:
+    """Rejected, read from an email. 2026-10-09. No commit, as mark_applied.
+
+    `applied_at` keeps the date he applied when one is held. Only when none is
+    held is it filled, with the rejection's date, which is the latest he can
+    have applied; a blank there drops the row from every query that counts
+    applications by date.
+    """
+    _mark_sent(conn, posting_id, "rejected", rejected_at, REJECTABLE, overwrite_date=False)
+
+
+def _mark_sent(conn, posting_id: int, status: str, at: str, from_statuses: tuple,
+               overwrite_date: bool) -> None:
+    marks = ",".join("?" for _ in from_statuses)
+    date = "?" if overwrite_date else "COALESCE(applied_at, ?)"
+    conn.execute(
+        f"UPDATE postings SET applied_status = ?, applied_at = {date}, "
+        "prefilter_reason = CASE WHEN prefilter_verdict = 'surface' THEN prefilter_reason "
+        "  ELSE ? || ', overriding: ' || COALESCE(prefilter_reason, prefilter_verdict, 'untriaged') END, "
+        "prefilter_verdict = 'surface' "
+        f"WHERE id = ? AND COALESCE(applied_status, 'not_applied') IN ({marks})",
+        (status, at, status, posting_id, *from_statuses),
+    )
+
+
+def insert_applied_posting(conn: sqlite3.Connection, *, company: str, title: str,
+                           location: str, url: str, external_id: str,
+                           applied_at: str, status: str = "applied") -> tuple[dict, bool]:
+    """Store a posting the owner applied to that no watcher had found. 2026-10-08.
+
+    `status` is "applied" for a confirmation and "rejected" for a rejection
+    whose application the agent never held, 2026-10-09. Nothing else.
+
+    Returns (row, created). The posting goes through `fetchers.Posting`, so its
+    identity is `fetchers._identity` on the source "inbox:applications" (rule
+    6), and through `_match` first, so a posting already stored under the same
+    content is marked rather than duplicated. Its row key comes from `_row_key`
+    (rule 11).
+
+    It is stored surfaced, because an application is a fact about him and not a
+    question for the filter, and Airtable only carries surfaced postings. It is
+    never stamped `alerted_at`: no email carried it (rule 10), and a posting the
+    agent never found is exactly what the coverage audit should count as missed.
+    The discovery queries skip applied postings instead, so it is not emailed
+    to him as a new find.
+
+    No commit; the caller commits with the ledger row.
+    """
+    from .fetchers import Posting
+
+    if status not in ("applied", "rejected"):
+        raise ValueError(f"not a status the inbox writes: {status}")
+    p = Posting(company=company, title=title, location=location, url=url,
+                source="inbox:applications", ats="inbox", external_id=external_id)
+    existing = _match(conn, p)
+    if existing is not None:
+        (mark_applied if status == "applied" else mark_rejected)(conn, existing["id"], applied_at)
+        row = conn.execute("SELECT * FROM postings WHERE id = ?", (existing["id"],)).fetchone()
+        return dict(row), False
+
+    ts = now()
+    cur = conn.execute(
+        """INSERT INTO postings
+           (hash, identity, content_hash, company, title, location, url, source,
+            ats_platform, external_id, first_seen, last_seen_open,
+            prefilter_verdict, prefilter_reason, prefilter_at,
+            applied_status, applied_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'surface', ?, ?, ?, ?)""",
+        (_row_key(conn, p), p.identity, p.content_hash, p.company, p.title,
+         p.location, p.url, p.source, p.ats, p.external_id, ts, ts,
+         f"{status}: found in the inbox, not on any board", ts, status, applied_at),
+    )
+    row = conn.execute("SELECT * FROM postings WHERE id = ?", (cur.lastrowid,)).fetchone()
+    return dict(row), True
 
 
 def mark_urgent(conn: sqlite3.Connection, rows: list[dict], column: str) -> int:

@@ -166,7 +166,7 @@ def derived_windows(conn, today: dt.date | None = None) -> list[Window]:
 
     PRD section 12 phase three. Built 2026-09-22, having been blocked since
     2026-08-19 on there being an application date to count from; `applied_at`
-    exists now and the logged applications carry one.
+    exists now and applications carry one.
 
     Returned as `Window` objects so they go through exactly the same
     `_event_body`, key lookup and patch path as the cycle windows. That is the

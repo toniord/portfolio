@@ -20,6 +20,8 @@ How to run any of it is in `README.md`. What is being built and why is in `PRD.m
 | Which email a tier goes to | `rubric.md`, `delivery` on the tier band | `python -m tools.rubric_check`, then `tools.test_digest` |
 | Email item caps, the urgent triggers, the roundup day, collapsed locations | `sources/email.toml` | `python -m tools.test_digest` |
 | The YOUR MOVE block: its cap, what counts as waiting, when an application is called silent | `sources/email.toml`, `[actions]` | `python -m tools.test_actions` |
+| Which emails count as an application confirmation or a possible rejection, and the sender domains searched | `sources/inbox.toml`, `[application]` | `python -m tools.inbox --dry-run`, then `tools.test_inbox` |
+| What the inbox's one model call reads off an email | `sources/inbox_prompt.md` | `python -m tools.inbox --dry-run` |
 | Referral contacts | `sources/contacts.toml` | `python -m agent.run` |
 | The Airtable base layout | `sources/airtable.toml` | `python -m tools.sync_airtable` |
 | Application windows on the calendar | `sources/cycle_windows.toml` | `python -m tools.sync_calendar` |
@@ -83,6 +85,7 @@ The pipeline, in the order a posting moves through it.
 | `airtable.py` | Airtable client and schema bootstrap. |
 | `airtable_sync.py` | Two-way sync between SQLite and the base. |
 | `gcal.py` | Google Calendar writes, to a dedicated calendar and never the primary one. |
+| `inbox.py` | Reads application confirmations and rejections from Gmail, read-only, and marks the posting or creates it. |
 | `prep.py` | Preparation tasks: definitions from TOML, completion state from SQLite. |
 | `schedule.py` | Reads `sources/schedule.toml` and generates the launchd plists. |
 | `health.py` | Whether the agent is alive, and the email when it is not. Depends on almost nothing, on purpose. |
@@ -107,6 +110,8 @@ Things run by hand or by the scheduler, never part of the polling cycle.
 | `test_health.py` | 13 cases on the failure alert. Mutation-tested, because a silent monitor looks healthy. |
 | `test_actions.py` | 33 cases on the YOUR MOVE block, the applied date and the owner's own closure. |
 | `test_workday.py` | 23 cases on the Workday fetcher, against a fake board. No network. |
+| `inbox.py` | The inbox step: Gmail consent, dry run, the scheduled read. First step of every run, not required. |
+| `test_inbox.py` | 156 checks on matching confirmations and rejections, creating postings, write order and the spend cap. Mutation-tested. |
 | `report.py` | Writes the Life Dashboard's Job search file. A scheduled step; read-only on `state.db`, never a stamp. |
 | `test_report.py` | 24 checks on the report: it cannot write, stamps nothing, and keeps status moves for 36 hours. |
 | `probe_workday.py` | Is a Workday board addable? Prints the employer's own job types and answers outright. |
@@ -129,4 +134,5 @@ Things run by hand or by the scheduler, never part of the polling cycle.
 | `.env` | API keys, SMTP credentials, Airtable token. |
 | `logs/` | Output from scheduled runs. `run.log` is the run history, `launchd.log` should stay empty. |
 | `credentials.json`, `.google-token.json` | Google Calendar OAuth. |
+| `.gmail-token.json` | Gmail OAuth, `gmail.readonly` only. Never shared with the calendar or another project. |
 | `.venv/` | The virtual environment. Everything runs as `.venv/bin/python -m ...`. |

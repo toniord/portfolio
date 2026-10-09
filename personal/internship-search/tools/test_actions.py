@@ -294,8 +294,8 @@ def test_an_application_always_keeps_its_airtable_row():
     push, _ = airtable_sync.candidate_query(schema, [4])
     prune, _ = airtable_sync.prune_query(schema, [4])
     # 1. A closed posting he applied to used to fall out, because only
-    #    label='interested' excused a closure. One application
-    #    vanished from the base the day its posting closed.
+    #    label='interested' excused a closure. One of his applications
+    #    vanished from the base the day that posting closed.
     check("a closed application is still a push candidate",
           "applied_status, 'not_applied') <> 'not_applied'" in push, True)
     check("and the prune carries the matching exemption",

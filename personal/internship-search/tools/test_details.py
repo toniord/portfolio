@@ -6,7 +6,7 @@ Makes no network request, spends nothing, and never touches state.db. Run it
 after editing agent/triage.feed_detail_pass, agent/fetchers.locate_job or
 anything that fetches a single job's description.
 
-Built after a Walleye Capital internship about building AI agents sat in tier 4
+Built after an internship about building AI agents sat in tier 4
 because the ranker scored it on its title. The cases below are mostly about
 what the pass must never do while fixing that:
 

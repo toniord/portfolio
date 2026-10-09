@@ -173,6 +173,15 @@ def _action_lines(actions: dict, collapse_cfg: dict, url: str = "") -> list[str]
     if actions["decide"]:
         lines.append("")
 
+    stale = actions.get("inbox_stale")
+    if stale:
+        since = "has never run successfully" if stale == "never" else f"has not run successfully since {stale}"
+        lines.append(
+            f"  The Gmail reader {since}, so Applied status is not being set from "
+            "your inbox. Run tools.inbox to see why."
+        )
+        lines.append("")
+
     if actions["apply"]:
         total = len(actions["apply"]) + actions["over_cap"]
         lines.append(f"  Marked interested, not applied ({total})")

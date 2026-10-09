@@ -8,7 +8,9 @@ survivors against a fixed-anchor rubric. Haiku scores every posting, and only th
 routing threshold go to Claude Sonnet 5. Each prompt carries my 54 labelled postings as
 few-shot examples, cached at a tenth of the input price. Per-run call caps and a monthly
 budget bound spending. Output goes to a daily email, an Airtable base and a local dashboard,
-with health alerts checked by mutation testing. About 18,700 lines of Python including tests,
-and 533 checks.
+with health alerts checked by mutation testing. A read-only Gmail reader turns application
+confirmations into Applied status and rejections into Rejected, with a Haiku call deciding any
+email whose wording could be either, and creates the posting from the email when the agent
+never found it. About 20,900 lines of Python including tests, and 689 checks.
 
-Python, SQLite, Claude API, Airtable API, launchd.
+Python, SQLite, Claude API, Airtable API, Gmail API, launchd.

@@ -125,7 +125,7 @@ def detail_pass(conn, max_fetches=None, verbose=False) -> dict:
 def feed_detail_pass(conn, max_fetches=None, client=None, verbose=False) -> dict:
     """The detail pass for aggregator feed postings, which arrive as a link.
 
-    Built 2026-10-03 after a Walleye Capital internship about building AI agents
+    Built 2026-10-03 after an internship about building AI agents
     sat in tier 4, never emailed, because both feeds carrying it had no text and
     the ranker wrote "no AI or ML component mentioned" about a description it
     never saw. That was 1,988 of 1,990 blind-scored postings, and it is the

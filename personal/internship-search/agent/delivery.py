@@ -298,7 +298,8 @@ def action_content(conn, cfg=None, email_rules=None) -> dict:
     email_rules = email_rules or rules()
     cfg = cfg or email_rules.get("actions", {})
     if not cfg.get("enabled", True):
-        return {"apply": [], "decide": [], "silent": [], "waiting": 0, "over_cap": 0}
+        return {"apply": [], "decide": [], "silent": [], "waiting": 0, "over_cap": 0,
+                "inbox_stale": None}
 
     waiting_statuses = list(cfg.get("waiting_statuses", []))
     decision_statuses = list(cfg.get("decision_statuses", []))
@@ -336,12 +337,32 @@ def action_content(conn, cfg=None, email_rules=None) -> dict:
         "silent": silent,
         "waiting": waiting,
         "over_cap": over_cap,
+        **inbox_actions(conn),
     }
+
+
+def inbox_actions(conn) -> dict:
+    """Whether the inbox reader has stalled, for one line in YOUR MOVE.
+
+    Milestone 7.5, 2026-10-08. The reader sets Applied status, and creates the
+    posting when the agent does not hold it, without asking him anything, so
+    the only thing it ever needs to say here is that it has stopped working.
+
+    Never raises. A malformed sources/inbox.toml or a missing table must not be
+    able to stop the watcher, which is the step that calls this (CLAUDE.md rule
+    15), so any failure here costs only this one line of the digest.
+    """
+    try:
+        from . import inbox
+        return {"inbox_stale": inbox.stale_since(conn)}
+    except Exception:  # noqa: BLE001
+        return {"inbox_stale": None}
 
 
 def has_actions(content: dict) -> bool:
     return bool(
         content["apply"] or content["decide"] or content["silent"] or content["waiting"]
+        or content.get("inbox_stale")
     )
 
 

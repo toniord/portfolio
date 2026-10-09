@@ -479,7 +479,7 @@ def workday_description(client: httpx.Client, company: Company, url: str) -> str
 # An aggregator feed hands over a title, a company, a location and a link, and
 # no description. Until 2026-10-03 that is what the ranker scored: 80 percent of
 # open surfaced postings were judged on "(no description available)", which is
-# how a Walleye Capital internship about building AI agents for the firm landed
+# how an internship about building AI agents for a fund landed
 # in tier 4 with the reason "no AI or ML component mentioned".
 #
 # Most of those links point at a board one of the fetchers above already reads,

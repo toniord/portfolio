@@ -176,8 +176,8 @@ CANDIDATE_BASE = (
     "prefilter_verdict='surface' "
     "AND COALESCE(closed_by_me, 0) = 0 "
     # A closed posting keeps its row when he labelled it interested OR applied
-    # to it. The applied half was added later: one application vanished from
-    # the base the day its posting closed, so the Applied view
+    # to it. The applied half was added 2026-09-25: one of his applications
+    # vanished from the base the day that posting closed, so the Applied view
     # could never show it. An application is a fact about him, not about whether
     # the employer is still listing the role.
     "AND (closed_detected_at IS NULL "
@@ -297,6 +297,72 @@ def _applied_stamp(row, incoming):
     if status == "not_applied" and stamped:
         return ""
     return None
+
+
+def push_applied_status(rows_and_status: list[tuple], client=None,
+                        only_if_blank: bool = False,
+                        only_from: tuple[str, ...] | None = None) -> dict[str, int]:
+    """Set Applied status on Airtable rows directly, outside a sync.
+
+    For a writer that is not the sync: `tools.log_application` and the inbox
+    reader. Both write SQLite too, but for a row already in the base that write
+    alone is undone by the next pull, which reads Airtable as authoritative for
+    Applied status (CLAUDE.md rule 9). So the Airtable half is the one that
+    makes it stick. A row with no record id is skipped and needs nothing: the
+    create path carries editable fields upward when its row is made.
+
+    only_if_blank reads each live record first and leaves it alone unless its
+    Applied cell is empty or says not applied. The inbox reader needs that and
+    the hand tool does not. SQLite can be up to a day behind the base, so a
+    confirmation read today can meet a row he moved to Interviewing this
+    morning, and overwriting that with Applied would move his status backwards.
+    It costs one read per record, CLAUDE.md rule 8, and a reader that finds a
+    few confirmations a week spends a few calls on it.
+
+    only_from generalises that for the rejection reader, 2026-10-09: the live
+    cell is overwritten only when it holds one of these statuses (an empty
+    cell counts as not applied). Rejected may replace Applied or Interviewing,
+    never an Offer he typed in this morning. only_if_blank is only_from
+    (not_applied,) and stays as the name the confirmation path uses.
+
+    Returns {"written": n, "kept": [posting ids]}: kept is the rows whose live
+    cell held a status outside what may be replaced, and so were not touched.
+    """
+    targets = [(r, s) for r, s in rows_and_status if r["airtable_record_id"]]
+    if not targets:
+        return {"written": 0, "kept": []}
+    schema = airtable.load_schema()
+    table = schema.table("postings")
+    field_ = next(
+        (f for f in table.editable_fields if f.column == "applied_status"), None
+    )
+    if field_ is None:
+        raise airtable.AirtableError("no Applied status field in sources/airtable.toml")
+
+    owned = client is None
+    client = client or airtable.Client()
+    try:
+        if only_if_blank and only_from is None:
+            only_from = (field_.empty_value,)
+        records, kept = [], []
+        for row, status in targets:
+            if only_from is not None:
+                live = client.request(
+                    "GET", f"{client.base_id}/{table.name}/{row['airtable_record_id']}"
+                ).get("fields", {}).get(field_.name)
+                now_ = (field_.to_db(live) if live else None) or field_.empty_value
+                if now_ not in only_from:
+                    kept.append(row["id"])
+                    continue
+            shown = field_.to_airtable(status)
+            if shown is None:
+                continue
+            records.append({"id": row["airtable_record_id"], "fields": {field_.name: shown}})
+        written = client.update_records(table.name, records) if records else 0
+        return {"written": written, "kept": kept}
+    finally:
+        if owned:
+            client.close()
 
 
 def _collapsed_row(group) -> dict:

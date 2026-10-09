@@ -1,71 +1,218 @@
 # The mailbox, as data. Same rule as companies.toml and feeds.toml.
 #
-# SHELVED 2026-08-16. Milestones 6.5 and 7.5 are off the build path and nothing on the
-# schedule reads this file. `agent/inbox.py` reads it and `tools/probe_inbox.py` runs that,
-# but neither is called by anything. UChicago's Workspace closes every route into the
-# mailbox: app passwords disabled, automatic forwarding disabled, and OAuth needing a
-# restricted Gmail scope no unverified personal app can hold. CHANGELOG.md for that date
-# lists each one. The file is kept intact because the facts in it are still true and were
-# expensive to establish; do not re-investigate without a changed policy or a new account.
+# Revived 2026-10-08 for Milestone 7.5, application confirmations to Applied status.
+# `agent/inbox.py` reads this file and `tools/inbox.py` runs it, as the first step of
+# every scheduled run (see sources/schedule.toml).
+#
+# It was shelved on 2026-08-16 on the claim that UChicago closes every route into the
+# mailbox. Three of the four routes are closed (app passwords, forwarding, pulling). The
+# fourth was wrong: UChicago's Workspace lets an OAuth app hold gmail.readonly once the owner
+# accepts its policy prompt, and the life-dashboard project already reads this inbox that way. CHANGELOG.md for 2026-10-08 records the reversal.
 #
 # No address, sender name, subject line or phrase in this file may ever move into a .py
 # file. That is CLAUDE.md rule 2, and inbound mail is the likeliest place to break it,
 # because a list of phrases looks like code when you are in the middle of writing code.
 
-[mailbox]
-# These settings describe a Gmail-hosted mailbox and are correct for one. There is no
-# mailbox they currently point at, because the four routes into owner@example.edu are
-# all closed. Recorded here so nobody spends the afternoon rediscovering them:
+[gmail]
+# Read-only, and not a preference. The token is refused unless gmail.readonly is the only
+# scope it carries, both when it is created and every time it is loaded. Nothing in the
+# code can mark a message read, label it, move it or send anything, because the scope
+# does not permit it, not because the code remembers not to.
 #
-#   app passwords    disabled by the Workspace administrator, so IMAP cannot authenticate.
-#                    IMAP itself is switched on; there is simply no usable credential
-#   OAuth            gmail.readonly is a restricted scope. An unverified published app
-#                    cannot hold one, and the Testing mode that could expires refresh
-#                    tokens every seven days, which no unattended job can live with
-#   forwarding       disabled by the same administrator. Gmail renames the settings tab
-#                    "POP/IMAP Download" and removes the Forwarding section outright, and
-#                    filter forwarding goes with it since the address cannot be verified
-#   pulling          Gmail's "check mail from other accounts" on a personal account asks
-#                    for a POP password, which is the first wall from the other side
+# The client id and secret go in .env as GMAIL_CLIENT_ID and GMAIL_CLIENT_SECRET, and the
+# token is written to .gmail-token.json (gitignored, mode 0600). One-time consent:
 #
-# The address is not stored here. It goes in .env as IMAP_USER alongside IMAP_PASSWORD, for
-# the same reason SMTP_USER does: this file is committed and credentials are not.
-host = "imap.gmail.com"
-port = 993
+#     .venv/bin/python -m tools.inbox --authorize
 
-# Read-only, and not a preference. PRD section 13 forbids sending, deleting, moving, and
-# marking read from this connection. IMAP's EXAMINE command opens a mailbox without the
-# side effect that SELECT has, which is what enforces it at the protocol level rather than
-# by remembering not to.
-readonly = true
-folder = "INBOX"
+# How far back each search looks. Confirmations arrive within minutes of applying and
+# the step runs four times a day, so this only needs to cover a few days of the laptop
+# being shut. The ledger in `inbox_messages` is what stops rework; this bounds the search.
+# The first run after connecting is the exception: run it by hand with --days 60 to pick
+# up the applications made before the reader existed.
+lookback_days = 7
 
-# How far back to search on each run. A newsletter arrives weekly or fortnightly and the
-# watcher runs four times a day, so anything beyond a couple of weeks is re-reading mail
-# that has already been handled. The Message-ID ledger is what actually prevents rework;
-# this only bounds the search.
-lookback_days = 21
+# Hard ceiling on messages read per run. A search that suddenly matches hundreds means a
+# phrase in [application] is far too broad, and reading all of them would be the wrong
+# response. The run reads this many and says so.
+max_messages = 50
+
+
+# ------------------------------------------------- Milestone 7.5, application state
+
+[application]
+# Shipped false on 2026-10-08 and stays false until one real dry run has been read:
+#
+#     .venv/bin/python -m tools.inbox --dry-run --days 60
+#
+# The phrases below are a starting set written before the reader had seen a single real
+# confirmation. Section 13 of PRD.md warns against exactly that, a data file that looks
+# authoritative and has never matched a message, so the dry run is the step that earns the
+# switch. Edit the lists from what it prints, then set this true.
+#
+# Switched on 2026-10-08 after two real dry runs over 60 days were read with the owner.
+enabled = true
+
+# The search. A message is looked at if it came from one of these domains OR its subject
+# contains one of the subject phrases. These are the ATS platforms that send on a company's
+# behalf, which is most of them. A company that sends from its own domain is caught by the
+# subject phrases instead.
+sender_domains = [
+  "greenhouse.io",
+  "greenhouse-mail.io",
+  "lever.co",
+  "ashbyhq.com",
+  "myworkday.com",
+  "smartrecruiters.com",
+  "icims.com",
+  "oraclecloud.com",
+  "successfactors.com",
+  "jobvite.com",
+  "workablemail.com",
+]
+
+subject_phrases = [
+  "thank you for applying",
+  "thanks for applying",
+  "thank you for your application",
+  "thanks for your application",
+  "application received",
+  "we received your application",
+  "we've received your application",
+  "your application to",
+  "your application for",
+  "application submitted",
+  "application confirmation",
+  # Added 2026-10-09 with the rejection reader, after real acknowledgements and
+  # rejections slipped past every phrase above: "we've received your <Company>
+  # application", "Thank you for your interest in <Company>", and a rejection titled
+  # "Application Update". Gmail matches these as words in order, so "received your"
+  # catches a company name sitting before "application".
+  "received your",
+  "thank you for your interest",
+  "application update",
+  "update on your application",
+  "your application status",
+  "regarding your application",
+]
+
+# What makes a message an acknowledgement. At least one of these must appear in the
+# subject, the snippet or the body. Matching is case-insensitive and on whole words.
+ack_phrases = [
+  "thank you for applying",
+  "taking the time to apply",
+  "submitting an application",
+  "for submitting your application",
+  "thanks for applying",
+  "thank you for your application",
+  "thanks for your application",
+  "application received",
+  "received your application",
+  "application has been received",
+  "application has been submitted",
+  "application submitted",
+  "successfully submitted",
+  "successfully applied",
+  # Added 2026-10-09: "the time you took to apply ... as we review your application".
+  "took to apply",
+  "as we review your application",
+]
+
+# What might make a message a rejection. Added 2026-10-09. These win over everything
+# else in this file, and a hit is never written on its own: it buys one model call
+# (sources/inbox_prompt.md), and the model says rejection, confirmation or neither. That
+# is because real acknowledgements carry this wording too. One says "if you are not
+# selected for this position" and another "if there is not an immediate fit", so a
+# phrase alone would have rejected two live applications. Broad is therefore cheap here:
+# a false hit costs $0.0015 and a miss costs a rejection never recorded.
+#
+# Written from the wording real rejections use, with the common variants added.
+rejection_phrases = [
+  "unfortunately",
+  "not to proceed",
+  "not proceed with",
+  "not moving forward",
+  "not to move forward",
+  "not move forward",
+  "move forward with other",
+  "move ahead with other",
+  "other candidates",
+  "will not be moving",
+  "decided to pursue other",
+  "pursue other candidates",
+  "position has been filled",
+  "no longer under consideration",
+  "not been selected",
+  "were not selected",
+  "regret to inform",
+  "unable to find a good match",
+  "unable to offer",
+]
+
+# What makes a message NOT an acknowledgement, whatever else it says, and not a
+# rejection either. Interview invitations and assessments are recorded and left alone;
+# turning them into Interviewing is a later step, not this one.
+not_ack_phrases = [
+  "schedule an interview",
+  "invite you to interview",
+  "next steps in the interview",
+  "complete the assessment",
+  "coding challenge",
+  "verify your email",
+  "verification code",
+  "reset your password",
+  "create your account",
+  "job alert",
+  "jobs you may be interested",
+  "recommended jobs",
+]
+
+# Snippets are about 200 characters. When the snippet names a company but not the role,
+# the body is read, because Greenhouse and Workday usually put the job title and the
+# requisition number a paragraph down. Reading a body costs one API call and no money.
+fetch_body = true
+
+# Words that say nothing about which role a title is, dropped before two titles are compared.
+# Boards disagree about them constantly: one writes "2027 Summer Intern - Software Engineer,
+# AV/AI Platform" and another "Software Engineer Intern - AV/AI Platform" for one role. Every
+# other word counts, so a title with a word the other lacks is a different role.
+title_noise_words = [
+  "intern", "interns", "internship", "internships",
+  "summer", "fall", "spring", "winter",
+  "2026", "2027", "2028",
+]
+
+# An email from a company where an application is already on record, dated within this many
+# days of it, confirms that application rather than a new one, provided the email names no
+# role or its title contains every word of the recorded one. Written after the first real dry
+# run on 2026-10-08, where applications logged by hand weeks earlier would otherwise each
+# have been recorded twice; every logged date was within two days of its email.
+same_application_days = 3
+
+# The most model calls one run may make. A call is made only for a confirmation the free
+# matching could not place on a posting, and reads its company, title, location and
+# requisition number so the posting can be found or created (sources/inbox_prompt.md).
+# About $0.0015 each, so this cap is about three cents a run. A message past the cap is
+# left for the next run, never guessed at. A run that hits it means a phrase above is
+# matching mail it should not.
+max_extractions = 20
+
+# How long the reader may go without a successful run before the digest says so. A
+# revoked or expired token is a failure of an optional step, which the run log records
+# and nothing emails, so without this line Applied status would quietly stop updating.
+stale_after_days = 3
 
 
 # ---------------------------------------------------------------- Milestone 6.5, sources
-
-# A newsletter is a source of postings, in the same sense companies.toml and feeds.toml are.
-# It is the third kind, and the one that costs a model call to read, because it is prose
-# rather than JSON.
 #
-# key      short name, used to build the source key stored in SQLite (inbox:careers-in-ai)
-# sender   exact address to match on. Match on the address, never the display name, which
-#          mail clients rewrite and which anyone can set to anything
-# subject  substring match, case-insensitive. Not a regex, because a regex here would be a
-#          rule in a data file, and the point of the file is that it holds no logic
-# enabled  set false to stop reading a newsletter without losing what it taught us
+# Still shelved. Nothing reads the entry below. Kept because the facts in it were
+# expensive to establish and the Gmail reader built for 7.5 is the half 6.5 was waiting on.
 
 [[newsletter]]
 key = "careers-in-ai"
 name = "This Week in Artificial Intelligence"
 sender = "newsletter@example.edu"
 subject = "This Week in Artificial Intelligence"
-enabled = true
+enabled = false
 notes = """
 Careers in AI at UChicago. The owner reads it already and rates it highly; ingesting it is
 about not losing what it mentions, rather than about finding things first. Arrives weekly
@@ -81,28 +228,3 @@ Unverified until the first real read: whether it links to job postings directly,
 one issue carries a handful of roles or several dozen. Both change what the extraction
 prompt has to do. Do not guess at these, read an issue.
 """
-
-
-# ------------------------------------------------- Milestone 7.5, application state
-#
-# Deliberately unpopulated. The senders below are the three ATS platforms this repo already
-# polls, so they are facts rather than guesses, and they are the addresses an acknowledgement
-# or a rejection is most likely to come from.
-#
-# The phrase lists that separate an acknowledgement from a rejection from an interview
-# invitation are NOT written here yet, on purpose. Inventing them from imagination would
-# produce a data file that looks authoritative and has never matched a real message. They
-# get written from real mail once the owner has applied to something, which is the same
-# trigger Milestone 7.5 itself waits on.
-#
-# They will now stay empty. Milestone 7.5 was shelved on 2026-08-16, and not only because
-# the mailbox is unreachable. Classification was always the easy half; matching was the hard
-# half, and PRD section 13 already conceded that an acknowledgement naming only the company,
-# where more than one live application exists there, must write nothing and ask the owner in
-# the digest. He now sets Applied status in Airtable himself, which costs one dropdown per
-# application and removes the only real risk in the feature: a wrong `applied_status` write
-# teaching the ranker the wrong lesson permanently.
-
-[application]
-enabled = false
-ats_domains = ["greenhouse.io", "lever.co", "ashbyhq.com", "myworkday.com"]
