@@ -94,3 +94,10 @@ both Claude prompts (prompt version 2).
 `README.md` and `PORTFOLIO.md` lead with the measured result (22 seconds and $0.05 for the
 sample group), the origin story is two sentences, and the known limits are the three that
 matter most.
+
+## 8. Sonnet instead of Opus (Oct 12, 2026)
+
+`server/claude/llm.ts` calls Claude Sonnet 5.5 instead of Opus 5.5, to cut API spend, and the
+cost line in the agent trace uses Sonnet's price ($2 and $10 per million tokens, half of Opus).
+The refusal fallback and effort levels are unchanged. The 22 second and $0.05 figures in the
+README were measured on Opus and have not been re-measured.

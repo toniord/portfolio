@@ -6,10 +6,10 @@ import Anthropic from "@anthropic-ai/sdk";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 import type { z } from "zod/v4";
 
-export const MODEL = "claude-opus-5-5";
+export const MODEL = "claude-sonnet-5-5";
 
 // USD per million tokens for MODEL, used for the cost line in the agent trace.
-const PRICE = { input: 4, output: 20, cache_read: 0.2 };
+const PRICE = { input: 2, output: 10, cache_read: 0.2 };
 
 export interface Usage {
   input_tokens: number;

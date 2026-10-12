@@ -87,7 +87,7 @@ Measured on the sample trip (six people, five home airports):
 | First plan, nothing cached | $0.05 | 7 | 22 s |
 | Same group again | $0.02 to $0.03 | 0 | 9 to 14 s |
 
-- Claude Opus 5.5 at low effort for the itinerary. Medium effort measured 35 s
+- Claude Sonnet 5.5 at low effort for the itinerary (Opus 5.5 until Oct 12, 2026; the timings above were measured on Opus). Medium effort measured 35 s
   and $0.06 with no visible gain on the same plan.
 - SerpApi's free plan allows 250 searches a month. The app caches every price
   for three days, stops live searches at 200 a month, and falls back to

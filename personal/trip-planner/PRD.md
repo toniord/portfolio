@@ -128,7 +128,7 @@ plan's `agent` trace.
    no unknown names, no activity over 600 characters. Failures are sent back in
    the same conversation, up to 3 drafts, then the template is used.
 
-Model: `claude-opus-5-5` with server-side refusal fallback. Traveler notes are
+Model: `claude-sonnet-5-5` with server-side refusal fallback. Traveler notes are
 wrapped in tags and marked as data in both prompts.
 
 ## External services and limits
