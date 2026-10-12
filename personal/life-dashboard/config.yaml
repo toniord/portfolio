@@ -134,8 +134,8 @@ ai_daily_brief:
 # upcoming events for lead time, using the last feedback_limit feedback entries.
 actions:
   cap: 7
-  model: claude-opus-5-5
-  effort: high
+  model: claude-sonnet-5-5
+  effort: medium
   feedback_limit: 60
 
 agent_reports_dir: agent-reports
