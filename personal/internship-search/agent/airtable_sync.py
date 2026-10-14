@@ -173,7 +173,12 @@ def _demotion(schema, never_tiers) -> tuple[str, tuple]:
 # the dry run reported nothing unusual. `tools.test_airtable_slice` calls this
 # function, so the ordering is now covered by a case rather than by care.
 CANDIDATE_BASE = (
-    "prefilter_verdict='surface' "
+    # An application outranks the prefilter, added 2026-10-14. Two roles he
+    # applied to were killed by a rule and so could never reach the Applied
+    # view. Paired with the same exemption on the killed clause in
+    # `prune_query`, or the row is created and deleted on every run.
+    "(prefilter_verdict='surface' "
+    " OR COALESCE(applied_status, 'not_applied') <> 'not_applied') "
     "AND COALESCE(closed_by_me, 0) = 0 "
     # A closed posting keeps its row when he labelled it interested OR applied
     # to it. The applied half was added 2026-09-25: one of his applications
@@ -203,6 +208,12 @@ def candidate_query(schema, never_tiers, select: str = "*") -> tuple[str, tuple]
         order_params = (schema.feed_source_prefix + "%",)
     if getattr(schema, "sort_by_tier", False):
         order = "CASE WHEN COALESCE(tier, 0) = 0 THEN 9 ELSE tier END ASC, " + order
+    # Applications first, ahead of tier, added 2026-10-14. The exemptions in
+    # `_demotion` keep an applied row once it is in, but nothing got it in: at
+    # the cap, a tier 3 or 4 application queued behind hundreds of better-tiered
+    # strangers and 12 of them never reached the base. Ordering only picks which
+    # candidate fills a slot the prune already freed, so this evicts nothing.
+    order = "(COALESCE(applied_status, 'not_applied') = 'not_applied') ASC, " + order
     push = f" AND NOT {demote_clause}" if demote_clause else ""
     sql = f"SELECT {select} FROM postings WHERE {CANDIDATE_BASE}{push} ORDER BY {order}"
     return sql, demote_params + order_params
@@ -218,7 +229,8 @@ def prune_query(schema, never_tiers) -> tuple[str, tuple]:
     extra = f" OR {demote_clause}" if demote_clause else ""
     sql = (
         "SELECT hash FROM postings WHERE airtable_record_id IS NOT NULL "
-        "AND (prefilter_verdict = 'killed' "
+        "AND ((prefilter_verdict = 'killed' "
+        "      AND COALESCE(applied_status, 'not_applied') = 'not_applied') "
         "     OR COALESCE(closed_by_me, 0) = 1 "
         # Paired with the candidate clause above. Both halves gained the
         # applied exemption together on 2026-09-25; separating them deletes and

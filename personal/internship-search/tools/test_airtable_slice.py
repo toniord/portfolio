@@ -90,14 +90,6 @@ class FakeSchema:
         self.feed_source_prefix = "feed:"
 
 
-BASE = (
-    "prefilter_verdict='surface' AND COALESCE(closed_by_me, 0) = 0 "
-    "AND (closed_detected_at IS NULL OR COALESCE(label, '') = 'interested') "
-    "AND NOT (COALESCE(label, '') = 'not_interested' "
-    "         AND TRIM(COALESCE(label_reason, '')) <> '')"
-)
-
-
 def candidates(conn, schema, never_tiers=(4,)) -> set[str]:
     """Run the sync's OWN query, assembled by the sync's own code.
 
@@ -125,7 +117,7 @@ def demoted(conn, schema, never_tiers=(4,)) -> set[str]:
     return {
         r["hash"]
         for r in conn.execute(
-            f"SELECT hash FROM postings WHERE {BASE} AND {clause}", params
+            f"SELECT hash FROM postings WHERE {airtable_sync.CANDIDATE_BASE} AND {clause}", params
         )
     }
 
@@ -193,6 +185,34 @@ def test_prune_and_push_are_complements():
     check("every posting is accounted for", len(keep) + len(drop), n)
 
 
+def test_applications_get_a_slot():
+    """2026-10-14. 14 applications were missing from a full base.
+
+    Twelve queued behind better-tiered postings for slots that never came free,
+    and two were killed by the prefilter. An application must be the first
+    candidate for a free slot and must survive a kill, on both sides of the
+    rule 9 pairing.
+    """
+    conn = make_db()
+    add(conn, 1, age_days=1, tier=1)
+    add(conn, 2, age_days=5, tier=4, applied_status="applied")
+    add(conn, 3, age_days=1, tier=None, prefilter_verdict="killed",
+        applied_status="applied")
+    add(conn, 4, age_days=1, tier=1, prefilter_verdict="killed")
+    sql, params = airtable_sync.candidate_query(FakeSchema(), [4], "hash")
+    order = [r["hash"] for r in conn.execute(sql, params)]
+    check("applications fill free slots before anything else",
+          sorted(order[:2]), ["h2", "h3"])
+    check("a killed posting you applied to is a candidate", "h3" in order, True)
+    check("a killed posting you did not apply to is not", "h4" in order, False)
+    conn.execute("UPDATE postings SET airtable_record_id = 'rec' || id")
+    conn.commit()
+    sql, params = airtable_sync.prune_query(FakeSchema(), [4])
+    pruned = {r["hash"] for r in conn.execute(sql, params)}
+    check("the prune leaves a killed application alone", "h3" in pruned, False)
+    check("the prune still takes a killed non-application", "h4" in pruned, True)
+
+
 def test_switching_off():
     conn = make_db()
     add(conn, 1, age_days=900, tier=4)
@@ -215,6 +235,7 @@ def main() -> int:
         test_tier_and_age_evict,
         test_exemptions,
         test_prune_and_push_are_complements,
+        test_applications_get_a_slot,
         test_switching_off,
         test_real_schema_loads,
     ):
