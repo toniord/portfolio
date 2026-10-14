@@ -414,7 +414,13 @@ always_score_labelled = ["interested"]
 # while it holds, the daily digest carries unscored postings marked NOT YET
 # SCORED, which is the condition CLAUDE.md rule 10 sets for include_unscored
 # being off. Raise monthly_usd here to lift it; nothing else needs editing.
-monthly_usd = 10.0
+#
+# 20, raised from 10 on 2026-10-14 by the owner after ranking paused on 2026-10-13
+# at $10.02. Most of October's spend was not the schedule: $5.55 was manual
+# `tools.rank_report` runs against about $4.40 for scheduled runs. Measured
+# scheduled cost is $0.0055 to $0.008 a scored posting, and the 102 postings
+# waiting when it was raised were estimated at about $0.60 to clear.
+monthly_usd = 20.0
 warn_fraction = 0.8
 stop_fraction = 1.0
 
