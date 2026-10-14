@@ -669,6 +669,11 @@ def test_monthly_budget_pauses_ranking_without_stranding():
     check("and warns", money["warn"], True)
     check("no budget block never pauses", ranker.budget_state(conn, {})["paused"], False)
 
+    # `ranker.run` reads the live rubric, so spend past whatever ceiling it
+    # carries. The $6.50 above only cleared $10, and raising the budget to $20
+    # on 2026-10-14 turned this case into a false failure.
+    live = float((rubric.settings().get("budget") or {}).get("monthly_usd", 0) or 0)
+    db.record_run(conn, estimated_cost=live)
     add(conn, n=1, hash="u1", identity="u1", tier=None, title="Unscored Role")
     # No real call may happen even if this case is broken, so the key check is
     # forced off. A broken pause then reads as "skipped, no key" and fails here.
