@@ -158,12 +158,18 @@ prune_never_delivered_tiers = true
 # 14 rather than 7 because it keeps 114 more tier 3 rows at no cost while still
 # fitting, and because internships reward applying early: a posting he has
 # scrolled past for a fortnight is one he has decided about.
-max_row_age_days = 14
+#
+# 7, lowered from 14 on 2026-10-14 at the owner's request: "dont really care about
+# holding on to postings over a week old". The reasoning above still holds, and
+# a week is simply his shelf life. Applications and roles labelled interested
+# remain exempt through `_demotion`, which is not configured here.
+max_row_age_days = 7
 
-# Tiers that never age out. A tier 1 role open for two months is still the best
-# thing on the page. Written here rather than read from rubric.md because this
-# is a statement about shelf life, not about what a tier means.
-age_exempt_tiers = [1, 2]
+# Tiers that never age out. Emptied on 2026-10-14 with the change above, at his
+# request, so a week means a week for every tier; it was [1, 2]. Written here
+# rather than read from rubric.md because this is a statement about shelf life,
+# not about what a tier means.
+age_exempt_tiers = []
 
 # How a source key says it came from an aggregator rather than a company board.
 # Set by agent/sources.py Feed.source_key; named here so the rule stays data.
