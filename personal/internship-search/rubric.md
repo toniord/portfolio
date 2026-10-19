@@ -117,24 +117,30 @@ Score the role as described in the posting, not the company's reputation. A bran
 with a generic operations internship is a low fit score.
 
 **9 to 10.** The primary target, directly. Building AI agents or agentic systems as the actual
-work. Applied AI or ML engineering at a frontier lab, an AI-first startup, or a serious
-institution standing up an AI team. Forward deployed engineer roles anywhere, which value the
-economics plus technical profile and rarely require a CS degree.
+work. Agentic workflow and AI automation roles at any employer, where the job is wiring LLMs or
+agents into a real business process; titles like AI automation, workflow automation or AI
+operations engineer count when the posting describes that work. Applied AI or ML engineering at
+a frontier lab, an AI-first startup, or a serious institution standing up an AI team. Forward
+deployed engineer roles anywhere, which value the economics plus technical profile and rarely
+require a CS degree.
 
 **7 to 8.** Strongly adjacent. AI or ML research and product internships. Software engineering
 at an AI-first company. AI and agent teams inside finance employers, which is a real and
 growing category that the institutional investing plus AI combination fits unusually well; score
 these high, not low, despite the finance employer. Investment or platform roles at AI-focused
-venture and growth funds where the work is evaluating AI companies. Defense, aerospace, vehicle,
-autonomy and robotics roles where a physics and CubeSat background carries weight.
+venture and growth funds where the work is evaluating AI companies. Data science, data
+engineering, analytics engineering and data pipeline roles at any credible employer, with or
+without AI content, because building and modelling with data is work he has already done.
 
 **5 to 6.** Real technical or analytical work with a credible AI component but not at the
-center of it. General software engineering, data science, or data engineering at a strong
-technology or product employer with no AI content. Investment roles at generalist funds with
-some AI exposure.
+center of it. General software engineering at a strong technology or product employer with no
+AI content. Data analyst roles where the work is analysis in Python, R or SQL. Investment roles
+at generalist funds with some AI exposure.
 
-**3 to 4.** Technical or quantitative work with no AI component at all. Traditional finance,
-banking, and consulting. General data analysis and reporting.
+**3 to 4.** Technical or quantitative work with no AI or data component. Hardware, embedded,
+controls, mechanical, electrical and manufacturing engineering, in any industry. Traditional
+finance, banking, and consulting. Reporting and dashboard upkeep where the data work is
+incidental.
 
 **1 to 2.** General business, marketing, sales, operations, HR, communications, recruiting.
 Anything requiring a PhD or a publication record. Anything where none of his background is
@@ -150,25 +156,25 @@ through this in order and stop at the first line that matches.
 1. Does the posting describe any AI or ML content, on any team, at any depth? If yes, this
    section does not apply at all. Score it on the bands above, where the AI and finance overlap
    is explicitly 7 to 8.
-2. Is the work vehicles, autonomy, robotics, defense, aerospace or space? Score 7 to 8.
-   Embedded, controls, mechanical, manufacturing, electrical and hardware engineering all
-   count. This is the domain he named and where the physics and CubeSat background lands.
-3. Is the employer a trading firm, a proprietary trading shop, a bank, an asset manager or a
+2. Is the work data science, data engineering, analytics engineering or building data
+   pipelines? Score 7 to 8, at any employer and in any industry. This is the second thing he
+   named and where the a nonprofit work and econometrics land.
+3. Is the work hardware, embedded, controls, mechanical, electrical, manufacturing or other
+   physical systems engineering? Score 3 to 4, in any industry. Vehicle, robotics, defense,
+   aerospace and space employers get no lift; none of these is a domain he wants.
+4. Is the employer a trading firm, a proprietary trading shop, a bank, an asset manager or a
    finance corporation? Score 3 to 4. Employer prestige does not lift it, and a well-known
    name is not a reason to move up.
-4. Anything else. Score on the bands above, which for solid engineering at a strong technology
-   or product employer means 5 to 6.
+5. Anything else. Score on the bands above, which for solid software engineering at a strong
+   technology or product employer means 5 to 6.
 
-At the vehicle and autonomy employers added on 2026-09-25 (the `vehicles-autonomy` category in
-`sources/companies.toml`), score the work exactly as above. The agent then holds any role there
-whose title names no AI or ML work to tier 2 at best, by the `[[tier_cap]]` rule below, so do
-not adjust the score to anticipate it. The same holds for robotics: he has no robotics
-experience, so a role with robotics in its title, and any non-AI role at a robotics employer, is
-held to tier 2 by the agent. Score those on the work as usual.
+The agent also holds some roles to tier 2 at best by the `[[tier_cap]]` rules below: non-AI
+roles at vehicle and robotics employers, and any role with robotics in its title. Do not adjust
+the score to anticipate a cap. Score the work as usual.
 
-When an employer spans both, the work decides and the employer never does. A robotics or
-autonomy team inside a bank is step 2. A trading firm's own settlement and accounting
-infrastructure is step 3, whatever else the firm builds.
+When an employer spans both, the work decides and the employer never does. A data engineering
+team inside a defense contractor is step 2. A trading firm's own settlement and accounting
+infrastructure is step 4, whatever else the firm builds.
 
 Two things that are never fit penalties. Timing, which is already handled by the prefilter and
 carried to him as a flag, so a winter or off-cycle role is scored on its work like any other.
@@ -220,7 +226,7 @@ and the absence of a statement is not evidence of anything.
 - If the title leaves the work open, as "Special Projects Developer Intern" or "Engineering
   Intern" does, score the middle of the range the employer makes plausible, not the bottom. In
   the engineering steps above, step 1 cannot be answered without text, so do not continue to
-  step 3: a finance employer with an open title is 5, not 3 to 4.
+  steps 3 or 4: a finance employer with an open title is 5, not 3 to 4.
 - Score reach 5 or 6 unless the title itself states a blocker, such as PhD, senior, or a
   graduation year that excludes him.
 - Begin the reason with "No description:" so he can see which scores were made blind. Then name
@@ -309,9 +315,16 @@ flag_at_or_below = 4
 
 [[tier_cap]]
 # Added 2026-09-25 at the owner's instruction: at vehicle and autonomy employers,
-# top tier is for AI only. Step 2 of the engineering section scores non-AI
-# vehicle engineering 7 to 8, which reaches tier 1 at 8; this holds those roles
-# to best_tier instead, while an AI or ML role there is judged like any other.
+# top tier is for AI only. When it was added, step 2 of the engineering section
+# scored non-AI vehicle engineering 7 to 8, which reached tier 1 at 8; this
+# holds those roles to best_tier instead, while an AI or ML role there is judged
+# like any other.
+#
+# Kept on 2026-10-19 when the owner removed the vehicle, robotics, defense and
+# aerospace domain preference entirely. That change scores non-AI engineering
+# there 3 to 4, so this cap and the two robotics caps below rarely bind now.
+# They stay as a backstop against the model drifting back up, and they cost
+# nothing when they do not fire.
 #
 # Deterministic on purpose, and applied after the model answers, so the model's
 # own score is still stored unchanged and the cap is visible as the only reason

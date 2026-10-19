@@ -278,6 +278,13 @@ kill_title = [
 #
 # If this ever needs reversing, empty kill_title rather than deleting the
 # section, so the reasoning above survives the reversal.
+#
+# Narrowed 2026-10-19 at the owner's instruction. He dropped the vehicle, autonomy,
+# robotics, defense and aerospace domain preference (no real interest, thin
+# background), so the aerospace, vehicle and hardware rescue groups came out:
+# "Software Engineer Intern - Avionics", "- Chassis Control" and "Embedded
+# Software Engineer Intern" now die here like any generalist title. Data and
+# agentic workflow words went in instead, the two areas he now puts first.
 [generalist_software]
 
 kill_title = [
@@ -296,18 +303,17 @@ keep_title = [
     # Forward deployed and solutions work.
     "forward deployed", "solutions engineer", "applied ai",
     # Quantitative work, where the economics half of the degree counts.
-    "quant", "trading", "algorithmic", "data scien",
-    # Aerospace and space, where the CubeSat project counts.
-    "aerospace", "spacecraft", "satellite", "avionics", "flight", "orbital",
-    "propulsion", "gnc", "guidance", "navigation",
-    # Vehicles, autonomy and robotics, a stated domain interest.
-    "autonomy", "autonomous", "self-driving", "robotics", "perception",
-    "motion planning", "maneuver", "vehicle", "chassis", "powertrain",
-    "controls",
-    # Close to hardware, where a physics degree is an advantage rather than a
-    # handicap. "embedded" and "firmware" are the two that rescue the most.
-    "embedded", "firmware", "hardware", "fpga", "silicon", "physics",
-    "simulation", "computational",
+    "quant", "trading", "algorithmic", "physics", "computational",
+    # Data, added 2026-10-19. Substring match, so "data" also covers "data
+    # scien", "data platform" and "database".
+    "data", "analytics",
+    # Agents and agentic workflows, added 2026-10-19. "agent" covers "agentic".
+    "agent", "workflow", "ai automation", "genai", "generative", "inference",
+    # A bare "ai" would match inside "maintain" and "chain", since this list is
+    # substring matched, so it only counts with a space on both sides or after
+    # "and". These rescue "System and AI" and "AI Inference" titles that only
+    # survived on "silicon" until 2026-10-19.
+    " ai ", "and ai",
 ]
 
 # --------------------------------------------------------- employer exclusions
