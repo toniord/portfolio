@@ -1,0 +1,31 @@
+sku,branch,supplier,portal_item_status,replacement_sku,portal_quoted_lead_time_days,last_receipt_date,last_3_receipts_to_this_branch,po_to_receipt_days_last_3,unit_cost_on_portal
+ELE-10502,JOL,Prairie State Electrical Supply,Active,,10,2025-02-20,2025-02-20 x10; 2024-09-14 x12; 2024-02-13 x12,"9, 11, 11",23.51
+LUB-10039,JOL,Maumee Chemical Products,Active,,7,2026-08-28,2026-08-28 x11; 2026-06-17 x10; 2026-04-20 x13,"6, 8, 6",40.66
+SAF-10233,JOL,Guardwell PPE,Active,,10,2026-09-20,2026-09-20 x11; 2026-07-23 x11; 2026-06-02 x10,"11, 9, 9",41.00
+BRG-10009,FTW,Great Lakes Bearing,Active,,14,2026-10-06,2026-10-06 x8; 2026-06-06 x10; 2026-01-24 x9,"14, 13, 15",40.61
+CUT-10558,JOL,Fox Valley Carbide,Active,,14,2026-09-28,2026-09-28 x7; 2026-05-10 x8; 2026-01-15 x8,"13, 16, 14",36.44
+PLM-10015,JOL,Illini Pipe & Valve,Active,,7,2026-09-08,2026-09-08 x2; 2026-05-04 x2; 2025-11-15 x2,"7, 8, 6",68.00
+MTR-10011,JOL,Buckeye Motor & Drive,Active,,45,2026-09-06,2026-09-06 x6; 2026-06-02 x6; 2026-02-21 x5,"42, 38, 49",210.00
+FAS-10007,JOL,Sheldon Fastener Co.,"Discontinued, last buy 2026-06-07",,10,2026-05-12,2026-05-12 x7; 2025-12-31 x6; 2025-07-11 x7,"10, 11, 10",15.05
+FLT-10211,JOL,Pioneer Filter Co.,Active,,10,2026-09-02,2026-09-02 x4; 2026-01-27 x4; 2025-07-31 x3,"9, 9, 9",43.03
+PLM-10091,JOL,Cedar Point Fittings,Active,,10,2026-10-09,2026-10-09 x3; 2026-04-29 x3; 2025-12-20 x3,"9, 10, 10",11.85
+PLM-10011,JOL,Illini Pipe & Valve,Active,,7,2026-10-03,2026-10-03 x67; 2026-07-24 x62; 2026-04-26 x60,"7, 7, 6",6.10
+CUT-10052,JOL,Wabash Cutting Tool,Active,,30,2026-09-03,2026-09-03 x27; 2026-05-15 x25; 2026-02-22 x32,"29, 29, 33",21.00
+CUT-10322,JOL,Fox Valley Carbide,Active,,14,2026-09-26,2026-09-26 x11; 2026-07-24 x12; 2026-06-06 x11,"17, 14, 14",12.35
+ABR-10032,JOL,Calumet Abrasives,Active,,10,2026-09-05,2026-09-05 x43; 2026-06-21 x45; 2026-03-28 x44,"11, 9, 10",20.38
+CUT-10043,JOL,Fox Valley Carbide,"Discontinued, last buy 2026-01-17",,14,2025-12-26,2025-12-26 x11; 2025-09-12 x14; 2025-06-18 x13,"16, 12, 12",75.20
+LUB-10506,FTW,Pine Bend Lubricants,Active,,7,2026-10-08,2026-10-08 x2; 2026-03-16 x2; 2025-09-02 x2,"8, 6, 8",32.71
+ADH-10009,JOL,Granite Adhesives,Active,,7,2026-09-17,2026-09-17 x4; 2026-05-03 x4; 2025-11-16 x4,"8, 6, 8",44.00
+PLM-10011,RKF,Illini Pipe & Valve,Active,,7,2026-10-09,2026-10-09 x29; 2026-08-07 x33; 2026-05-26 x33,"7, 7, 7",6.10
+SAF-10024,JOL,Meridian Hand Protection,Active,,7,2026-09-18,2026-09-18 x23; 2026-06-02 x25; 2026-02-22 x30,"7, 7, 7",72.88
+SAF-10186,FTW,Tri-State Safety Products,Active,,5,2026-09-07,2026-09-07 x25; 2026-05-22 x27; 2026-01-13 x29,"5, 6, 6",89.76
+ADH-10273,JOL,Granite Adhesives,Active,,7,2026-10-09,2026-10-09 x5; 2026-07-04 x5; 2026-04-04 x4,"8, 8, 6",13.16
+WLD-10011,FTW,Heartland Welding Supply,Active,,7,2026-09-11,2026-09-11 x61; 2026-06-17 x66; 2026-03-17 x61,"6, 7, 8",20.53
+FAS-10579,JOL,Cedar Point Fastener Supply,Active,,10,2026-09-10,2026-09-10 x5; 2026-06-29 x5; 2026-04-11 x5,"9, 9, 11",34.99
+SAF-10050,JOL,Meridian Hand Protection,Active,,7,2026-10-04,2026-10-04 x15; 2026-07-13 x11; 2026-04-11 x12,"7, 7, 6",71.84
+HYD-10147,JOL,Pine Bend Hydraulics,Active,,14,2026-09-16,2026-09-16 x11; 2026-05-19 x9; 2026-01-25 x11,"12, 13, 13",27.22
+SAF-10469,FTW,Tri-State Safety Products,Active,,5,2026-10-07,2026-10-07 x8; 2026-07-16 x7; 2026-05-06 x7,"5, 5, 5",7.83
+SAF-10389,JOL,Driftless Protective Equipment Co.,Active,,10,2025-07-26,2025-07-26 x6; 2024-12-29 x5; 2024-08-01 x6,"12, 11, 9",81.96
+PLM-10534,JOL,Cedar Point Fittings,Active,,10,2026-10-02,2026-10-02 x4; 2026-07-20 x4; 2026-05-15 x4,"10, 10, 9",22.78
+LTG-10011,JOL,Frontier Lighting Supply,"Discontinued, last buy 2026-10-09",LTG-10017,14,2026-09-04,2026-09-04 x8; 2026-05-15 x8; 2026-01-08 x7,"15, 16, 14",52.00
+FAS-10198,JOL,Prairie Bolt & Nut,Active,,7,2026-09-16,2026-09-16 x14; 2026-07-20 x16; 2026-06-04 x16,"8, 7, 6",27.65

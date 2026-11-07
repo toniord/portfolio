@@ -1,0 +1,105 @@
+CUSTOMER STOCKING COMMITMENTS, EXCERPTS
+Excerpts pulled by Ron Spiller (VP Sales) for Kevin Doyle, October 2026. The clause and the schedule are copied as signed. The full agreements are in the Sales contract folder. R.S.
+
+=====================================================================
+1. MIDVALE CASTINGS LLC
+Master Supply Agreement dated March 1, 2025, between Midvale Castings LLC, an Indiana limited liability company ("Buyer"), and Brickyard Industrial Supply, Inc., an Illinois corporation ("Supplier"). Term: thirty-six (36) months, renewing annually thereafter unless terminated on ninety (90) days' notice.
+
+SECTION 6. STOCKED ITEMS.
+
+6.1 Stocking Commitment. Supplier shall maintain at its Fort Wayne, Indiana branch, at all times during the Term, physical inventory of each item listed in Schedule 6-A (the "Stocked Items") in a quantity not less than the Minimum On-Hand Quantity set out for that item in Schedule 6-A. Inventory on order, in transit or held at any other Supplier location shall not count toward the Minimum On-Hand Quantity.
+
+6.2 Delivery. Supplier shall deliver any Stocked Item ordered by Buyer before 2:00 p.m. local time on a business day to Buyer's Fort Wayne facility no later than the end of that business day, at no charge for freight.
+
+6.3 Shortfall. If Supplier is unable to deliver a Stocked Item in accordance with Section 6.2, Buyer may procure a substitute item from any source and Supplier shall reimburse Buyer for the difference between the price paid and the Agreement price, plus fifteen percent (15%) of that difference as an administrative charge, together with any expedited freight incurred by Buyer. Two (2) shortfalls in any calendar quarter shall constitute a material breach of this Agreement.
+
+6.4 Substitution. Supplier shall not substitute another item for a Stocked Item without Buyer's prior written approval, which Buyer may withhold in its sole discretion.
+
+6.5 Schedule Changes. Buyer may add items to or remove items from Schedule 6-A on thirty (30) days' written notice. Supplier may request a change to a Minimum On-Hand Quantity, which Buyer will consider in good faith.
+
+SCHEDULE 6-A. STOCKED ITEMS (Fort Wayne branch)
+Item No.    Description                                                 Minimum On-Hand Quantity
+WLD-10011   MIG WIRE ER70S-6 .035 44LB SPOOL                                                  20
+WLD-10015   MIG WIRE ER70S-6 .045 44LB SPOOL                                                  12
+WLD-10026   CONTACT TIP .035 TWECO STYLE 25/PK                                                10
+WLD-10030   MIG NOZZLE 5/8 TWECO STYLE 10/PK                                                   6
+SAF-10186   RESPIRATOR CARTRIDGE P100 PAIR                                                    36
+SAF-10190   FACE SHIELD CLEAR 9X15-1/2 POLYCARB                                               12
+SAF-10198   FOUNDRY GLOVE 18IN ALUMINIZED L 6PR/CS                                             4
+ABR-10008   FLAP DISC 7 X 7/8 60 GRIT ZIRC T29 10/BX                                          10
+ABR-10016   CUTOFF WHEEL 14 X 3/32 X 1 25/BX                                                   6
+ABR-10025   GRINDING WHEEL 7 X 1/4 X 5/8-11 T27 10/BX                                          8
+BRG-10009   PILLOW BLOCK 1-7/16 IN SET SCREW CAST                                              8
+PTR-10011   V-BELT B68                                                                        12
+FLT-10011   HYD FILTER ELEMENT 10 MICRON KF-410 GLASS                                          6
+SAF-10205   SAFETY GLASSES WRAP CLEAR AF                                                      48
+
+Signed for Midvale Castings LLC: T. Brandau, Plant Manager. Signed for Brickyard Industrial Supply, Inc.: R. Spiller, Vice President, Sales.
+
+=====================================================================
+2. STARR RIDGE PACKAGING, INC.
+Supply and Services Agreement dated August 18, 2025, between Starr Ridge Packaging, Inc., an Illinois corporation ("Customer"), and Brickyard Industrial Supply, Inc. ("Distributor"). Term: twenty-four (24) months.
+
+ARTICLE 9. CONSIGNMENT-FREE STOCKING PROGRAM.
+
+9.1 Distributor agrees to hold, at its Rockford, Illinois branch, a dedicated minimum quantity of each product identified in Exhibit C (each a "Program Item") for Customer's exclusive call-off. The minimum quantity for each Program Item (the "Minimum On-Hand Quantity") is stated in Exhibit C. Distributor's obligation under this Article 9 is continuous and applies on every day of the Term, including Distributor's annual inventory count.
+
+9.2 Distributor shall make Program Items available for Customer pick-up at the Rockford branch within two (2) hours of Customer's request during Distributor's business hours, and shall deliver Program Items to Customer's Rockford plant within four (4) hours of a request made outside those hours, at Distributor's expense.
+
+9.3 Where a Program Item is on hand in a quantity below its Minimum On-Hand Quantity for more than one (1) business day, Distributor shall notify Customer's Plant Manager in writing on the same day and shall, at Customer's election, either expedite replenishment at Distributor's cost or credit Customer an amount equal to five percent (5%) of the preceding month's purchases of that Program Item.
+
+9.4 Distributor shall not discontinue, substitute or re-source a Program Item without sixty (60) days' prior written notice to Customer and Customer's written consent to the substitute.
+
+9.5 Program Items are priced per Exhibit B and are not subject to Distributor's general price increases during the Term except as provided in Section 5.3.
+
+EXHIBIT C. PROGRAM ITEMS AND MINIMUM ON-HAND QUANTITIES (Rockford branch)
+Item No.    Description                                                 Minimum On-Hand Quantity
+MHD-10011   STRETCH WRAP 18IN 80GA 1500FT 4/CS                                                40
+MHD-10015   STRAPPING POLY 1/2 X 9000FT .025                                                  10
+MHD-10024   STRAPPING SEAL 1/2 OPEN 1000/CS                                                    4
+HTL-10012   UTILITY KNIFE BLADES HD 100/PK                                                    24
+CUT-10012   SLOTTER KNIFE 6IN CORRUGATOR HSS 6/PK                                              4
+BRG-10017   BALL BEARING 6205-2RS                                                             24
+PTR-10015   V-BELT A48                                                                        16
+PTR-10023   ROLLER CHAIN #50 10FT STD                                                          6
+FLT-10018   AIR FILTER PLEATED 20X20X2 MERV 8 12/CS                                            6
+SAF-10210   EARPLUG FOAM UNCORDED 32DB 200PR/BX                                               10
+SAF-10221   CUT RESISTANT GLOVE A4 L PU PALM 12PR/CS                                           8
+JAN-10012   ABSORBENT PAD 15X19 UNIVERSAL 100/BALE                                             6
+MHD-10033   SHIPPING TAPE 2IN X 110YD 2.0MIL CLEAR 36/CS                                      12
+
+Signed for Starr Ridge Packaging, Inc.: A. Ruiz, Plant Manager. Signed for Brickyard Industrial Supply, Inc.: R. Spiller, Vice President, Sales.
+
+=====================================================================
+3. LOCKPORT PRECISION COMPONENTS
+Integrated Supply Agreement dated November 3, 2025, between Lockport Precision Components, LLC ("LPC") and Brickyard Industrial Supply, Inc. ("BIS"). Term: thirty-six (36) months.
+
+SECTION 4. CRITICAL SPARES AND CONSUMABLES.
+
+4.1 Designation. The items listed in Appendix 4.1 are designated Critical Items. BIS acknowledges that LPC's production depends on the uninterrupted availability of the Critical Items and that LPC has entered into this Agreement in reliance on the stocking commitment in this Section 4.
+
+4.2 Stocking Level. BIS shall keep in stock at its Joliet, Illinois distribution center, at all times during the Term, not less than the quantity shown for each Critical Item in Appendix 4.1 (the "Minimum On-Hand Quantity"). BIS shall replenish each Critical Item upon any withdrawal so that the quantity on hand does not remain below the Minimum On-Hand Quantity for longer than two (2) business days.
+
+4.3 Same-Day Service. BIS shall deliver Critical Items to LPC's Lockport facility within four (4) hours of LPC's request, twenty-four hours a day, seven days a week, at no additional charge.
+
+4.4 Remedies. In the event of a failure under Section 4.2 or 4.3, LPC may, in addition to any other remedy, (a) charge BIS for documented production downtime at LPC's standard rate of $2,400 per hour, up to a maximum of $24,000 per occurrence, and (b) after the second such failure in any twelve (12) month period, terminate this Agreement on thirty (30) days' notice without liability.
+
+4.5 Reporting. BIS shall provide LPC, on the first business day of each month, a report of on-hand quantities of each Critical Item as of the last day of the preceding month, certified by BIS's Purchasing Manager.
+
+APPENDIX 4.1. CRITICAL ITEMS (Joliet distribution center)
+Item No.    Description                                                 Minimum On-Hand Quantity
+CUT-10015   END MILL 1/2 4FL CARBIDE ALTIN                                                    12
+CUT-10023   END MILL 3/8 4FL CARBIDE ALTIN                                                    12
+CUT-10029   JOBBER DRILL 1/4 HSS COBALT 12/PK                                                  6
+CUT-10039   TAP 1/4-20 SPIRAL POINT HSS                                                       10
+CUT-10043   CARBIDE INSERT CNMG 432 FV-2200 10/BX                                              8
+LUB-10009   CUTTING FLUID SEMI-SYNTHETIC 5GAL PAIL                                            24
+LUB-10018   COOLANT CONCENTRATE 55GAL DRUM                                                     2
+FLT-10024   HYD FILTER ELEMENT 10 MICRON KF-320 GLASS                                          4
+SAF-10228   SAFETY GLASSES OTG CLEAR AF                                                       24
+JAN-10018   SHOP TOWEL ROLL BLUE 9.4X11 200/RL 12/CS                                          10
+LUB-10021   PARTS WASHER SOLVENT 5GAL PAIL 140 FLASH                                           6
+LUB-10029   WAY OIL ISO 68 5GAL PAIL                                                           8
+BRG-10024   SPINDLE BEARING 7207 P4 ANGULAR CONTACT                                            2
+
+Signed for Lockport Precision Components, LLC: G. Halvorsen, Plant Manager. Signed for Brickyard Industrial Supply, Inc.: R. Spiller, Vice President, Sales.

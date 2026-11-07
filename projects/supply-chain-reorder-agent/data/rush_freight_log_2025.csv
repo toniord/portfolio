@@ -1,0 +1,411 @@
+date,branch,sku,description,supplier,qty,rush_freight_cost,carrier,customer_called,approved_by,note
+2025-01-01,FTW,WLD-10026,CONTACT TIP .035 TWECO STYLE 25/PK,Heartland Welding Supply,8,288.60,UPS 2nd Day,Midvale Castings LLC,DA,second rush this month
+2025-01-01,JOL,SAF-10641,SAFETY GLASSES HALF FRAME BLUE MIRROR AF,Tri-State Safety Products,3,340.12,courier,Summit Ridge Lumber,PS,customer called branch
+2025-01-02,RKF,MHD-10011,STRETCH WRAP 18IN 80GA 1500FT 4/CS,Timberline Packaging,39,317.32,FedEx Priority,"Starr Ridge Packaging, Inc.",,next-day air
+2025-01-04,RKF,ELE-10462,CONTACTOR 3P 65A 120V COIL NEMA SIZE 2,Granite Electric Co.,5,564.46,UPS Next Day,Hoosier Pallet Works,DA,"ERP said in stock, was not"
+2025-01-04,FTW,PLM-11030,PVC FITTING SCH40 1 COUPLING,Mississippi Valley Fittings,7,151.17,LTL hot shot,Summit Ridge Lumber,DA,plant down
+2025-01-05,RKF,LTG-10383,LED HIGH BAY 100W 4000K 347-480V,Heartland Lighting Co.,1,215.58,UPS 2nd Day,Summit Ridge Lumber,PS,overnight to plant
+2025-01-05,JOL,HTL-10392,COMBINATION WRENCH 19MM 12PT,Ironclad Tool Co.,2,550.54,UPS 2nd Day,Harbor Steel Processing,MK,will-call Saturday
+2025-01-07,JOL,LUB-10061,WAY OIL ISO 220 1GAL 4/CS,Pine Bend Lubricants,2,121.04,FedEx Priority,Grand Valley Extrusion,DA,
+2025-01-07,JOL,FAS-10845,LOCK WASHER 3/8 GR5 PLAIN 50/BX,Sheldon Fastener Co.,3,401.06,UPS Next Day,Calumet Precision Machining,PS,
+2025-01-07,JOL,SAF-10641,SAFETY GLASSES HALF FRAME BLUE MIRROR AF,Tri-State Safety Products,2,204.15,LTL hot shot,Summit Ridge Lumber,DA,will-call Saturday
+2025-01-08,RKF,CUT-11027,JOBBER DRILL 13/16 HSS TIN 12/PK,Wabash Cutting Tool,9,484.35,FedEx Priority,Illini Rendering,,
+2025-01-09,FTW,FAS-10148,NYLOCK NUT 1/2 GR8 PLAIN 100/BX,Sheldon Fastener Co.,2,199.37,FedEx Standard Overnight,,PS,courier same day
+2025-01-10,RKF,LTG-10470,LAMP T8 LED 4FT 12W 4000K TYPE A/B 25/CS,Heartland Lighting Co.,1,372.09,courier,Hoosier Pallet Works,DA,LTL hot shot
+2025-01-10,FTW,ADH-10180,THREADLOCKER BLUE 242 50ML,Pioneer Tape & Label,2,238.07,courier,,PS,customer threatened to source elsewhere
+2025-01-11,JOL,CUT-10355,TAP 5/16-18 SPIRAL POINT HSS,Wabash Cutting Tool,1,224.90,UPS 2nd Day,Rock River Foundry,PS,called Kevin direct
+2025-01-11,JOL,ADH-10161,RTV SILICONE BLACK 10.1OZ 12/CS,Pine Bend Adhesives Inc.,1,829.79,courier,Illini Rendering,DA,next-day air
+2025-01-11,FTW,LTG-10350,EXIT SIGN LED RED AC ONLY BLACK,Frontier Lighting Supply,1,639.24,FedEx Standard Overnight,North Shore Bottling,PS,"PO sat open, supplier backlog"
+2025-01-12,JOL,CUT-10015,END MILL 1/2 4FL CARBIDE ALTIN,Fox Valley Carbide,7,462.50,LTL hot shot,Lockport Precision Components,PS,overnight to plant
+2025-01-12,FTW,FAS-10640,FLAT WASHER M10 GR5 PLAIN 100/BX,North Shore Fastener,2,151.72,UPS 2nd Day,Calumet Precision Machining,,customer called branch
+2025-01-16,JOL,CUT-10319,JOBBER DRILL 7/16 HSS COBALT 12/PK,Wabash Cutting Tool,2,197.00,UPS 2nd Day,,DA,
+2025-01-16,JOL,LUB-10253,HYD OIL AW32 5GAL PAIL,Pine Bend Lubricants,1,325.75,FedEx Standard Overnight,Driftless Creamery,PS,branch mgr aware
+2025-01-17,JOL,CUT-10264,CARBIDE INSERT DNMG 432 FV-2200 10/BX,Fox Valley Carbide,7,781.32,courier,,PS,"ERP said in stock, was not"
+2025-01-18,FTW,FAS-11053,SET SCREW 7/16-14 X 2 18-8 SS 25/BX,Sheldon Fastener Co.,1,467.14,FedEx Standard Overnight,Calumet Precision Machining,PS,branch mgr aware
+2025-01-19,JOL,LUB-10115,CONTACT CLEANER PLASTIC SAFE 11OZ AEROSOL 12/CS,Pine Bend Lubricants,1,198.07,FedEx Priority,,DA,"PO sat open, supplier backlog"
+2025-01-19,RKF,FAS-11164,LOCK WASHER M6 GR8 YELLOW ZINC 50/BX,Ironclad Fastener Supply,4,288.03,UPS 2nd Day,Hoosier Pallet Works,PS,plant down
+2025-01-21,FTW,ELE-10957,CONTACTOR 3P 9A 120V COIL NEMA SIZE 1,Granite Electric Co.,3,565.98,FedEx Standard Overnight,,PS,receipt late
+2025-01-22,JOL,ABR-10169,FLAP DISC 6 X 5/8-11 120 GRIT AO T29 10/BX,Rock River Abrasive Products,8,248.56,FedEx Standard Overnight,,MK,second rush this month
+2025-01-22,JOL,LUB-10073,COOLANT CONCENTRATE 55GAL DRUM GREEN,Maumee Chemical Products,2,386.52,UPS 2nd Day,,DA,called Kevin direct
+2025-01-22,FTW,FAS-11862,CARRIAGE BOLT 5/16-18 X 3-1/2 GR8 YELLOW ZINC 100/BX,Ironclad Fastener Supply,8,682.00,FedEx Priority,Harbor Steel Processing,CD,overnight to plant
+2025-01-22,JOL,ABR-10500,SANDING BELT 2X48 120G AO 10/PK,Rock River Abrasive Products,3,932.81,UPS 2nd Day,Harbor Steel Processing,,branch mgr aware
+2025-01-22,JOL,CUT-10627,TAP 3/4-10 SPIRAL FLUTE HSS,Wabash Cutting Tool,2,573.87,courier,,PS,"ERP said in stock, was not"
+2025-01-23,FTW,JAN-10107,TOILET TISSUE JUMBO 12IN 80/CS,Cedar Point Janitorial Supply,4,319.72,FedEx Standard Overnight,Mill Creek Paper Products,,
+2025-01-23,JOL,FLT-10821,COMPRESSOR AIR INTAKE FILTER K-512,Pioneer Filter Co.,1,340.11,FedEx Priority,Des Plaines Die Casting,,called Kevin direct
+2025-01-24,JOL,SAF-10768,HI-VIS VEST CLASS 2 M ORANGE,Meridian Hand Protection,1,246.41,courier,,PS,
+2025-01-25,JOL,LUB-10346,GEAR OIL ISO 150 55GAL DRUM,Maumee Chemical Products,1,301.09,UPS 2nd Day,Driftless Creamery,DA,"ERP said in stock, was not"
+2025-01-25,JOL,PTR-10065,V-BELT B36,Driftless Power Transmission,1,424.33,FedEx Standard Overnight,Silver Lake Printing,DA,receipt late
+2025-01-26,JOL,HYD-10285,HYD HOSE 1 2-WIRE 100R2 250FT,Kettle Moraine Hydraulics,1,870.28,LTL hot shot,Pioneer Tube & Pipe,PS,will-call Saturday
+2025-01-26,JOL,MHD-10289,STRETCH WRAP 20IN 90GA 2000FT 4/CS,Timberline Packaging,2,291.42,LTL hot shot,Driftless Creamery,PS,customer threatened to source elsewhere
+2025-01-26,FTW,ELE-11145,TERMINAL BLOCK DIN 14 AWG GRAY 50/BX,Timberline Electrical Supply,1,271.34,FedEx Priority,,PS,plant down
+2025-01-28,FTW,HYD-10074,HYD HOSE 1/2 1-WIRE 100R1 50FT,Blue Ridge Hose & Fitting,4,183.23,courier,Pioneer Tube & Pipe,DA,called Kevin direct
+2025-01-28,JOL,ADH-10161,RTV SILICONE BLACK 10.1OZ 12/CS,Pine Bend Adhesives Inc.,1,330.89,courier,Illini Rendering,PS,
+2025-02-01,RKF,CUT-10837,END MILL 1/2 4FL CARBIDE UNCOATED,Wabash Cutting Tool,3,347.46,LTL hot shot,Wabash Valley Conveyor,PS,customer called branch
+2025-02-02,JOL,PLM-10158,BALL VALVE 1-1/4 IN NPT BRASS FULL PORT,Cedar Point Fittings,1,609.22,FedEx Priority,,DA,called Kevin direct
+2025-02-03,FTW,BRG-10196,FLANGE BEARING 4-BOLT 1 IN,Great Lakes Bearing,3,237.21,UPS 2nd Day,,DA,second rush this month
+2025-02-04,FTW,ABR-10877,QUICK CHANGE DISC 3 IN S-TYPE 36G AO 50/BX,Calumet Abrasives,6,1825.54,courier,Three Rivers Plastics,PS,branch mgr aware
+2025-02-05,JOL,ABR-10561,SANDING DISC 8 IN PSA 180G 100/BX,Calumet Abrasives,5,916.94,FedEx Standard Overnight,Des Plaines Die Casting,PS,
+2025-02-05,JOL,MTR-10154,MOTOR 5HP 1750RPM 143T TEFC 115/230V,Buckeye Motor & Drive,1,356.82,UPS 2nd Day,,DA,receipt late
+2025-02-05,FTW,CUT-10892,JOBBER DRILL 11/16 HSS COBALT 12/PK,Wabash Cutting Tool,2,309.25,LTL hot shot,Driftless Creamery,DA,called Kevin direct
+2025-02-05,JOL,FLT-10301,HYD FILTER ELEMENT 10 MICRON KF-310 GLASS,Keystone Filtration,2,715.14,courier,Silver Lake Printing,DA,next-day air
+2025-02-05,FTW,ABR-10849,GRINDING WHEEL 5 X 1/8 X 5/8-11 T27 AO 10/BX,Hoosier Abrasives Inc.,3,271.86,FedEx Priority,,PS,customer threatened to source elsewhere
+2025-02-06,JOL,HTL-10085,PLIERS SLIP JOINT 10IN,Stonegate Hand Tools,2,191.26,courier,Driftless Creamery,PS,LTL hot shot
+2025-02-06,JOL,JAN-10488,TOILET TISSUE 2-PLY 500SHT 80/CS,Cedar Point Janitorial Supply,2,972.22,UPS 2nd Day,North Shore Bottling,DA,next-day air
+2025-02-08,JOL,LTG-10050,LAMP T8 LED 4FT 15W 5000K TYPE A 10/CS,Frontier Lighting Supply,1,543.15,courier,Harbor Steel Processing,PS,next-day air
+2025-02-08,FTW,ADH-10432,MASKING TAPE 3/4IN X 60YD BLUE 12/CS,Granite Adhesives,1,315.16,UPS Next Day,Rock River Foundry,PS,
+2025-02-09,FTW,CUT-10674,END MILL 3/8 2FL CARBIDE ALTIN,Fox Valley Carbide,1,621.97,UPS 2nd Day,,PS,will-call Saturday
+2025-02-10,JOL,ADH-10201,MASKING TAPE 2IN X 60YD BLUE 36/CS,Granite Adhesives,4,1117.21,UPS 2nd Day,Driftless Creamery,DA,receipt late
+2025-02-11,JOL,FAS-10928,HEX CAP SCREW 3/4-10 X 3 GR5 PLAIN 100/BX,Cedar Point Fastener Supply,4,158.46,LTL hot shot,Driftless Creamery,DA,second rush this month
+2025-02-12,JOL,LUB-10128,COOLANT CONCENTRATE 55GAL DRUM LOW FOAM,Pine Bend Lubricants,2,703.41,FedEx Standard Overnight,Grand Valley Extrusion,DA,courier same day
+2025-02-13,JOL,PTR-10039,SPROCKET #60 12T 5/8 BORE,Summit Bearing & Drive,2,697.54,UPS Next Day,Calumet Precision Machining,DA,next-day air
+2025-02-15,JOL,JAN-10025,TRASH LINER 33GAL 1.5MIL BLACK 500/CS,Cedar Point Janitorial Supply,23,476.68,LTL hot shot,Des Plaines Die Casting,PS,branch mgr aware
+2025-02-16,JOL,FAS-10071,NYLOCK NUT #8 GR8 PLAIN 50/BX,Sheldon Fastener Co.,5,145.93,FedEx Priority,Fox River Fabricators,,called Kevin direct
+2025-02-19,FTW,WLD-10026,CONTACT TIP .035 TWECO STYLE 25/PK,Heartland Welding Supply,4,322.56,FedEx Priority,Midvale Castings LLC,DA,"PO sat open, supplier backlog"
+2025-02-19,JOL,ELE-10350,WIRE THHN 14 STR BLK 500FT,Prairie State Electrical Supply,1,169.18,UPS Next Day,,PS,overnight to plant
+2025-02-21,FTW,BRG-10052,INSERT BEARING UC204-24,Great Lakes Bearing,6,166.46,UPS 2nd Day,North Shore Bottling,DA,overnight to plant
+2025-02-21,FTW,FLT-10780,COMPRESSOR OIL FILTER K-520,Great Lakes Filtration Co.,1,498.81,FedEx Standard Overnight,,PS,LTL hot shot
+2025-02-21,FTW,JAN-10578,TRASH LINER 40GAL 2.0MIL BLACK 200/CS,Cedar Point Janitorial Supply,3,305.17,UPS Next Day,,PS,next-day air
+2025-02-22,JOL,ELE-10966,BREAKER 2P 30A CH STYLE,Prairie State Electrical Supply,1,311.86,UPS Next Day,Rock River Foundry,PS,"PO sat open, supplier backlog"
+2025-02-22,RKF,PLM-10919,PVC FITTING SCH40 2 COUPLING,Mississippi Valley Fittings,2,585.45,LTL hot shot,North Shore Bottling,LH,will-call Saturday
+2025-02-23,JOL,CUT-10584,JOBBER DRILL 1 HSS BLACK OXIDE 12/PK,Great Lakes Tool & Die Supply,4,355.00,UPS Next Day,Maumee Bay Fasteners,,"PO sat open, supplier backlog"
+2025-02-23,JOL,ABR-10750,QUICK CHANGE DISC 2 IN R-TYPE 120G CERAMIC 50/BX,Calumet Abrasives,3,419.22,FedEx Standard Overnight,Harbor Steel Processing,DA,plant down
+2025-02-23,JOL,ADH-10358,DUCT TAPE 2IN X 60YD 11MIL BLACK 24/CS,Pioneer Tape & Label,1,615.08,FedEx Standard Overnight,,PS,plant down
+2025-02-23,FTW,FAS-11169,NYLOCK NUT 5/8 GR8 YELLOW ZINC 50/BX,Cedar Point Fastener Supply,5,468.16,UPS Next Day,Calumet Precision Machining,DA,"ERP said in stock, was not"
+2025-02-23,JOL,PLM-10777,PIPE NIPPLE 3/8 X 4 SS SCH40,Illini Pipe & Valve,1,179.11,FedEx Standard Overnight,,,customer called branch
+2025-02-24,JOL,PLM-10082,BALL VALVE 1/4 IN NPT FORGED STEEL FULL PORT,Cedar Point Fittings,2,297.96,FedEx Standard Overnight,Grand Valley Extrusion,DA,customer threatened to source elsewhere
+2025-02-25,JOL,FAS-11011,FLAT WASHER M6 GR8 YELLOW ZINC 50/BX,Sheldon Fastener Co.,4,336.64,FedEx Standard Overnight,Mill Creek Paper Products,DA,overnight to plant
+2025-02-27,JOL,FAS-10187,HEX CAP SCREW 1/2-13 X 1/2 GR8 PLAIN 25/BX,Cedar Point Fastener Supply,1,900.23,FedEx Priority,Summit Ridge Lumber,PS,receipt late
+2025-03-01,JOL,PTR-10065,V-BELT B36,Driftless Power Transmission,1,918.91,FedEx Priority,Silver Lake Printing,DA,plant down
+2025-03-01,JOL,HYD-10278,HYD CYLINDER SEAL KIT 3 BORE POLYURETHANE,Harbor Hose & Fitting Co.,1,246.37,UPS 2nd Day,Calumet Precision Machining,PS,
+2025-03-01,JOL,PLM-10203,BALL VALVE 1/2 IN NPT BRASS FULL PORT,Illini Pipe & Valve,1,901.12,courier,Illini Rendering,DA,plant down
+2025-03-02,JOL,CUT-10837,END MILL 1/2 4FL CARBIDE UNCOATED,Wabash Cutting Tool,5,385.75,FedEx Priority,Wabash Valley Conveyor,MK,LTL hot shot
+2025-03-04,JOL,FAS-11229,SET SCREW 5/8-11 X 3-1/2 GR5 PLAIN 100/BX,Sheldon Fastener Co.,11,520.92,courier,,,branch mgr aware
+2025-03-05,JOL,ELE-11176,TERMINAL BLOCK DIN 14 AWG BLUE 50/BX,Granite Electric Co.,6,212.42,LTL hot shot,Summit Ridge Lumber,DA,receipt late
+2025-03-06,JOL,HTL-10085,PLIERS SLIP JOINT 10IN,Stonegate Hand Tools,3,847.56,FedEx Priority,Driftless Creamery,PS,customer threatened to source elsewhere
+2025-03-06,JOL,HYD-10327,PRESSURE GAUGE 4 IN 10000 PSI LIQUID FILLED 1/4 NPT,Blue Ridge Hose & Fitting,4,271.55,UPS 2nd Day,,DA,plant down
+2025-03-08,JOL,PNT-10144,PRIMER ZINC RICH 5GAL,Grand Valley Paint Supply,1,461.64,UPS 2nd Day,Harbor Steel Processing,DA,receipt late
+2025-03-08,FTW,PLM-10770,PIPE NIPPLE 3/4 X 4 GALV SCH40,Cedar Point Fittings,1,276.24,UPS 2nd Day,Sangamon Feed Mills,PS,customer called branch
+2025-03-08,RKF,HTL-10593,PRY BAR 48IN ROLLING HEAD,Ironclad Tool Co.,2,373.23,FedEx Priority,Illini Rendering,,
+2025-03-08,JOL,FAS-11377,HEX CAP SCREW #10-24 X 4 GR5 ZINC 100/BX,North Shore Fastener,4,414.56,UPS 2nd Day,Des Plaines Die Casting,PS,
+2025-03-09,JOL,BRG-10058,INSERT BEARING UC207-20,Three Rivers Bearing Supply Co.,1,408.21,UPS Next Day,Calumet Precision Machining,,branch mgr aware
+2025-03-10,FTW,LTG-10422,EXIT SIGN LED GREEN AC ONLY BLACK,Prairie State Lighting,1,435.71,UPS Next Day,Silver Lake Printing,,LTL hot shot
+2025-03-11,JOL,ADH-10389,MASKING TAPE 1-1/2IN X 60YD BLUE 36/CS,Pine Bend Adhesives Inc.,1,528.42,LTL hot shot,Driftless Creamery,DA,
+2025-03-12,JOL,LUB-10200,HYD OIL AW100 275GAL TOTE,Pine Bend Lubricants,3,387.04,FedEx Standard Overnight,Grand Valley Extrusion,DA,second rush this month
+2025-03-12,RKF,BRG-10474,BALL BEARING 6004-2RS,Three Rivers Bearing Supply Co.,1,916.38,UPS 2nd Day,,LH,called Kevin direct
+2025-03-12,JOL,HTL-10485,PUNCH CHISEL 1/2 STD,Ironclad Tool Co.,1,811.27,LTL hot shot,Illini Rendering,DA,courier same day
+2025-03-14,FTW,ABR-10744,SANDING BELT 4X24 120G AO 10/PK,Calumet Abrasives,4,111.65,courier,Calumet Precision Machining,PS,customer threatened to source elsewhere
+2025-03-14,RKF,FAS-11181,FLAT WASHER M8 HDG 500/BX,Sheldon Fastener Co.,2,195.87,courier,Des Plaines Die Casting,DA,
+2025-03-15,FTW,CUT-10492,TAP M6-1.0 HAND PLUG HSS,Wabash Cutting Tool,1,677.76,FedEx Standard Overnight,,PS,"line out, customer pickup Friday"
+2025-03-15,JOL,MTR-10154,MOTOR 5HP 1750RPM 143T TEFC 115/230V,Buckeye Motor & Drive,1,1153.45,LTL hot shot,,DA,will-call Saturday
+2025-03-15,FTW,WLD-10193,STICK ELECTRODE 6010 1/8 50LB,Heartland Welding Supply,5,382.97,courier,,DA,courier same day
+2025-03-16,JOL,LUB-10661,CHAIN LUBE 1GAL FOOD GRADE,Oak Ridge Chemical,1,363.78,courier,Des Plaines Die Casting,PS,second rush this month
+2025-03-16,JOL,JAN-10126,DEGREASER 5GAL SAFETY,Tri-State Janitorial Supply,2,299.83,UPS Next Day,,MK,customer called branch
+2025-03-17,RKF,MTR-10423,MOTOR CAPACITOR 30 MFD 370V START,Maumee Electric Motor,2,320.84,FedEx Priority,,,
+2025-03-18,JOL,FAS-12033,HEX NUT 1/2 18-8 SS 100/BX,Heartland Fastener Supply,3,154.04,FedEx Priority,Pioneer Tube & Pipe,PS,customer threatened to source elsewhere
+2025-03-18,JOL,ADH-10518,MASKING TAPE 1IN X 60YD BEIGE 24/CS,Pine Bend Adhesives Inc.,1,501.71,UPS 2nd Day,Kankakee Stamping,MK,receipt late
+2025-03-19,JOL,MTR-10011,MOTOR 1HP 1750RPM 56C TEFC 230/460V,Buckeye Motor & Drive,2,244.53,FedEx Standard Overnight,Three Rivers Plastics,DA,will-call Saturday
+2025-03-19,JOL,HTL-10313,HAMMER CLAW 16OZ,Summit Tool Co. Co.,2,305.14,UPS Next Day,North Shore Bottling,PS,overnight to plant
+2025-03-19,JOL,LUB-10702,GEAR OIL ISO 150 1GAL 4/CS,Pine Bend Lubricants,1,184.15,LTL hot shot,Des Plaines Die Casting,PS,overnight to plant
+2025-03-20,RKF,SAF-10954,CUT RESISTANT GLOVE A4 M PU PALM 12PR/CS,Guardwell PPE,6,693.18,FedEx Standard Overnight,Kankakee Stamping,PS,branch mgr aware
+2025-03-22,JOL,ADH-10161,RTV SILICONE BLACK 10.1OZ 12/CS,Pine Bend Adhesives Inc.,1,125.02,UPS Next Day,Illini Rendering,PS,next-day air
+2025-03-23,FTW,JAN-10177,TOILET TISSUE JUMBO 9IN 80/CS,Mississippi Valley Sanitary Supply,4,306.36,courier,Rock River Foundry,DA,"ERP said in stock, was not"
+2025-03-23,JOL,ELE-10409,RELAY ICE CUBE SPDT 24V,Northwind Controls,1,554.68,LTL hot shot,,DA,courier same day
+2025-03-23,JOL,SAF-10288,LEATHER DRIVER GLOVE XL SPLIT COWHIDE 12PR/CS,Summit Safety Supply,1,304.99,courier,Sangamon Feed Mills,DA,branch mgr aware
+2025-03-23,JOL,FAS-10071,NYLOCK NUT #8 GR8 PLAIN 50/BX,Sheldon Fastener Co.,7,324.43,UPS 2nd Day,Fox River Fabricators,DA,customer called branch
+2025-03-23,JOL,ELE-10966,BREAKER 2P 30A CH STYLE,Prairie State Electrical Supply,1,972.90,LTL hot shot,Rock River Foundry,DA,branch mgr aware
+2025-03-25,JOL,FAS-10210,HEX CAP SCREW 3/4-10 X 4 GR8 PLAIN 500/BX,Sheldon Fastener Co.,1,215.04,UPS Next Day,Sangamon Feed Mills,PS,
+2025-03-26,JOL,FAS-10705,FLANGE BOLT #8-32 X 3 GR5 PLAIN 25/BX,Sheldon Fastener Co.,2,347.08,UPS Next Day,Fox River Fabricators,PS,
+2025-03-26,JOL,PLM-10646,UNION 1 IN GALV 150#,Illini Pipe & Valve,5,128.46,UPS Next Day,,,courier same day
+2025-03-26,JOL,LTG-10161,LAMP T12 40W 4FT 3500K FLUORESCENT 30/CS,Frontier Lighting Supply,1,511.96,UPS Next Day,,PS,next-day air
+2025-03-28,FTW,BRG-10052,INSERT BEARING UC204-24,Great Lakes Bearing,9,285.07,courier,North Shore Bottling,PS,will-call Saturday
+2025-04-01,JOL,JAN-10236,MOP HEAD DUST 36IN BLEND 12/CS,Mississippi Valley Sanitary Supply,2,243.17,LTL hot shot,Illini Rendering,PS,second rush this month
+2025-04-01,JOL,PTR-10039,SPROCKET #60 12T 5/8 BORE,Summit Bearing & Drive,2,867.20,courier,Calumet Precision Machining,DA,overnight to plant
+2025-04-01,FTW,HTL-10630,ADJUSTABLE WRENCH 10IN CHROME,Stonegate Hand Tools,1,331.68,UPS 2nd Day,Fox River Fabricators,PS,will-call Saturday
+2025-04-02,JOL,JAN-10249,HAND SOAP LOTION 1GAL 4/CS,Sangamon Paper Co.,7,873.85,FedEx Standard Overnight,,DA,
+2025-04-03,FTW,PTR-10248,V-BELT A100,Driftless Belt & Chain,3,790.19,FedEx Priority,,,will-call Saturday
+2025-04-04,JOL,FLT-10737,HYD FILTER ELEMENT 25 MICRON KF-620 CELLULOSE,Keystone Filtration,1,144.65,FedEx Standard Overnight,Fox River Fabricators,DA,customer threatened to source elsewhere
+2025-04-06,JOL,JAN-10361,PAPER TOWEL ROLL 8IN X 1000FT NATURAL 12/CS,Riverbend Paper,3,634.02,LTL hot shot,Sangamon Feed Mills,DA,called Kevin direct
+2025-04-07,FTW,FAS-11397,FLAT WASHER 5/8 GR8 PLAIN 100/BX,North Shore Fastener,7,437.69,FedEx Standard Overnight,North Shore Bottling,DA,receipt late
+2025-04-08,JOL,ELE-10914,BREAKER 3P 20A QO STYLE,Prairie State Electrical Supply,1,460.64,UPS Next Day,Fox River Fabricators,PS,branch mgr aware
+2025-04-09,RKF,ELE-10662,TERMINAL BLOCK SCREW 12 AWG BLUE 50/BX,Timberline Electrical Supply,6,212.41,LTL hot shot,Rock River Foundry,DA,next-day air
+2025-04-12,JOL,FAS-11706,LOCK WASHER M6 GR8 PLAIN 500/BX,Prairie Bolt & Nut,9,787.64,courier,Grand Valley Extrusion,DA,plant down
+2025-04-13,FTW,FAS-10640,FLAT WASHER M10 GR5 PLAIN 100/BX,North Shore Fastener,2,589.59,LTL hot shot,Calumet Precision Machining,PS,courier same day
+2025-04-14,JOL,PNT-10203,SPRAY PAINT ANSI GRAY 15OZ 6/CS ENAMEL,Grand Valley Paint Supply,1,368.73,LTL hot shot,Wabash Valley Conveyor,,
+2025-04-15,JOL,CUT-10109,END MILL 9/32 2FL CARBIDE UNCOATED,Fox Valley Carbide,5,293.92,FedEx Priority,Kankakee Stamping,PS,"line out, customer pickup Friday"
+2025-04-16,FTW,WLD-10106,STICK ELECTRODE 7014 1/8 50LB,Heartland Welding Supply,1,94.84,FedEx Priority,,DA,receipt late
+2025-04-16,JOL,MHD-10231,STRAPPING SEAL 3/4 CLOSED 1000/CS,Mississippi Valley Shipping Supply Co.,3,147.77,LTL hot shot,,DA,plant down
+2025-04-17,JOL,ABR-10094,SANDING BELT 3X24 220G ZIRC 10/PK,Hoosier Abrasives Inc.,4,323.78,courier,Hoosier Pallet Works,PS,
+2025-04-17,JOL,FLT-10299,HYD FILTER ELEMENT 10 MICRON KF-620 GLASS,Pioneer Filter Co.,1,260.25,courier,Hoosier Pallet Works,DA,"line out, customer pickup Friday"
+2025-04-17,JOL,MHD-10289,STRETCH WRAP 20IN 90GA 2000FT 4/CS,Timberline Packaging,1,707.47,UPS 2nd Day,Driftless Creamery,PS,receipt late
+2025-04-17,RKF,LTG-10626,LED WALL PACK 30W NO PHOTOCELL 4000K,Frontier Lighting Supply,2,828.61,UPS 2nd Day,North Shore Bottling,PS,
+2025-04-18,JOL,LUB-10338,CHAIN LUBE 1GAL DRY FILM,Pine Bend Lubricants,2,355.82,FedEx Priority,Illini Rendering,DA,branch mgr aware
+2025-04-20,JOL,ABR-10085,CUTOFF WHEEL 6 X 3/32 X 5/8-11 T27 25/BX,Rock River Abrasive Products,1,444.54,UPS Next Day,Calumet Precision Machining,,next-day air
+2025-04-20,RKF,FAS-11229,SET SCREW 5/8-11 X 3-1/2 GR5 PLAIN 100/BX,Sheldon Fastener Co.,4,804.53,UPS 2nd Day,,DA,
+2025-04-20,FTW,MTR-10120,MOTOR 3HP 1750RPM 184T TEFC 230/460V,Maumee Electric Motor,1,201.28,UPS 2nd Day,Hoosier Pallet Works,DA,called Kevin direct
+2025-04-22,FTW,PTR-10011,V-BELT B68,Summit Bearing & Drive,1,393.14,courier,Midvale Castings LLC,DA,will-call Saturday
+2025-04-23,JOL,ABR-10301,MOUNTED POINT B41 1/4 SHANK SC 10/PK,Hoosier Abrasives Inc.,1,280.02,FedEx Priority,Driftless Creamery,DA,called Kevin direct
+2025-04-24,FTW,ELE-11071,TERMINAL BLOCK DIN 16 AWG GRAY 50/BX,Prairie State Electrical Supply,3,691.79,courier,Illini Rendering,DA,customer called branch
+2025-04-24,JOL,FAS-10911,LOCK WASHER 1/4 GR5 ZINC 100/BX,Ironclad Fastener Supply,3,354.03,UPS 2nd Day,Pioneer Tube & Pipe,PS,customer threatened to source elsewhere
+2025-04-27,FTW,FAS-10148,NYLOCK NUT 1/2 GR8 PLAIN 100/BX,Sheldon Fastener Co.,3,274.42,UPS 2nd Day,,DA,will-call Saturday
+2025-04-27,JOL,JAN-10428,TRASH LINER 55GAL 1.2MIL CLEAR 200/CS,Cedar Point Janitorial Supply,2,272.53,LTL hot shot,Pioneer Tube & Pipe,,
+2025-04-27,FTW,SAF-10912,HI-VIS VEST CLASS 3 2XL ORANGE,Meridian Hand Protection,11,368.54,UPS 2nd Day,Pioneer Tube & Pipe,DA,next-day air
+2025-04-28,JOL,HYD-10278,HYD CYLINDER SEAL KIT 3 BORE POLYURETHANE,Harbor Hose & Fitting Co.,1,415.11,UPS Next Day,Calumet Precision Machining,DA,LTL hot shot
+2025-05-01,JOL,ADH-10460,THREADLOCKER BLUE 243 50ML,Pine Bend Adhesives Inc.,1,170.57,UPS Next Day,Sangamon Feed Mills,PS,receipt late
+2025-05-04,JOL,PLM-11030,PVC FITTING SCH40 1 COUPLING,Mississippi Valley Fittings,3,881.27,LTL hot shot,Summit Ridge Lumber,PS,customer threatened to source elsewhere
+2025-05-05,JOL,FLT-10780,COMPRESSOR OIL FILTER K-520,Great Lakes Filtration Co.,1,168.02,FedEx Priority,,DA,
+2025-05-05,JOL,MHD-10179,PALLET JACK ENTRY ROLLER,Mississippi Valley Shipping Supply Co.,1,148.43,courier,,MK,
+2025-05-06,RKF,BRG-10017,BALL BEARING 6205-2RS,Great Lakes Bearing,8,538.60,courier,"Starr Ridge Packaging, Inc.",DA,next-day air
+2025-05-06,JOL,SAF-10530,HARD HAT YELLOW RATCHET CAP,Driftless Protective Equipment Co.,3,391.56,LTL hot shot,Des Plaines Die Casting,DA,"line out, customer pickup Friday"
+2025-05-07,JOL,LUB-10273,CONTACT CLEANER STD 11OZ AEROSOL 12/CS,Maumee Chemical Products,2,555.38,courier,,PS,LTL hot shot
+2025-05-07,JOL,CUT-10355,TAP 5/16-18 SPIRAL POINT HSS,Wabash Cutting Tool,2,430.99,LTL hot shot,Rock River Foundry,PS,"PO sat open, supplier backlog"
+2025-05-07,JOL,WLD-10317,ANTI-SPATTER 1GAL 12/CS,Driftless Weld Products,1,291.76,courier,Illini Rendering,DA,
+2025-05-08,JOL,CUT-10514,END MILL 5/8 4FL CARBIDE TIALN,Fox Valley Carbide,2,496.24,FedEx Priority,Fox River Fabricators,,called Kevin direct
+2025-05-09,FTW,SAF-10793,FACE SHIELD GREEN 8X15-1/2 POLYCARB,Meridian Hand Protection,4,351.33,courier,,DA,overnight to plant
+2025-05-10,JOL,HYD-10366,HYD HOSE 1 2-WIRE 100R2 100FT,Pine Bend Hydraulics,2,238.03,FedEx Priority,Fox River Fabricators,DA,"PO sat open, supplier backlog"
+2025-05-10,JOL,LUB-10346,GEAR OIL ISO 150 55GAL DRUM,Maumee Chemical Products,2,288.91,UPS Next Day,Driftless Creamery,DA,
+2025-05-13,JOL,JAN-10309,HAND SOAP FOAM 1250ML 2/CS,Cedar Point Janitorial Supply,2,768.03,courier,Kankakee Stamping,PS,LTL hot shot
+2025-05-14,RKF,FAS-11788,FLAT WASHER 1/4 18-8 SS 25/BX,Sheldon Fastener Co.,6,464.70,LTL hot shot,,DA,will-call Saturday
+2025-05-16,RKF,ELE-10982,WIRE THHN 14 STR WHT 500FT,Prairie State Electrical Supply,1,446.67,courier,Sangamon Feed Mills,DA,"line out, customer pickup Friday"
+2025-05-17,RKF,CUT-10892,JOBBER DRILL 11/16 HSS COBALT 12/PK,Wabash Cutting Tool,1,197.57,LTL hot shot,Driftless Creamery,DA,will-call Saturday
+2025-05-17,RKF,LTG-10589,LAMP T8 LED 4FT 18W 3500K TYPE A 25/CS,Heartland Lighting Co.,7,449.38,FedEx Standard Overnight,,PS,customer threatened to source elsewhere
+2025-05-19,JOL,MTR-10094,MOTOR 7-1/2HP 1750RPM 56 TEFC 230/460V,Maumee Electric Motor,1,1034.84,FedEx Standard Overnight,,PS,will-call Saturday
+2025-05-20,FTW,LTG-10358,EXIT SIGN LED RED BATTERY BACKUP BLACK,Heartland Lighting Co.,8,266.28,UPS 2nd Day,Heartland Can Co.,PS,courier same day
+2025-05-22,JOL,HTL-10085,PLIERS SLIP JOINT 10IN,Stonegate Hand Tools,2,650.85,courier,Driftless Creamery,PS,overnight to plant
+2025-05-23,FTW,BRG-10474,BALL BEARING 6004-2RS,Three Rivers Bearing Supply Co.,1,285.50,LTL hot shot,,DA,next-day air
+2025-05-23,JOL,MTR-10423,MOTOR CAPACITOR 30 MFD 370V START,Maumee Electric Motor,2,192.09,FedEx Standard Overnight,,DA,
+2025-05-23,RKF,LTG-10276,BALLAST T8 2-LAMP 120V PROGRAM START,Heartland Lighting Co.,1,391.29,UPS Next Day,,PS,"line out, customer pickup Friday"
+2025-05-23,FTW,MHD-10213,STRETCH WRAP 15IN 70GA 2000FT 4/CS,Bluffside Strapping,1,463.02,UPS Next Day,Pioneer Tube & Pipe,DA,overnight to plant
+2025-05-24,RKF,PLM-10913,PIPE NIPPLE 1/4 X 4 SS SCH40,Illini Pipe & Valve,2,295.67,UPS Next Day,,,customer threatened to source elsewhere
+2025-05-25,JOL,MTR-10085,GEARBOX OIL SEAL 2.000 X 2.750 VITON,Oak Ridge Electric Motor Inc.,1,578.39,courier,Grand Valley Extrusion,DA,
+2025-05-25,JOL,LTG-10065,LAMP T5 54W HO 4FT 4100K FLUORESCENT 25/CS,Prairie State Lighting,1,699.44,UPS Next Day,,DA,customer threatened to source elsewhere
+2025-05-26,FTW,FAS-11251,LOCK WASHER 7/16 GR5 ZINC 100/BX,Sheldon Fastener Co.,3,989.04,FedEx Priority,Rock River Foundry,CD,branch mgr aware
+2025-05-27,RKF,BRG-10474,BALL BEARING 6004-2RS,Three Rivers Bearing Supply Co.,1,337.31,courier,,PS,
+2025-05-28,JOL,PLM-10777,PIPE NIPPLE 3/8 X 4 SS SCH40,Illini Pipe & Valve,1,431.10,courier,,DA,"PO sat open, supplier backlog"
+2025-06-01,JOL,FAS-11317,SET SCREW M12-1.75 X 1-1/2 GR8 PLAIN 100/BX,Sheldon Fastener Co.,3,929.29,LTL hot shot,Silver Lake Printing,DA,will-call Saturday
+2025-06-02,FTW,HYD-10227,HYD HOSE 3/4 1-WIRE 100R1 250FT,Pine Bend Hydraulics,1,78.69,UPS Next Day,Illini Rendering,DA,courier same day
+2025-06-03,JOL,FAS-10187,HEX CAP SCREW 1/2-13 X 1/2 GR8 PLAIN 25/BX,Cedar Point Fastener Supply,1,266.96,FedEx Standard Overnight,Summit Ridge Lumber,PS,
+2025-06-04,RKF,LUB-10540,CUTTING FLUID TAPPING 16OZ 12/CS,Hoosier Oil Co.,4,147.79,FedEx Standard Overnight,Driftless Creamery,DA,courier same day
+2025-06-04,FTW,FAS-12014,HEX CAP SCREW 7/16-14 X 1/2 GR8 PLAIN 25/BX,Cedar Point Fastener Supply,3,411.88,UPS Next Day,,PS,second rush this month
+2025-06-04,FTW,LUB-10309,CUTTING FLUID TAPPING 5GAL PAIL,Maumee Chemical Products,1,411.82,LTL hot shot,Hoosier Pallet Works,DA,customer threatened to source elsewhere
+2025-06-05,JOL,PLM-10082,BALL VALVE 1/4 IN NPT FORGED STEEL FULL PORT,Cedar Point Fittings,1,476.90,FedEx Priority,Grand Valley Extrusion,DA,called Kevin direct
+2025-06-05,FTW,HYD-10466,QUICK COUPLER 3/4 FLAT FACE SET,Harbor Hose & Fitting Co.,1,333.39,UPS Next Day,,DA,"PO sat open, supplier backlog"
+2025-06-06,FTW,LTG-10331,BALLAST T8 4-LAMP 120V INSTANT START,Heartland Lighting Co.,1,304.20,UPS Next Day,Grand Valley Extrusion,CD,branch mgr aware
+2025-06-07,JOL,MHD-10053,SHIPPING TAPE 2IN X 1000YD 1.9MIL TAN 36/CS,Timberline Packaging,8,235.50,FedEx Priority,Silver Lake Printing,DA,customer called branch
+2025-06-07,JOL,LTG-10065,LAMP T5 54W HO 4FT 4100K FLUORESCENT 25/CS,Prairie State Lighting,1,316.06,FedEx Priority,,DA,next-day air
+2025-06-09,RKF,FAS-11706,LOCK WASHER M6 GR8 PLAIN 500/BX,Prairie Bolt & Nut,9,594.32,LTL hot shot,Grand Valley Extrusion,DA,
+2025-06-10,JOL,LUB-10366,COOLANT CONCENTRATE 5GAL PAIL GREEN,Maumee Chemical Products,1,215.66,FedEx Standard Overnight,Mill Creek Paper Products,PS,"PO sat open, supplier backlog"
+2025-06-11,JOL,LTG-10220,EXIT SIGN LED RED AC ONLY WHITE,Heartland Lighting Co.,1,239.02,courier,Kankakee Stamping,DA,overnight to plant
+2025-06-11,FTW,LUB-10540,CUTTING FLUID TAPPING 16OZ 12/CS,Hoosier Oil Co.,1,941.57,UPS Next Day,Driftless Creamery,DA,next-day air
+2025-06-11,FTW,ELE-10991,FUSE 1A CLASS CC 10/BX,Prairie State Electrical Supply,1,163.23,UPS 2nd Day,Fox River Fabricators,PS,branch mgr aware
+2025-06-11,JOL,PTR-10443,V-BELT B112,Summit Bearing & Drive,1,719.85,LTL hot shot,,PS,
+2025-06-12,JOL,HTL-10221,PLIERS NEEDLE NOSE 8IN,Ironclad Tool Co.,2,139.08,FedEx Standard Overnight,Calumet Precision Machining,DA,customer threatened to source elsewhere
+2025-06-12,JOL,ELE-10271,CONTACTOR 3P 32A 24V COIL NEMA SIZE 1,Granite Electric Co.,2,401.30,FedEx Priority,Driftless Creamery,DA,overnight to plant
+2025-06-14,RKF,PLM-10752,UNION 1/2 IN BRASS 150#,Tri-State Plumbing Supply,2,476.27,UPS Next Day,Three Rivers Plastics,DA,plant down
+2025-06-16,JOL,LTG-10331,BALLAST T8 4-LAMP 120V INSTANT START,Heartland Lighting Co.,2,114.98,courier,Grand Valley Extrusion,,second rush this month
+2025-06-16,JOL,FAS-11404,HEX CAP SCREW M12-1.75 X 1-1/4 GR5 PLAIN 25/BX,Heartland Fastener Supply,3,358.39,FedEx Priority,Rock River Foundry,DA,courier same day
+2025-06-18,JOL,HYD-10386,HYD CYLINDER SEAL KIT 2 BORE POLYURETHANE,Kettle Moraine Hydraulics,4,534.52,FedEx Priority,,PS,LTL hot shot
+2025-06-20,JOL,ABR-10301,MOUNTED POINT B41 1/4 SHANK SC 10/PK,Hoosier Abrasives Inc.,2,890.47,LTL hot shot,Driftless Creamery,DA,customer threatened to source elsewhere
+2025-06-21,RKF,HTL-10485,PUNCH CHISEL 1/2 STD,Ironclad Tool Co.,2,171.74,FedEx Priority,Illini Rendering,LH,will-call Saturday
+2025-06-22,FTW,BRG-10457,SPINDLE BEARING 7205 P5 ANGULAR CONTACT,Great Lakes Bearing,1,242.22,LTL hot shot,,PS,called Kevin direct
+2025-06-25,JOL,WLD-10137,MIG NOZZLE 5/8 BERNARD STYLE COPPER 10/PK,Buckeye Weld Products,1,179.08,UPS 2nd Day,Wabash Valley Conveyor,PS,will-call Saturday
+2025-06-25,JOL,SAF-10486,SAFETY GLASSES SEALED AMBER AS,Driftless Protective Equipment Co.,3,547.74,FedEx Priority,,,overnight to plant
+2025-06-28,JOL,JAN-10025,TRASH LINER 33GAL 1.5MIL BLACK 500/CS,Cedar Point Janitorial Supply,24,453.56,FedEx Priority,Des Plaines Die Casting,DA,called Kevin direct
+2025-07-01,JOL,PTR-10618,V-BELT C80,Driftless Belt & Chain,3,289.05,LTL hot shot,,PS,overnight to plant
+2025-07-02,JOL,CUT-10514,END MILL 5/8 4FL CARBIDE TIALN,Fox Valley Carbide,4,1283.67,UPS Next Day,Fox River Fabricators,PS,
+2025-07-03,JOL,HTL-10392,COMBINATION WRENCH 19MM 12PT,Ironclad Tool Co.,1,162.04,FedEx Priority,Harbor Steel Processing,,
+2025-07-05,FTW,HYD-10172,HYD FITTING JIC -08 FEMALE SWIVEL STEEL,Pine Bend Hydraulics,1,220.24,FedEx Standard Overnight,Summit Ridge Lumber,DA,will-call Saturday
+2025-07-06,JOL,ELE-11045,CORD GRIP 3/4 NPT NYLON .38-.63 RANGE,Prairie State Electrical Supply,1,387.85,UPS 2nd Day,Summit Ridge Lumber,DA,"PO sat open, supplier backlog"
+2025-07-08,JOL,SAF-10492,WELDING GLOVE M STICK 12PR/CS,Driftless Protective Equipment Co.,5,910.60,FedEx Priority,,,called Kevin direct
+2025-07-08,JOL,ELE-10350,WIRE THHN 14 STR BLK 500FT,Prairie State Electrical Supply,1,505.64,courier,,PS,
+2025-07-08,JOL,LTG-10126,BALLAST T8 4-LAMP 120-277V PROGRAM START,Prairie State Lighting,3,414.53,FedEx Priority,North Shore Bottling,DA,branch mgr aware
+2025-07-08,RKF,LTG-10350,EXIT SIGN LED RED AC ONLY BLACK,Frontier Lighting Supply,1,186.35,courier,North Shore Bottling,DA,customer threatened to source elsewhere
+2025-07-09,JOL,PTR-10213,CONNECTING LINK #40 OFFSET 10/PK,Summit Bearing & Drive,1,912.90,UPS Next Day,Hoosier Pallet Works,DA,customer threatened to source elsewhere
+2025-07-09,FTW,LTG-10422,EXIT SIGN LED GREEN AC ONLY BLACK,Prairie State Lighting,1,217.86,FedEx Priority,Silver Lake Printing,PS,"line out, customer pickup Friday"
+2025-07-10,FTW,FLT-10140,AIR FILTER PLEATED 16X20X4 MERV 11 12/CS,Keystone Filtration,1,277.64,courier,,PS,
+2025-07-11,JOL,CUT-10514,END MILL 5/8 4FL CARBIDE TIALN,Fox Valley Carbide,3,409.77,LTL hot shot,Fox River Fabricators,PS,
+2025-07-14,JOL,PLM-10218,BRASS FITTING 1/4 NPT PLUG,Cedar Point Fittings,5,309.94,FedEx Standard Overnight,Hoosier Pallet Works,PS,courier same day
+2025-07-14,JOL,FAS-10742,HEX CAP SCREW M10-1.5 X 1-1/4 HDG 25/BX,Sheldon Fastener Co.,3,215.23,courier,,DA,
+2025-07-15,JOL,PLM-10731,PVC FITTING SCH40 1 TEE,Mississippi Valley Fittings,4,276.91,UPS Next Day,Fox River Fabricators,MK,called Kevin direct
+2025-07-15,JOL,ELE-11108,CORD GRIP 3/4 NPT NYLON .25-.56 RANGE,Prairie State Electrical Supply,1,219.35,FedEx Priority,,DA,customer threatened to source elsewhere
+2025-07-16,FTW,FAS-12065,FENDER WASHER M10 HDG 100/BX,Cedar Point Fastener Supply,8,455.91,UPS Next Day,Mill Creek Paper Products,DA,next-day air
+2025-07-17,JOL,FAS-10071,NYLOCK NUT #8 GR8 PLAIN 50/BX,Sheldon Fastener Co.,3,278.19,FedEx Priority,Fox River Fabricators,DA,LTL hot shot
+2025-07-19,JOL,PLM-10149,BRASS FITTING 1/2 NPT COUPLING,Mississippi Valley Fittings,1,539.38,UPS 2nd Day,Mill Creek Paper Products,DA,
+2025-07-19,RKF,LUB-10625,GREASE EP1 1LB CAN 12/CS,Maumee Chemical Products,2,266.20,UPS Next Day,Fox River Fabricators,DA,receipt late
+2025-07-20,RKF,CUT-10701,CARBIDE INSERT TNMG 332 FV-4100 10/BX,Silver Lake Carbide,1,363.12,LTL hot shot,,,called Kevin direct
+2025-07-20,JOL,PTR-10627,V-BELT 3V90,Driftless Belt & Chain,1,128.59,courier,Summit Ridge Lumber,PS,"ERP said in stock, was not"
+2025-07-21,JOL,MTR-10011,MOTOR 1HP 1750RPM 56C TEFC 230/460V,Buckeye Motor & Drive,1,359.87,courier,Three Rivers Plastics,MK,
+2025-07-21,FTW,HYD-10177,PRESSURE GAUGE 2-1/2 IN 1000 PSI DRY 1/4 NPT,Kettle Moraine Hydraulics,3,997.96,courier,Maumee Bay Fasteners,DA,customer threatened to source elsewhere
+2025-07-23,RKF,LTG-10276,BALLAST T8 2-LAMP 120V PROGRAM START,Heartland Lighting Co.,1,278.99,FedEx Standard Overnight,,,customer threatened to source elsewhere
+2025-07-24,JOL,LUB-10247,CUTTING FLUID TAPPING 1GAL 4/CS,Maumee Chemical Products,1,224.91,LTL hot shot,Illini Rendering,PS,overnight to plant
+2025-07-25,JOL,MHD-10102,CORNER BOARD 2X2X72 50/BDL,Mississippi Valley Shipping Supply Co.,1,154.80,FedEx Priority,Rock River Foundry,DA,"PO sat open, supplier backlog"
+2025-07-26,JOL,ABR-10322,CUTOFF WHEEL 6 X 3/32 X 5/8-11 T1 25/BX,Rock River Abrasive Products,3,288.00,LTL hot shot,,DA,receipt late
+2025-07-27,JOL,HTL-10080,ADJUSTABLE WRENCH 10IN BLACK OXIDE,Stonegate Hand Tools,1,316.70,courier,,DA,plant down
+2025-07-28,FTW,FAS-10942,FLANGE BOLT 1/4-20 X 1 GR5 PLAIN 500/BX,Sheldon Fastener Co.,4,162.57,UPS Next Day,,PS,next-day air
+2025-08-01,FTW,FAS-10942,FLANGE BOLT 1/4-20 X 1 GR5 PLAIN 500/BX,Sheldon Fastener Co.,4,428.40,FedEx Priority,,CD,"line out, customer pickup Friday"
+2025-08-01,JOL,LUB-10338,CHAIN LUBE 1GAL DRY FILM,Pine Bend Lubricants,2,393.31,courier,Illini Rendering,DA,called Kevin direct
+2025-08-02,JOL,ABR-10530,WIRE WHEEL 8 IN CRIMPED .020 5/8-11,Rock River Abrasive Products,2,623.52,UPS 2nd Day,Wabash Valley Conveyor,MK,next-day air
+2025-08-02,JOL,PLM-10085,HOSE CLAMP #20 SS 10/BX,Mississippi Valley Fittings,2,498.19,LTL hot shot,Harbor Steel Processing,DA,branch mgr aware
+2025-08-02,JOL,PTR-10661,SHEAVE A 5.0 IN 1 GR 3/4 BORE,Driftless Power Transmission,2,525.74,FedEx Priority,Rock River Foundry,PS,"PO sat open, supplier backlog"
+2025-08-02,RKF,LTG-10350,EXIT SIGN LED RED AC ONLY BLACK,Frontier Lighting Supply,1,580.89,LTL hot shot,North Shore Bottling,PS,receipt late
+2025-08-02,FTW,WLD-10078,CONTACT TIP .045 TWECO STYLE HD 25/PK,Heartland Welding Supply,5,189.94,FedEx Priority,,DA,receipt late
+2025-08-03,JOL,FAS-11164,LOCK WASHER M6 GR8 YELLOW ZINC 50/BX,Ironclad Fastener Supply,3,294.14,UPS 2nd Day,Hoosier Pallet Works,DA,LTL hot shot
+2025-08-03,FTW,FAS-11788,FLAT WASHER 1/4 18-8 SS 25/BX,Sheldon Fastener Co.,6,306.90,UPS Next Day,,DA,"PO sat open, supplier backlog"
+2025-08-03,JOL,LTG-10276,BALLAST T8 2-LAMP 120V PROGRAM START,Heartland Lighting Co.,1,408.73,FedEx Priority,,PS,
+2025-08-04,JOL,PNT-10458,PRIMER EPOXY 1GAL,Driftless Paint Supply,2,156.52,LTL hot shot,,DA,called Kevin direct
+2025-08-05,FTW,CUT-10084,TAP 5/8-11 SPIRAL POINT HSS,Wabash Cutting Tool,2,732.35,UPS Next Day,,PS,"PO sat open, supplier backlog"
+2025-08-05,JOL,HYD-10285,HYD HOSE 1 2-WIRE 100R2 250FT,Kettle Moraine Hydraulics,1,1104.72,FedEx Priority,Pioneer Tube & Pipe,DA,receipt late
+2025-08-05,RKF,FAS-11317,SET SCREW M12-1.75 X 1-1/2 GR8 PLAIN 100/BX,Sheldon Fastener Co.,2,241.47,LTL hot shot,Silver Lake Printing,DA,overnight to plant
+2025-08-05,JOL,ELE-10662,TERMINAL BLOCK SCREW 12 AWG BLUE 50/BX,Timberline Electrical Supply,6,180.07,courier,Rock River Foundry,MK,will-call Saturday
+2025-08-06,RKF,PTR-10576,SPROCKET #40 15T 1 BORE,Summit Bearing & Drive,4,364.17,LTL hot shot,,,"PO sat open, supplier backlog"
+2025-08-07,JOL,LUB-10470,WAY OIL ISO 68 1GAL 4/CS,Oak Ridge Chemical,1,540.37,UPS 2nd Day,,DA,courier same day
+2025-08-09,JOL,ABR-10169,FLAP DISC 6 X 5/8-11 120 GRIT AO T29 10/BX,Rock River Abrasive Products,5,421.85,courier,,PS,will-call Saturday
+2025-08-11,JOL,SAF-10970,FACE SHIELD GREEN 8X15-1/2 PETG,Tri-State Safety Products,3,226.29,FedEx Standard Overnight,,DA,customer called branch
+2025-08-12,JOL,FAS-12014,HEX CAP SCREW 7/16-14 X 1/2 GR8 PLAIN 25/BX,Cedar Point Fastener Supply,7,343.35,courier,,DA,next-day air
+2025-08-13,FTW,WLD-10011,MIG WIRE ER70S-6 .035 44LB SPOOL,Heartland Welding Supply,11,639.79,FedEx Priority,Midvale Castings LLC,PS,second rush this month
+2025-08-13,RKF,HTL-10012,UTILITY KNIFE BLADES HD 100/PK,Ironclad Tool Co.,3,128.61,UPS Next Day,"Starr Ridge Packaging, Inc.",PS,next-day air
+2025-08-15,JOL,PTR-10033,V-BELT B60,Summit Bearing & Drive,4,327.70,FedEx Standard Overnight,Des Plaines Die Casting,,"PO sat open, supplier backlog"
+2025-08-16,RKF,ABR-10570,SANDING DISC 6 IN PSA 220G 50/BX,Rock River Abrasive Products,1,777.37,courier,,PS,
+2025-08-17,JOL,ELE-10357,FUSE 30A CLASS CC 10/BX,Meridian Electric,2,212.21,courier,Grand Valley Extrusion,PS,overnight to plant
+2025-08-18,JOL,BRG-10227,PILLOW BLOCK 1/2 IN SET SCREW CAST,Great Lakes Bearing,1,951.05,FedEx Standard Overnight,Fox River Fabricators,DA,"line out, customer pickup Friday"
+2025-08-19,JOL,HTL-10341,TAPE MEASURE 25FT MAGNETIC,Stonegate Hand Tools,1,533.64,UPS Next Day,,DA,"ERP said in stock, was not"
+2025-08-19,RKF,ELE-11071,TERMINAL BLOCK DIN 16 AWG GRAY 50/BX,Prairie State Electrical Supply,3,280.84,courier,Illini Rendering,DA,LTL hot shot
+2025-08-20,FTW,PLM-10752,UNION 1/2 IN BRASS 150#,Tri-State Plumbing Supply,2,525.36,FedEx Priority,Three Rivers Plastics,PS,
+2025-08-20,FTW,LTG-10276,BALLAST T8 2-LAMP 120V PROGRAM START,Heartland Lighting Co.,1,511.91,FedEx Standard Overnight,,DA,overnight to plant
+2025-08-21,RKF,PLM-10798,BRASS FITTING 1 NPT STREET ELBOW,Mississippi Valley Fittings,1,170.49,FedEx Priority,,LH,"line out, customer pickup Friday"
+2025-08-22,FTW,PLM-10577,BALL VALVE 3/8 IN NPT BRASS STD PORT,Illini Pipe & Valve,4,547.36,FedEx Standard Overnight,Des Plaines Die Casting,PS,customer threatened to source elsewhere
+2025-08-25,JOL,ADH-10161,RTV SILICONE BLACK 10.1OZ 12/CS,Pine Bend Adhesives Inc.,1,271.68,FedEx Priority,Illini Rendering,PS,overnight to plant
+2025-08-25,RKF,CUT-11010,END MILL 5/8 4FL CARBIDE ALTIN,Wabash Cutting Tool,2,464.92,courier,Hoosier Pallet Works,DA,next-day air
+2025-08-26,FTW,MHD-10249,STRAPPING SEAL 5/8 CLOSED 1000/CS,Three Rivers Packaging,6,310.78,UPS Next Day,Driftless Creamery,PS,customer called branch
+2025-08-26,FTW,FAS-10148,NYLOCK NUT 1/2 GR8 PLAIN 100/BX,Sheldon Fastener Co.,1,289.29,LTL hot shot,,PS,"ERP said in stock, was not"
+2025-08-27,JOL,CUT-10514,END MILL 5/8 4FL CARBIDE TIALN,Fox Valley Carbide,3,131.79,UPS 2nd Day,Fox River Fabricators,PS,plant down
+2025-08-28,JOL,FAS-10896,FENDER WASHER #8 HDG 100/BX,Sheldon Fastener Co.,5,285.17,LTL hot shot,Three Rivers Plastics,DA,plant down
+2025-08-28,JOL,FAS-10845,LOCK WASHER 3/8 GR5 PLAIN 50/BX,Sheldon Fastener Co.,8,504.62,FedEx Priority,Calumet Precision Machining,PS,LTL hot shot
+2025-09-01,JOL,ABR-10530,WIRE WHEEL 8 IN CRIMPED .020 5/8-11,Rock River Abrasive Products,1,464.70,FedEx Priority,Wabash Valley Conveyor,PS,second rush this month
+2025-09-01,JOL,FAS-10210,HEX CAP SCREW 3/4-10 X 4 GR8 PLAIN 500/BX,Sheldon Fastener Co.,1,278.09,LTL hot shot,Sangamon Feed Mills,PS,will-call Saturday
+2025-09-01,FTW,SAF-10847,SAFETY GLASSES METAL FRAME CLEAR AF,Meridian Hand Protection,4,548.38,courier,Mill Creek Paper Products,DA,receipt late
+2025-09-02,JOL,ABR-10744,SANDING BELT 4X24 120G AO 10/PK,Calumet Abrasives,3,268.38,LTL hot shot,Calumet Precision Machining,PS,overnight to plant
+2025-09-02,JOL,LUB-10625,GREASE EP1 1LB CAN 12/CS,Maumee Chemical Products,3,102.97,FedEx Standard Overnight,Fox River Fabricators,PS,called Kevin direct
+2025-09-02,RKF,LUB-10050,GEAR OIL ISO 460 1GAL 4/CS,Maumee Chemical Products,1,540.97,UPS 2nd Day,,PS,
+2025-09-05,FTW,PLM-10577,BALL VALVE 3/8 IN NPT BRASS STD PORT,Illini Pipe & Valve,4,244.57,LTL hot shot,Des Plaines Die Casting,CD,will-call Saturday
+2025-09-05,RKF,HTL-10392,COMBINATION WRENCH 19MM 12PT,Ironclad Tool Co.,1,294.04,UPS 2nd Day,Harbor Steel Processing,LH,"line out, customer pickup Friday"
+2025-09-06,JOL,CUT-10319,JOBBER DRILL 7/16 HSS COBALT 12/PK,Wabash Cutting Tool,1,500.77,FedEx Standard Overnight,,PS,overnight to plant
+2025-09-06,FTW,ADH-10395,RTV SILICONE BLUE 3OZ 12/CS,Pioneer Tape & Label,1,874.15,LTL hot shot,,CD,
+2025-09-07,FTW,WLD-10106,STICK ELECTRODE 7014 1/8 50LB,Heartland Welding Supply,1,367.75,UPS 2nd Day,,DA,courier same day
+2025-09-07,JOL,MHD-10289,STRETCH WRAP 20IN 90GA 2000FT 4/CS,Timberline Packaging,1,115.89,courier,Driftless Creamery,DA,branch mgr aware
+2025-09-07,RKF,CUT-11010,END MILL 5/8 4FL CARBIDE ALTIN,Wabash Cutting Tool,2,1500.38,courier,Hoosier Pallet Works,PS,customer threatened to source elsewhere
+2025-09-07,JOL,HTL-10045,SCREWDRIVER SET 10PC CUSHION GRIP,Stonegate Hand Tools,15,573.53,UPS 2nd Day,Rock River Foundry,DA,plant down
+2025-09-08,JOL,LUB-10115,CONTACT CLEANER PLASTIC SAFE 11OZ AEROSOL 12/CS,Pine Bend Lubricants,1,328.41,UPS Next Day,,,"line out, customer pickup Friday"
+2025-09-08,JOL,PLM-10085,HOSE CLAMP #20 SS 10/BX,Mississippi Valley Fittings,2,204.79,FedEx Standard Overnight,Harbor Steel Processing,MK,"ERP said in stock, was not"
+2025-09-08,JOL,PLM-10149,BRASS FITTING 1/2 NPT COUPLING,Mississippi Valley Fittings,1,293.54,FedEx Priority,Mill Creek Paper Products,PS,plant down
+2025-09-09,FTW,MHD-10249,STRAPPING SEAL 5/8 CLOSED 1000/CS,Three Rivers Packaging,5,342.17,FedEx Standard Overnight,Driftless Creamery,,overnight to plant
+2025-09-12,JOL,PLM-10297,HOSE CLAMP #10 SS 10/BX,Mississippi Valley Fittings,6,383.54,FedEx Standard Overnight,North Shore Bottling,DA,courier same day
+2025-09-12,RKF,ABR-10425,QUICK CHANGE DISC 3 IN R-TYPE 120G ZIRC 50/BX,Hoosier Abrasives Inc.,1,231.84,FedEx Priority,,DA,second rush this month
+2025-09-14,FTW,FAS-11060,HEX NUT M8 GR8 PLAIN 500/BX,Sheldon Fastener Co.,9,345.42,LTL hot shot,Fox River Fabricators,CD,overnight to plant
+2025-09-18,JOL,MHD-10369,STRAPPING POLY 3/4 X 6000FT .025,Timberline Packaging,2,381.09,LTL hot shot,Summit Ridge Lumber,PS,
+2025-09-19,JOL,PNT-10037,SPRAY PAINT FLAT BLACK 15OZ 6/CS ENAMEL,Oak Ridge Coatings,2,559.90,UPS Next Day,Des Plaines Die Casting,DA,
+2025-09-21,JOL,LUB-10115,CONTACT CLEANER PLASTIC SAFE 11OZ AEROSOL 12/CS,Pine Bend Lubricants,1,249.71,UPS 2nd Day,,PS,
+2025-09-21,JOL,ELE-10388,FUSE 100A CLASS RK1 10/BX,Granite Electric Co.,1,250.00,courier,Harbor Steel Processing,MK,
+2025-09-21,FTW,LTG-10470,LAMP T8 LED 4FT 12W 4000K TYPE A/B 25/CS,Heartland Lighting Co.,1,280.92,FedEx Standard Overnight,Hoosier Pallet Works,DA,customer threatened to source elsewhere
+2025-09-23,FTW,WLD-10011,MIG WIRE ER70S-6 .035 44LB SPOOL,Heartland Welding Supply,17,692.01,UPS 2nd Day,Midvale Castings LLC,,overnight to plant
+2025-09-23,JOL,LUB-10061,WAY OIL ISO 220 1GAL 4/CS,Pine Bend Lubricants,1,509.91,UPS 2nd Day,Grand Valley Extrusion,DA,
+2025-09-23,RKF,SAF-11037,CUT RESISTANT GLOVE A6 M SANDY NITRILE 12PR/CS,Tri-State Safety Products,1,299.20,LTL hot shot,,DA,courier same day
+2025-09-24,FTW,PLM-10770,PIPE NIPPLE 3/4 X 4 GALV SCH40,Cedar Point Fittings,2,571.56,UPS Next Day,Sangamon Feed Mills,DA,called Kevin direct
+2025-09-25,JOL,FAS-10619,HEX CAP SCREW M12-1.75 X 3/4 GR5 PLAIN 25/BX,Sheldon Fastener Co.,8,291.25,UPS 2nd Day,Fox River Fabricators,PS,LTL hot shot
+2025-09-25,FTW,BRG-10196,FLANGE BEARING 4-BOLT 1 IN,Great Lakes Bearing,4,328.09,courier,,PS,
+2025-09-25,FTW,FAS-11522,SET SCREW M10-1.5 X 3/4 GR5 PLAIN 50/BX,Cedar Point Fastener Supply,3,846.37,FedEx Standard Overnight,Silver Lake Printing,DA,
+2025-09-25,FTW,LTG-10589,LAMP T8 LED 4FT 18W 3500K TYPE A 25/CS,Heartland Lighting Co.,3,222.21,UPS 2nd Day,,PS,customer threatened to source elsewhere
+2025-10-01,JOL,PLM-10171,GATE VALVE 1/2 IN IRON THREADED,Mississippi Valley Fittings,1,201.49,UPS 2nd Day,,PS,will-call Saturday
+2025-10-01,JOL,ABR-10633,FIBER DISC 7 X 7/8 60G ZIRC 25/BX,Harbor Abrasives,3,627.88,UPS Next Day,,PS,"PO sat open, supplier backlog"
+2025-10-02,JOL,HTL-10203,HAMMER DEAD BLOW 2LB,Ironclad Tool Co.,1,1051.54,FedEx Priority,,DA,next-day air
+2025-10-02,JOL,FAS-10187,HEX CAP SCREW 1/2-13 X 1/2 GR8 PLAIN 25/BX,Cedar Point Fastener Supply,2,609.63,LTL hot shot,Summit Ridge Lumber,,
+2025-10-02,RKF,LUB-10661,CHAIN LUBE 1GAL FOOD GRADE,Oak Ridge Chemical,1,396.46,FedEx Priority,Des Plaines Die Casting,PS,branch mgr aware
+2025-10-03,JOL,FAS-11862,CARRIAGE BOLT 5/16-18 X 3-1/2 GR8 YELLOW ZINC 100/BX,Ironclad Fastener Supply,11,148.27,UPS 2nd Day,Harbor Steel Processing,DA,
+2025-10-04,FTW,LUB-10225,GREASE EP2 LITHIUM 35LB PAIL,Maumee Chemical Products,2,202.27,UPS Next Day,Three Rivers Plastics,,receipt late
+2025-10-04,RKF,LTG-10470,LAMP T8 LED 4FT 12W 4000K TYPE A/B 25/CS,Heartland Lighting Co.,1,665.19,UPS Next Day,Hoosier Pallet Works,DA,customer called branch
+2025-10-04,JOL,PTR-10627,V-BELT 3V90,Driftless Belt & Chain,1,327.29,FedEx Standard Overnight,Summit Ridge Lumber,PS,called Kevin direct
+2025-10-05,RKF,HTL-10593,PRY BAR 48IN ROLLING HEAD,Ironclad Tool Co.,1,322.67,LTL hot shot,Illini Rendering,DA,plant down
+2025-10-08,JOL,WLD-10219,MIG WIRE E71T-1 FLUX CORE .035 44LB SPOOL,Heartland Welding Supply,1,387.28,FedEx Standard Overnight,Silver Lake Printing,,will-call Saturday
+2025-10-08,RKF,LUB-10717,GREASE MOLY EP2 14OZ TUBE 10/CS,Pine Bend Lubricants,1,552.49,courier,,PS,plant down
+2025-10-09,RKF,HTL-10012,UTILITY KNIFE BLADES HD 100/PK,Ironclad Tool Co.,5,244.22,FedEx Standard Overnight,"Starr Ridge Packaging, Inc.",PS,receipt late
+2025-10-09,FTW,CUT-10084,TAP 5/8-11 SPIRAL POINT HSS,Wabash Cutting Tool,1,810.19,FedEx Standard Overnight,,DA,
+2025-10-11,RKF,BRG-10017,BALL BEARING 6205-2RS,Great Lakes Bearing,10,489.40,FedEx Priority,"Starr Ridge Packaging, Inc.",,called Kevin direct
+2025-10-11,JOL,ABR-10418,WIRE WHEEL 8 IN KNOT .014 5/8-11,Hoosier Abrasives Inc.,2,130.67,courier,North Shore Bottling,DA,
+2025-10-11,JOL,FAS-10224,CARRIAGE BOLT #10-24 X 2 GR5 PLAIN 100/BX,Ironclad Fastener Supply,6,904.70,FedEx Priority,Kankakee Stamping,MK,
+2025-10-12,FTW,MHD-10249,STRAPPING SEAL 5/8 CLOSED 1000/CS,Three Rivers Packaging,7,937.50,courier,Driftless Creamery,PS,
+2025-10-15,JOL,ELE-10357,FUSE 30A CLASS CC 10/BX,Meridian Electric,2,532.22,UPS Next Day,Grand Valley Extrusion,MK,plant down
+2025-10-16,JOL,HYD-10466,QUICK COUPLER 3/4 FLAT FACE SET,Harbor Hose & Fitting Co.,1,388.09,LTL hot shot,,,"PO sat open, supplier backlog"
+2025-10-17,JOL,ADH-10201,MASKING TAPE 2IN X 60YD BLUE 36/CS,Granite Adhesives,10,312.87,UPS 2nd Day,Driftless Creamery,DA,second rush this month
+2025-10-17,JOL,HTL-10095,PLIERS DIAGONAL 7IN,Ironclad Tool Co.,1,453.88,LTL hot shot,,PS,"ERP said in stock, was not"
+2025-10-18,FTW,SAF-10205,SAFETY GLASSES WRAP CLEAR AF,Tri-State Safety Products,20,194.04,courier,Midvale Castings LLC,PS,courier same day
+2025-10-18,JOL,JAN-10309,HAND SOAP FOAM 1250ML 2/CS,Cedar Point Janitorial Supply,2,306.12,UPS Next Day,Kankakee Stamping,DA,branch mgr aware
+2025-10-18,FTW,PNT-10413,SPRAY PAINT GLOSS WHITE 15OZ 6/CS INDUSTRIAL,Grand Valley Paint Supply,1,740.39,FedEx Priority,Sangamon Feed Mills,PS,customer called branch
+2025-10-18,RKF,PLM-10716,BALL VALVE 2 IN NPT SS FULL PORT,Illini Pipe & Valve,2,459.57,FedEx Standard Overnight,,PS,
+2025-10-19,JOL,FAS-10705,FLANGE BOLT #8-32 X 3 GR5 PLAIN 25/BX,Sheldon Fastener Co.,2,111.02,FedEx Priority,Fox River Fabricators,DA,overnight to plant
+2025-10-21,RKF,ABR-10142,FLAP DISC 4-1/2 X 5/8-11 36 GRIT AO T27 10/BX,Illini Abrasives Co.,1,115.28,courier,Des Plaines Die Casting,DA,overnight to plant
+2025-10-21,JOL,PLM-10149,BRASS FITTING 1/2 NPT COUPLING,Mississippi Valley Fittings,1,463.26,UPS Next Day,Mill Creek Paper Products,PS,customer called branch
+2025-10-21,JOL,CUT-11010,END MILL 5/8 4FL CARBIDE ALTIN,Wabash Cutting Tool,1,466.29,UPS Next Day,Hoosier Pallet Works,DA,second rush this month
+2025-10-22,JOL,MTR-10249,PUMP SEAL KIT 1-1/2 IN EPDM,Oak Ridge Electric Motor Inc.,1,650.88,LTL hot shot,,PS,"line out, customer pickup Friday"
+2025-10-23,JOL,LUB-10253,HYD OIL AW32 5GAL PAIL,Pine Bend Lubricants,1,231.89,FedEx Standard Overnight,Driftless Creamery,DA,"line out, customer pickup Friday"
+2025-10-23,JOL,LUB-10373,GREASE POLYUREA EP2 1LB CAN 12/CS,Pine Bend Lubricants,1,448.37,UPS Next Day,Fox River Fabricators,PS,next-day air
+2025-10-23,JOL,HTL-10095,PLIERS DIAGONAL 7IN,Ironclad Tool Co.,1,85.82,courier,,MK,receipt late
+2025-10-23,JOL,LTG-10679,LAMP T8 LED 4FT 15W 5000K TYPE A 25/CS,Prairie State Lighting,3,339.25,FedEx Priority,Grand Valley Extrusion,DA,"line out, customer pickup Friday"
+2025-10-24,JOL,PTR-10033,V-BELT B60,Summit Bearing & Drive,5,427.66,courier,Des Plaines Die Casting,,"ERP said in stock, was not"
+2025-10-27,JOL,FAS-10071,NYLOCK NUT #8 GR8 PLAIN 50/BX,Sheldon Fastener Co.,6,627.99,LTL hot shot,Fox River Fabricators,PS,customer called branch
+2025-10-27,FTW,PNT-10413,SPRAY PAINT GLOSS WHITE 15OZ 6/CS INDUSTRIAL,Grand Valley Paint Supply,1,350.67,FedEx Priority,Sangamon Feed Mills,DA,customer threatened to source elsewhere
+2025-10-28,RKF,MHD-10011,STRETCH WRAP 18IN 80GA 1500FT 4/CS,Timberline Packaging,47,411.76,FedEx Standard Overnight,"Starr Ridge Packaging, Inc.",,courier same day
+2025-11-01,JOL,LTG-10350,EXIT SIGN LED RED AC ONLY BLACK,Frontier Lighting Supply,1,118.77,FedEx Standard Overnight,North Shore Bottling,DA,"PO sat open, supplier backlog"
+2025-11-01,FTW,HYD-10093,QUICK COUPLER 1/2 FLAT FACE SET,Kettle Moraine Hydraulics,1,162.88,FedEx Standard Overnight,,DA,next-day air
+2025-11-02,JOL,ABR-10085,CUTOFF WHEEL 6 X 3/32 X 5/8-11 T27 25/BX,Rock River Abrasive Products,1,450.30,UPS Next Day,Calumet Precision Machining,PS,
+2025-11-02,JOL,MTR-10212,MOTOR CAPACITOR 88 MFD 440V START,Buckeye Motor & Drive,1,863.53,FedEx Priority,Des Plaines Die Casting,,customer called branch
+2025-11-02,JOL,SAF-10970,FACE SHIELD GREEN 8X15-1/2 PETG,Tri-State Safety Products,2,399.85,FedEx Standard Overnight,,PS,
+2025-11-03,JOL,FLT-10666,HYD FILTER ELEMENT 5 MICRON KF-230 CELLULOSE,Great Lakes Filtration Co.,4,1059.74,LTL hot shot,,DA,LTL hot shot
+2025-11-05,JOL,LTG-10383,LED HIGH BAY 100W 4000K 347-480V,Heartland Lighting Co.,1,425.98,LTL hot shot,Summit Ridge Lumber,PS,receipt late
+2025-11-05,JOL,FLT-10204,COALESCING ELEMENT 1.0 MICRON KC-60,Great Lakes Filtration Co.,1,281.29,courier,Calumet Precision Machining,DA,branch mgr aware
+2025-11-06,JOL,ELE-10024,WIRE THHN 12 STR GRN 500FT,Meridian Electric,1,222.38,LTL hot shot,Kankakee Stamping,PS,next-day air
+2025-11-07,RKF,MTR-10423,MOTOR CAPACITOR 30 MFD 370V START,Maumee Electric Motor,2,739.59,UPS Next Day,,PS,
+2025-11-08,FTW,FAS-10148,NYLOCK NUT 1/2 GR8 PLAIN 100/BX,Sheldon Fastener Co.,3,419.01,LTL hot shot,,DA,next-day air
+2025-11-08,JOL,CUT-10497,END MILL 5/16 2FL CARBIDE ALTIN,Silver Lake Cutting Tool Co.,4,380.48,UPS Next Day,,PS,overnight to plant
+2025-11-09,JOL,FAS-10896,FENDER WASHER #8 HDG 100/BX,Sheldon Fastener Co.,2,2083.92,LTL hot shot,Three Rivers Plastics,,courier same day
+2025-11-09,FTW,PTR-10661,SHEAVE A 5.0 IN 1 GR 3/4 BORE,Driftless Power Transmission,2,565.50,LTL hot shot,Rock River Foundry,DA,"PO sat open, supplier backlog"
+2025-11-09,FTW,LUB-10788,CONTACT CLEANER PRECISION 11OZ AEROSOL 12/CS,Pine Bend Lubricants,5,311.43,FedEx Priority,,DA,LTL hot shot
+2025-11-11,JOL,CUT-10892,JOBBER DRILL 11/16 HSS COBALT 12/PK,Wabash Cutting Tool,2,179.34,FedEx Priority,Driftless Creamery,DA,"line out, customer pickup Friday"
+2025-11-11,FTW,ADH-10460,THREADLOCKER BLUE 243 50ML,Pine Bend Adhesives Inc.,1,601.71,courier,Sangamon Feed Mills,,plant down
+2025-11-13,JOL,HYD-10043,HYD HOSE 3/8 2-WIRE 100R2 50FT,Pine Bend Hydraulics,1,587.66,courier,Pioneer Tube & Pipe,,second rush this month
+2025-11-13,FTW,FLT-10401,HYD FILTER ELEMENT 10 MICRON KF-430 GLASS,Keystone Filtration,1,227.82,FedEx Priority,Pioneer Tube & Pipe,PS,second rush this month
+2025-11-14,RKF,ELE-10878,CORD GRIP 1/2 NPT ALUM .50-.56 RANGE,Northwind Controls,9,854.55,courier,Three Rivers Plastics,,next-day air
+2025-11-14,FTW,FAS-11755,HEX NUT #10 GR5 PLAIN 50/BX,Sheldon Fastener Co.,1,180.81,UPS 2nd Day,Three Rivers Plastics,DA,overnight to plant
+2025-11-14,RKF,PLM-10367,BALL VALVE 1 IN NPT BRASS FULL PORT,Illini Pipe & Valve,3,399.76,UPS Next Day,Harbor Steel Processing,PS,next-day air
+2025-11-15,JOL,CUT-10264,CARBIDE INSERT DNMG 432 FV-2200 10/BX,Fox Valley Carbide,2,421.66,LTL hot shot,,MK,"ERP said in stock, was not"
+2025-11-15,JOL,LUB-10788,CONTACT CLEANER PRECISION 11OZ AEROSOL 12/CS,Pine Bend Lubricants,1,216.66,LTL hot shot,,,plant down
+2025-11-15,FTW,PLM-10946,PIPE NIPPLE 1 X 3 BLACK SCH40,Illini Pipe & Valve,1,228.76,UPS Next Day,Maumee Bay Fasteners,DA,plant down
+2025-11-15,JOL,WLD-10287,CONTACT TIP .030 BERNARD STYLE STD 25/PK,Heartland Welding Supply,1,366.73,LTL hot shot,Calumet Precision Machining,MK,
+2025-11-17,JOL,MTR-10212,MOTOR CAPACITOR 88 MFD 440V START,Buckeye Motor & Drive,1,982.58,FedEx Priority,Des Plaines Die Casting,PS,overnight to plant
+2025-11-19,JOL,CUT-10015,END MILL 1/2 4FL CARBIDE ALTIN,Fox Valley Carbide,5,151.64,UPS Next Day,Lockport Precision Components,DA,called Kevin direct
+2025-11-20,FTW,WLD-10044,CONTACT TIP .052 BERNARD STYLE STD 25/PK,Heartland Welding Supply,4,439.75,UPS Next Day,Illini Rendering,,overnight to plant
+2025-11-20,JOL,PTR-10386,SHEAVE AB 3.0 IN 2 GR 1 BORE,Driftless Power Transmission,9,175.00,UPS Next Day,Driftless Creamery,MK,customer called branch
+2025-11-23,JOL,JAN-10355,HAND SOAP FOAM 1250ML 4/CS,Mississippi Valley Sanitary Supply,4,694.01,UPS Next Day,Illini Rendering,DA,customer threatened to source elsewhere
+2025-11-24,RKF,PTR-10627,V-BELT 3V90,Driftless Belt & Chain,1,800.91,FedEx Standard Overnight,Summit Ridge Lumber,DA,will-call Saturday
+2025-11-25,JOL,LUB-10253,HYD OIL AW32 5GAL PAIL,Pine Bend Lubricants,1,826.62,courier,Driftless Creamery,,second rush this month
+2025-11-25,FTW,CUT-10084,TAP 5/8-11 SPIRAL POINT HSS,Wabash Cutting Tool,2,415.87,UPS 2nd Day,,PS,receipt late
+2025-11-26,FTW,SAF-10205,SAFETY GLASSES WRAP CLEAR AF,Tri-State Safety Products,10,215.60,UPS 2nd Day,Midvale Castings LLC,PS,will-call Saturday
+2025-11-28,JOL,PTR-10213,CONNECTING LINK #40 OFFSET 10/PK,Summit Bearing & Drive,1,283.53,courier,Hoosier Pallet Works,DA,
+2025-11-28,FTW,WLD-10044,CONTACT TIP .052 BERNARD STYLE STD 25/PK,Heartland Welding Supply,2,406.78,UPS 2nd Day,Illini Rendering,PS,overnight to plant
+2025-11-28,JOL,ADH-10221,CONTACT CEMENT 1GAL BRUSH GRADE,Pine Bend Adhesives Inc.,1,315.60,courier,Heartland Can Co.,DA,plant down
+2025-12-03,JOL,ABR-10322,CUTOFF WHEEL 6 X 3/32 X 5/8-11 T1 25/BX,Rock River Abrasive Products,2,1180.09,FedEx Standard Overnight,,,"line out, customer pickup Friday"
+2025-12-03,JOL,HTL-10281,SCREWDRIVER PHILLIPS #1 ACETATE,Summit Tool Co. Co.,2,450.44,UPS 2nd Day,,,"ERP said in stock, was not"
+2025-12-06,JOL,PLM-10149,BRASS FITTING 1/2 NPT COUPLING,Mississippi Valley Fittings,1,278.91,FedEx Priority,Mill Creek Paper Products,DA,receipt late
+2025-12-06,JOL,CUT-10897,TAP 7/16-14 HAND PLUG HSS,Wabash Cutting Tool,7,141.73,FedEx Priority,Fox River Fabricators,MK,
+2025-12-07,FTW,ELE-10662,TERMINAL BLOCK SCREW 12 AWG BLUE 50/BX,Timberline Electrical Supply,7,506.40,UPS Next Day,Rock River Foundry,DA,courier same day
+2025-12-09,FTW,PTR-10011,V-BELT B68,Summit Bearing & Drive,2,591.20,UPS 2nd Day,Midvale Castings LLC,DA,"PO sat open, supplier backlog"
+2025-12-10,FTW,HYD-10172,HYD FITTING JIC -08 FEMALE SWIVEL STEEL,Pine Bend Hydraulics,1,786.50,FedEx Standard Overnight,Summit Ridge Lumber,DA,"line out, customer pickup Friday"
+2025-12-11,FTW,CUT-10892,JOBBER DRILL 11/16 HSS COBALT 12/PK,Wabash Cutting Tool,2,686.00,FedEx Priority,Driftless Creamery,PS,"PO sat open, supplier backlog"
+2025-12-11,JOL,MTR-10103,MOTOR 1HP 1750RPM 145T TEFC 230/460V,Buckeye Motor & Drive,1,465.62,courier,Silver Lake Printing,DA,second rush this month
+2025-12-12,JOL,PTR-10200,CONNECTING LINK #50 STD 10/PK,Summit Bearing & Drive,1,472.49,UPS 2nd Day,North Shore Bottling,DA,overnight to plant
+2025-12-13,RKF,PTR-10618,V-BELT C80,Driftless Belt & Chain,1,318.97,courier,,PS,courier same day
+2025-12-16,JOL,WLD-10233,MIG NOZZLE 3/4 BERNARD STYLE BRASS 10/PK,Driftless Weld Products,1,194.65,FedEx Priority,,MK,overnight to plant
+2025-12-18,FTW,SAF-10954,CUT RESISTANT GLOVE A4 M PU PALM 12PR/CS,Guardwell PPE,4,1242.17,courier,Kankakee Stamping,DA,courier same day
+2025-12-21,JOL,PNT-10144,PRIMER ZINC RICH 5GAL,Grand Valley Paint Supply,1,463.35,courier,Harbor Steel Processing,DA,next-day air
+2025-12-25,JOL,HTL-10221,PLIERS NEEDLE NOSE 8IN,Ironclad Tool Co.,1,214.91,courier,Calumet Precision Machining,MK,customer threatened to source elsewhere
+2025-12-26,JOL,FAS-11397,FLAT WASHER 5/8 GR8 PLAIN 100/BX,North Shore Fastener,4,289.73,FedEx Standard Overnight,North Shore Bottling,DA,"line out, customer pickup Friday"
+2025-12-27,FTW,HYD-10177,PRESSURE GAUGE 2-1/2 IN 1000 PSI DRY 1/4 NPT,Kettle Moraine Hydraulics,3,782.90,LTL hot shot,Maumee Bay Fasteners,DA,customer called branch
+2025-12-28,JOL,ELE-10388,FUSE 100A CLASS RK1 10/BX,Granite Electric Co.,2,595.78,FedEx Standard Overnight,Harbor Steel Processing,,
