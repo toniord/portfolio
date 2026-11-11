@@ -1,5 +1,5 @@
-# Monday reorder agent: reference implementation from docs/agent_instructions_v3.md.
-# Only change from the spec: OUT defaults to ./output (was /tmp/agent) and is created if missing.
+# Monday reorder agent: reference implementation from docs/agent_instructions_v3.md (v3.1).
+# OUT defaults to ./output and is created if missing.
 # Usage: python3 agent.py DATA_DIR [N]
 """Reorder agent, case 10, built from PRD v3. Usage: python agent.py PROJECT_DIR [N]"""
 import sys, re, glob, os, csv, pandas as pd
@@ -72,6 +72,8 @@ def decide(x):
     elif st=='D':
         po=f'; {x.on_order} on order: the PO sits open forever and the supplier never ships' if x.on_order>0 else ''
         if rep and rush: v=('call first',None,f'D, replacement {rep}; '+rush_ev(s)+po,b)
+        elif rep and x.on_hand<0: v=('count the shelf',None,f'D since {pl.discontinue_date}, replacement {rep}; on hand {x.on_hand} at {x.branch}: count the shelf, fix the count, then decide'+po,b)
+        elif rep and x.sales_12m==0: v=('order nothing, write it on the reset list',0,f'D since {pl.discontinue_date}, replacement {rep}, but sold nothing in twelve months at this branch: Kevin decides in January if the replacement stocks here'+po,b+' + Kevin (reset list)')
         elif rep: v=('order the replacement',g,f'D since {pl.discontinue_date}; order {rep} at the quantity the system wanted'+po,b)
         else: v=("don't order, it's D",0,f"hand back to {b}: {x.supplier}, D since {pl.discontinue_date}: write it down and find one, that's buyer work, don't guess"+(('; '+rush_ev(s)) if rush else '')+po,b)
     elif x.on_hand<0: v=('count the shelf',None,f'on hand {x.on_hand} at {x.branch}: count the shelf, fix the count, then decide',b)

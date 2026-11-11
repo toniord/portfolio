@@ -1,6 +1,6 @@
-# Agent instructions v3: Monday reorder agent, case 10, Brickyard Industrial Supply
+# Agent instructions v3.1: Monday reorder agent, case 10, Brickyard Industrial Supply
 
-Built from PRD version 3 (October 28, 2026). Take every rule from this file. Do not add rules from any other file, including the user profile file, and do not look anything up on the web.
+Built from PRD version 3.1 (November 10, 2026). Take every rule from this file. Do not add rules from any other file, including the user profile file, and do not look anything up on the web.
 
 ## What you are
 
@@ -38,7 +38,7 @@ The first rule that fits decides the line.
    - d. Else order the larger of Girder's quantity and (contract minimum minus on hand minus on order). If the contract number is larger, the verdict is **order to what the contract says**. Otherwise it is **order as printed**.
    - In every case, if on hand is under the contract minimum, also put the line on **Kevin's contract list**. On-order stock does not count toward the contract minimum.
 2. **The price list says D.**
-   - With a replacement listed: **order the replacement** at Girder's quantity. If the item is also on the rush log: **call first**, and name the replacement.
+   - With a replacement listed: **order the replacement** at Girder's quantity. If the item is also on the rush log: **call first**, and name the replacement. If on hand is negative: **count the shelf**. If 12-month sales at that branch are zero: **order nothing, write it on the reset list**, and name the replacement.
    - With no replacement listed: **don't order, it's D**. Start the reason with "hand back to Dee" (or Pete), then add "write it down and find one, that's buyer work, don't guess", plus the rush history if it was rushed.
    - If anything is on order, add "the PO sits open forever and the supplier never ships".
 3. **On hand is negative:** **count the shelf**. Add "count the shelf, fix the count, then decide".
@@ -98,10 +98,10 @@ The branch buyer gets every line: Dee for JOL and RKF, Pete for FTW. Kevin also 
 | don't order, it's D | 85 |
 | order to max | 67 (24 gloves + 43 at twice max, flagged "check F7 first") |
 | buyer decides: take the minimum, source it elsewhere or let it go | 62 |
-| order the replacement | 43 |
+| order the replacement | 42 |
 | order to the bigger number | 26 |
 | order to min | 17 |
-| order nothing, write it on the reset list | 15 |
+| order nothing, write it on the reset list | 16 |
 | count the shelf | 12 |
 | order to what the contract says | 6 |
 | comes to Kevin | 1 |
@@ -191,6 +191,8 @@ def decide(x):
     elif st=='D':
         po=f'; {x.on_order} on order: the PO sits open forever and the supplier never ships' if x.on_order>0 else ''
         if rep and rush: v=('call first',None,f'D, replacement {rep}; '+rush_ev(s)+po,b)
+        elif rep and x.on_hand<0: v=('count the shelf',None,f'D since {pl.discontinue_date}, replacement {rep}; on hand {x.on_hand} at {x.branch}: count the shelf, fix the count, then decide'+po,b)
+        elif rep and x.sales_12m==0: v=('order nothing, write it on the reset list',0,f'D since {pl.discontinue_date}, replacement {rep}, but sold nothing in twelve months at this branch: Kevin decides in January if the replacement stocks here'+po,b+' + Kevin (reset list)')
         elif rep: v=('order the replacement',g,f'D since {pl.discontinue_date}; order {rep} at the quantity the system wanted'+po,b)
         else: v=("don't order, it's D",0,f"hand back to {b}: {x.supplier}, D since {pl.discontinue_date}: write it down and find one, that's buyer work, don't guess"+(('; '+rush_ev(s)) if rush else '')+po,b)
     elif x.on_hand<0: v=('count the shelf',None,f'on hand {x.on_hand} at {x.branch}: count the shelf, fix the count, then decide',b)
@@ -216,7 +218,7 @@ src=e if N is None else e.head(N)
 out=pd.DataFrame([decide(x) for _,x in src.iterrows()])
 printed=set(zip(e.sku,e.branch))
 missing=C[[ (a,b) not in printed for a,b in zip(C.sku,C.branch)]].assign(goes_to=lambda d:d.branch.map(BUYER),check="check the on hand screen against what the contract says")
-OUT=os.environ.get('OUT','/tmp/agent')
+OUT=os.environ.get('OUT','output'); os.makedirs(OUT,exist_ok=True)
 out.to_csv(OUT+'/out.csv',index=False); missing.to_csv(OUT+'/missing.csv',index=False)
 if N is None:
     with pd.ExcelWriter(OUT+'/reorder_recommendations.xlsx') as w:

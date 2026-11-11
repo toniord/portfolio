@@ -1,8 +1,12 @@
 **Build doc, case 10, Brickyard Industrial Supply**
 
-Version 3, October 28, 2026. Built from version 2 (October 21), the Door 3 test (screen_these_30.csv and supplier_portal_snapshot_30.csv), the Table 7 score doc (27 of 30 against Kevin's answers) and Kevin's follow-up answers. Every change gets a new version number.
+Version 3.1, November 10, 2026, a fix found by the evals. Version 3 (October 28, 2026) was built from version 2 (October 21), the Door 3 test (screen_these_30.csv and supplier_portal_snapshot_30.csv), the Table 7 score doc (27 of 30 against Kevin's answers) and Kevin's follow-up answers. Every change gets a new version number.
 
-## What changed from the last version, and why
+## What changed in version 3.1 (November 10, 2026), and why
+
+1. A discontinued item with a replacement is no longer ordered when on hand is negative ("count the shelf") or when 12-month sales at that branch are zero ("order nothing, write it on the reset list"). Version 3 checked the replacement rule before both, so it ordered 2 of the replacement for ADH-10114 at Rockford, which sold nothing in a year. That broke the Never list ("never order a line with negative on hand, or a line with zero 12-month sales"). On October 12 it moves one line from "order the replacement" (43 to 42) to the reset list (15 to 16). No line has negative on hand. **Found by the evals**
+
+## What changed from version 2 to version 3, and why
 
 1. The agent reads the supplier's actual lead time from the supplier portal file: the average of po_to_receipt_days_last_3, by item and branch. Girder's lead time is no longer the only one used. **From the test**
 2. New, inside rule 1: a contract line that is short today, with a supplier whose actual lead time is more than 7 days, "comes to Kevin" the same day, because "a PO does not fix this week." The row names the shortfall, the actual lead time and the freight call. It fixes BRG-10009. **From the test**
@@ -119,10 +123,10 @@ Apply in this order; the first rule that fits decides the line. Counts are from 
    - Otherwise order the larger of Girder's quantity and the contract minimum minus on hand minus on order: "order to what the contract says" (6) or "order as printed" (7).
    - If on hand is under the contract minimum today, the line also goes on Kevin's contract list (21 of 22). On-order stock does not count toward the minimum.
 2. **If the price list says D:**
-   - With a replacement listed, "order the replacement" at Girder's quantity (43). If the item is also on the rush log, "call first" and name the replacement (2).
+   - With a replacement listed, "order the replacement" at Girder's quantity (42). If the item is also on the rush log, "call first" and name the replacement (2). If on hand is negative, "count the shelf" (0). If 12-month sales at that branch are zero, "order nothing, write it on the reset list" and name the replacement (1, ADH-10114 at Rockford).
    - With no replacement listed, "don't order, it's D," and hand it back (85).
 3. **If on hand is negative,** "count the shelf" (12).
-4. **If 12-month sales at that branch are zero,** "order nothing, write it on the reset list" (15).
+4. **If 12-month sales at that branch are zero,** "order nothing, write it on the reset list" (15, plus 1 from rule 2).
 5. **If the item is on the 2025 rush log,** "call first," with no number (211). Show the actual lead time when the portal has it.
    - 5b. **If the supplier's minimum order is more than a year of 12-month sales at that branch,** "buyer decides: take the minimum, source it elsewhere or let it go." Name the minimum, the sales and the supplier (62 on October 12).
 6. **If max is zero,** "order to min" (17). **If min is above max,** "order to the bigger number" and add the line to Kevin's fix list (26).
