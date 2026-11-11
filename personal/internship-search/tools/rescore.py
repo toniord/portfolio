@@ -5,6 +5,7 @@
     .venv/bin/python -m tools.rescore --company acme
     .venv/bin/python -m tools.rescore --since 2026-09-01    # scored before a date
     .venv/bin/python -m tools.rescore --no-description      # scored with no posting text
+    .venv/bin/python -m tools.rescore --tier-changes        # tier moves under new bands
 
 WHY THIS EXISTS.
 
@@ -42,7 +43,7 @@ from agent import config, db
 SCORE_COLUMNS = db.SCORE_COLUMNS
 
 
-def build_filter(args) -> tuple[str, list]:
+def build_filter(args, conn=None) -> tuple[str, list]:
     """The WHERE clause for what to clear, and its parameters."""
     where = ["fit_score IS NOT NULL"]
     params: list = []
@@ -69,6 +70,19 @@ def build_filter(args) -> tuple[str, list]:
         where.append("TRIM(COALESCE(description, '')) = ''")
         # A board that said the job is taken down is not worth paying to re-judge.
         where.append("detail_unavailable_at IS NULL")
+    if getattr(args, "tier_changes", False):
+        # Added 2026-10-20 with reach in the tier bands. A posting whose stored
+        # scores would put it in a different tier under the current bands is
+        # the one place a score made under an older rubric changes what he sees;
+        # everywhere else old and new bands agree and a re-score buys nothing.
+        # tools.retier owns that comparison, so this asks it rather than copying it.
+        from tools import retier
+        ids = [r["id"] for r, s in retier.changes(conn) if s["tier"] != r["tier"]]
+        if not ids:
+            where.append("0")
+        else:
+            where.append(f"id IN ({', '.join('?' for _ in ids)})")
+            params.extend(ids)
     # An override means he has already judged it himself, so the model's opinion
     # is not what decides its tier and re-asking buys nothing.
     where.append("fit_override IS NULL AND reach_override IS NULL")
@@ -86,6 +100,8 @@ def main() -> int:
     ap.add_argument("--since", help="only postings scored before this ISO date")
     ap.add_argument("--no-description", action="store_true",
                     help="only postings scored with no posting text")
+    ap.add_argument("--tier-changes", action="store_true",
+                    help="only postings whose tier the current bands would change")
     ap.add_argument("--include-closed", action="store_true",
                     help="also re-score closed postings, which is rarely useful")
     ap.add_argument("--include-killed", action="store_true",
@@ -94,12 +110,14 @@ def main() -> int:
                     help="count and price it, write nothing")
     args = ap.parse_args()
 
-    if not (args.all or args.tier or args.company or args.since or args.no_description):
-        ap.error("say what to re-score: --all, --tier, --company, --since or --no-description")
+    if not (args.all or args.tier or args.company or args.since or args.no_description
+            or args.tier_changes):
+        ap.error("say what to re-score: --all, --tier, --company, --since, "
+                 "--no-description or --tier-changes")
 
     conn = db.connect()
     conn.row_factory = sqlite3.Row
-    clause, params = build_filter(args)
+    clause, params = build_filter(args, conn)
 
     rows = conn.execute(
         f"SELECT id, company, title, tier FROM postings WHERE {clause}", params

@@ -103,8 +103,44 @@ def settings(path=None) -> dict:
 
 
 def tiers(cfg: dict) -> list[dict]:
-    """Tier bands, highest fit requirement first, which is match order."""
-    return sorted(cfg.get("tier", []), key=lambda t: t.get("min_fit", 0), reverse=True)
+    """Tier bands in match order, which is tier number order: best tier first.
+
+    Number order rather than min_fit order since 2026-10-20, when a band could
+    start carrying min_reach. Two bands may now share a min_fit and differ only
+    in reach, and "a posting that misses this band falls through to the next
+    one" only means anything if "next" is the next tier number.
+    """
+    return sorted(cfg.get("tier", []), key=lambda t: t.get("number", 0))
+
+
+def _floor(band: dict, axis: str, lo: int) -> int:
+    """A band's threshold on one axis. A band that names none accepts anything."""
+    value = band.get(f"min_{axis}")
+    return lo if value is None else value
+
+
+def _first_match(fit: int, reach: int, bands: list[dict], lo: int) -> dict | None:
+    for band in bands:
+        if fit >= _floor(band, "fit", lo) and reach >= _floor(band, "reach", lo):
+            return band
+    return None
+
+
+def grid(cfg: dict) -> dict[tuple[int, int], int | None]:
+    """The tier every (fit, reach) pair lands in, or None where it lands in none.
+
+    This is the whole tier rule written out as a table. tools.rubric_check
+    prints it, and validate() reads it, so the check and the ranker can never
+    disagree about what the bands mean.
+    """
+    lo, hi = cfg["scores"]["min"], cfg["scores"]["max"]
+    bands = tiers(cfg)
+    out = {}
+    for fit in range(lo, hi + 1):
+        for reach in range(lo, hi + 1):
+            band = _first_match(fit, reach, bands, lo)
+            out[(fit, reach)] = band["number"] if band else None
+    return out
 
 
 def validate(cfg: dict) -> list[str]:
@@ -130,30 +166,36 @@ def validate(cfg: dict) -> list[str]:
         numbers = [b.get("number") for b in bands]
         if len(set(numbers)) != len(numbers):
             problems.append(f"tier numbers repeat: {numbers}")
+        well_formed = True
         seen = set()
         for band in bands:
-            fit = band.get("min_fit")
-            if not isinstance(fit, int):
-                problems.append(f"tier {band.get('number')} has no integer min_fit")
-                continue
-            if not lo <= fit <= hi:
+            for axis, required in (("fit", True), ("reach", False)):
+                value = band.get(f"min_{axis}")
+                if value is None and not required:
+                    continue
+                if not isinstance(value, int):
+                    problems.append(
+                        f"tier {band.get('number')} has no integer min_{axis}"
+                    )
+                    well_formed = False
+                elif not lo <= value <= hi:
+                    problems.append(
+                        f"tier {band.get('number')} min_{axis} {value} "
+                        f"is outside {lo} to {hi}"
+                    )
+            key = (band.get("min_fit"), band.get("min_reach") or lo)
+            if key in seen:
                 problems.append(
-                    f"tier {band.get('number')} min_fit {fit} is outside {lo} to {hi}"
+                    f"two tiers both start at fit {key[0]} and reach {key[1]}"
                 )
-            if fit in seen:
-                problems.append(f"two tiers both start at fit {fit}")
-            seen.add(fit)
+            seen.add(key)
             if band.get("delivery") not in ("daily", "sunday", "never"):
                 problems.append(
                     f"tier {band.get('number')} delivery "
                     f"{band.get('delivery')!r} is not daily, sunday or never"
                 )
-        lowest = bands[-1].get("min_fit")
-        if isinstance(lowest, int) and lowest > lo:
-            problems.append(
-                f"lowest tier starts at fit {lowest}, so a fit of {lo} lands in no tier"
-            )
-
+        if well_formed and not problems:
+            problems.extend(_grid_problems(cfg))
     reach = (cfg.get("reach") or {}).get("flag_at_or_below")
     if not isinstance(reach, int) or not lo <= reach <= hi:
         problems.append(f"[reach] flag_at_or_below must be an integer in {lo} to {hi}")
@@ -183,15 +225,50 @@ def validate(cfg: dict) -> list[str]:
     return problems
 
 
-def tier_for(fit: int, cfg: dict | None = None) -> dict:
-    """The tier band a fit score falls into. Highest band that it clears."""
-    cfg = cfg or settings()
+def _grid_problems(cfg: dict) -> list[str]:
+    """Every way the tier grid can be wrong, from the grid itself.
+
+    Two checks, each guarding a failure that would otherwise be silent. A pair
+    in no tier is scored and never emailed. A band no pair can reach is a line
+    The owner edited that does nothing.
+
+    There is deliberately no check that a higher score never lands in a worse
+    tier. Bands only set minimums and match in tier order, so a pair that clears
+    a band is always cleared by any higher pair, and that property holds by
+    construction. A check for it was written on 2026-10-20 and could not be made
+    to fail, which is the argument for not keeping it.
+    """
+    table = grid(cfg)
+    problems = []
+    missing = [pair for pair, tier in table.items() if tier is None]
+    if missing:
+        shown = ", ".join(f"fit {f} reach {r}" for f, r in missing[:5])
+        more = f" and {len(missing) - 5} more" if len(missing) > 5 else ""
+        problems.append(f"{len(missing)} score pair(s) land in no tier: {shown}{more}")
+    reached = {t for t in table.values() if t is not None}
     for band in tiers(cfg):
-        if fit >= band["min_fit"]:
-            return band
-    # Unreachable while validate() passes, which requires the lowest band to
-    # reach scores.min. Kept so a hand-edited file fails loudly, not silently.
-    raise RubricError(f"fit {fit} falls into no tier band")
+        if band.get("number") not in reached:
+            problems.append(
+                f"tier {band.get('number')} is unreachable; an earlier band "
+                "catches every pair it would"
+            )
+    return problems
+
+
+def tier_for(fit: int, reach: int, cfg: dict | None = None) -> dict:
+    """The tier band a (fit, reach) pair falls into: the first band it clears.
+
+    A band clears when fit reaches its min_fit and reach reaches its min_reach.
+    A band with no min_reach accepts any reach, so a rubric that never mentions
+    reach behaves exactly as the fit-only rule did before 2026-10-20.
+    """
+    cfg = cfg or settings()
+    band = _first_match(fit, reach, tiers(cfg), cfg["scores"]["min"])
+    if band is None:
+        # Unreachable while validate() passes, which proves every pair lands
+        # somewhere. Kept so a hand-edited file fails loudly, not silently.
+        raise RubricError(f"fit {fit} reach {reach} falls into no tier band")
+    return band
 
 
 def capped_tier(tier: int, category: str, title: str, cfg: dict | None = None) -> int:

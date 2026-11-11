@@ -78,7 +78,7 @@ full spec; it is the single specification of record.
 
        tools.prefilter_report --dry-run     # read what the change would do
        tools.prefilter_report --reapply     # store it
-       tools.test_prefilter                 # 127 cases, all must pass
+       tools.test_prefilter                 # 160 cases, all must pass
        tools.sync_airtable                  # the prune removes the stranded rows
 
    `--reapply` is the step that gets skipped, and skipping it is silent. On 2026-08-14 four fall
@@ -162,6 +162,12 @@ full spec; it is the single specification of record.
     which is the state this rule was written to prevent. The pairing of a scoring window with
     this switch off is the specific combination to never ship: it strands every posting older
     than the window, permanently and silently.
+
+    On 2026-11-03 the second condition was broken on purpose and the switch went back on, as
+    this rule requires: `queue.max_age_days` is 7, because the owner has said postings older than
+    a week are useless to him and a nine day API cutoff had left 693 of them in the queue eating
+    the month's spend. `tools.test_digest` reads both live files and fails if a window is ever
+    paired with the switch off. Switching it off again needs the window back at 0 first.
 
     The monthly budget in `rubric.md`, added 2026-09-25, breaks the first condition on
     purpose: a month past its ceiling pauses ranking. That is only safe because

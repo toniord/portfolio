@@ -247,7 +247,7 @@ def urgent_content(conn, email_rules=None) -> dict:
         tiers,
         float(u.get("stale_after_days", 10)),
         bool(u.get("stale_needs_action", True)),
-    )
+    ) if u.get("stale_enabled", True) else []
 
     return {
         "enabled": True,

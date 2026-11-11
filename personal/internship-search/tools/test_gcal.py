@@ -132,10 +132,13 @@ def test_derived_windows_are_pinned():
         "INSERT INTO postings VALUES ('h2','Beta','Intern','u',NULL,"
         "'not_applied',1,NULL,0,'surface','','2026-07-01')"
     )
-    got = gcal.derived_windows(conn, today=TODAY)
+    got = gcal.derived_windows(conn, today=TODAY, stale=True)
     check("both kinds of derived event are made", sorted(w.key for w in got),
           ["followup:h1", "stale:h2"])
     check("every derived event is pinned", all(w.pinned for w in got), True)
+    off = gcal.derived_windows(conn, today=TODAY, stale=False)
+    check("stale switched off keeps the follow-up and drops the stale event",
+          sorted(w.key for w in off), ["followup:h1"])
 
 
 def main() -> int:

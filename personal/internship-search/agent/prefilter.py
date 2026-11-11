@@ -193,6 +193,16 @@ def is_student_role(title: str, from_feed: bool, rules: dict) -> bool:
         pattern = r"\b" + re.escape(needle.lower()) + r"\w*"
         if any(m.group(0) not in blocked for m in re.finditer(pattern, lowered)):
             return True
+
+    # A word too broad to admit a title alone, admitted only beside a role
+    # vocabulary that makes its meaning plain. Added 2026-10-20 for "campus",
+    # which employers use for recruiters and facilities as often as for student
+    # programs. Both halves are data in sources/prefilter.toml.
+    for entry in gate.get("title_include_with", []) or []:
+        if _word_start(title, [entry["word"]]) and _word_start(
+            title, entry.get("with_any", [])
+        ):
+            return True
     return False
 
 
@@ -242,6 +252,29 @@ def check_generalist_software(title: str, rules: dict) -> Verdict:
     if rescued:
         return Verdict(SURFACE, "")
     return Verdict(KILLED, f"generalist software role: matched {hit!r}")
+
+
+def check_off_target_roles(title: str, rules: dict) -> Verdict:
+    """Kill whole fields that never reach his inbox, unless the title is rescued.
+
+    Added 2026-11-10 to cut model spend. These categories (security, chip and
+    firmware engineering, test, mobile, design, marketing) were scored by the
+    model every day and almost never landed above tier 3, so the prefilter now
+    stops them before any call is made.
+
+    Kill words are matched at the start of a word, like excluded_roles, because
+    entries such as "ios" and "rtl" are short enough to sit inside other words.
+    Keep words are matched anywhere, like generalist_software, so "AI/ML for
+    Cybersecurity" or "Design Verification - Neural Engine" survive. Both lists
+    are sources/prefilter.toml; no role name belongs in this function.
+    """
+    section = rules.get("off_target_roles") or {}
+    hit = _word_start(title, section.get("kill_title", []))
+    if not hit:
+        return Verdict(SURFACE, "")
+    if _contains(title, section.get("keep_title", [])):
+        return Verdict(SURFACE, "")
+    return Verdict(KILLED, f"off-target role field: matched {hit!r}")
 
 
 def check_employer(company: str, rules: dict) -> Verdict:
@@ -374,6 +407,7 @@ def evaluate_hard(posting: dict, rules: dict | None = None) -> Verdict:
         check_employer(posting.get("company") or "", rules),
         check_excluded_roles(title, rules),
         check_generalist_software(title, rules),
+        check_off_target_roles(title, rules),
         check_quant(title, rules),
         check_location(posting.get("location") or "", rules),
         check_clearance(description, rules),

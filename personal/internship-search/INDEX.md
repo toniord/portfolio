@@ -9,7 +9,7 @@ How to run any of it is in `README.md`. What is being built and why is in `PRD.m
 
 | To change | Edit | Then run |
 | --- | --- | --- |
-| How postings are scored, tier boundaries, which model a posting is worth | `rubric.md` | `python -m tools.rubric_check` |
+| How postings are scored, tier boundaries (fit and reach), which model a posting is worth | `rubric.md` | `python -m tools.rubric_check`, then `tools.retier --dry-run` for postings already scored |
 | What gets filtered out before scoring: titles, locations, terms, hours | `sources/prefilter.toml` | `tools.prefilter_report --dry-run`, then `--reapply`, then `tools.test_prefilter` |
 | Which companies are polled, and their ATS tokens | `sources/companies.toml` | `python -m tools.verify_tokens` |
 | How Workday boards are asked for their interns | `sources/companies.toml`, `[workday]` | `python -m tools.test_workday`, then `tools.probe_workday <url>` |
@@ -22,7 +22,7 @@ How to run any of it is in `README.md`. What is being built and why is in `PRD.m
 | The YOUR MOVE block: its cap, what counts as waiting, when an application is called silent | `sources/email.toml`, `[actions]` | `python -m tools.test_actions` |
 | Which emails count as an application confirmation or a possible rejection, and the sender domains searched | `sources/inbox.toml`, `[application]` | `python -m tools.inbox --dry-run`, then `tools.test_inbox` |
 | What the inbox's one model call reads off an email | `sources/inbox_prompt.md` | `python -m tools.inbox --dry-run` |
-| Referral contacts | `sources/contacts.toml` | `python -m agent.run` |
+| Referral contacts (also boost the dashboard's Do next) | `sources/contacts.toml` | `python -m agent.run` |
 | The Airtable base layout | `sources/airtable.toml` | `python -m tools.sync_airtable` |
 | Application windows on the calendar | `sources/cycle_windows.toml` | `python -m tools.sync_calendar` |
 | Anything about credentials | `.env` | nothing, it is read on the next run |
@@ -102,11 +102,12 @@ Things run by hand or by the scheduler, never part of the polling cycle.
 | --- | --- |
 | `scheduled_run.py` | The one program launchd starts. Poll, then sync Airtable, then sync the calendar. |
 | `schedule.py` | Installs, removes and inspects the launchd agents. `--dry-run` writes nothing. |
-| `rubric_check.py` | Parses `rubric.md` and prints what the ranker will apply. Read-only. |
+| `rubric_check.py` | Parses `rubric.md` and prints what the ranker will apply. Prints the 10 by 10 fit and reach tier grid. Read-only. |
+| `retier.py` | Re-derives stored tiers from stored scores after a band edit. No model call. `--dry-run` writes nothing. |
 | `rank_report.py` | What the ranker would do and what it decided. Read-only unless `--run`. |
-| `test_prefilter.py` | 99 cases the prefilter must get right. No framework, no database. |
+| `test_prefilter.py` | 147 cases the prefilter must get right. No framework, no database. |
 | `test_identity.py` | 9 cases on what makes two sightings the same posting. No framework, no database. |
-| `test_digest.py` | 43 cases on who gets which email, the caps, the collapse and the urgent triggers. |
+| `test_digest.py` | 167 cases on who gets which email, the caps, the collapse, the urgent triggers, the tier grid and the dashboard's Do next weights. |
 | `test_health.py` | 13 cases on the failure alert. Mutation-tested, because a silent monitor looks healthy. |
 | `test_actions.py` | 33 cases on the YOUR MOVE block, the applied date and the owner's own closure. |
 | `test_workday.py` | 23 cases on the Workday fetcher, against a fake board. No network. |

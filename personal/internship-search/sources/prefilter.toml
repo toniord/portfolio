@@ -130,6 +130,31 @@ title_block = [
 # here would do nothing, because no entry above ever lands inside that word.
 # Excluding a whole category of role is what [excluded_roles] below is for.
 
+# A gate entry that counts only beside a role word, added 2026-10-20. "campus" is
+# out of title_include above for good reason, and the audit still holds: of 46
+# postings killed at this gate with "campus" in the title, 31 of them open on
+# 2026-10-20, every one is a recruiter, a sourcer, a facilities job, a talent
+# community or a full-time hire. One was not. Boston Consulting Group's
+# "Forward Deployed AI Engineer - Campus" came in through the Simplify internship
+# feed open to bachelor's students and died here for want of the word "intern".
+# Forward deployed work is his first choice of role and among his best odds.
+#
+# So "campus" admits a title only when the title also names forward deployed,
+# deployment strategist or applied AI work. "solutions engineer" is deliberately
+# not in with_any: Skydio's "Senior Manager, Solutions Engineering ... Campus
+# Security" would have walked back in on it. Measured with
+# tools.prefilter_report --dry-run before adding: zero open postings move, and
+# no recruiter, facilities or full-time campus posting is re-admitted.
+# It sits last in [student_role] because it is a TOML array of tables: any plain
+# key written below its header would belong to the entry, not to the gate. That
+# happened once while writing it and silently emptied title_block.
+[[student_role.title_include_with]]
+word = "campus"
+with_any = [
+    "forward deployed", "forward-deployed", "deployment strategist",
+    "applied ai", "ai engineer",
+]
+
 # ------------------------------------------------------------ role exclusions
 
 # Added 2026-08-12. Whole categories of work the owner does not want, killed on
@@ -314,6 +339,57 @@ keep_title = [
     # "and". These rescue "System and AI" and "AI Inference" titles that only
     # survived on "silicon" until 2026-10-19.
     " ai ", "and ai",
+]
+
+# ------------------------------------------------------- off-target role fields
+
+# Added 2026-11-10 at the owner's instruction, to cut model spend. Month to date
+# was $4.86 after ten days, about $0.45 a day after the 2026-11-03 cuts, which
+# projects to $14 against a $10 ceiling. Most of it was paying the model to read
+# roles that end in tier 3 or 4: of about 865 postings scored that week, 635
+# landed there.
+#
+# Every field below was measured before it went in, against every surfaced
+# posting the model had ever scored. Together they had produced 0 interested
+# labels and 3 tier 1 postings out of 763, and the three are why the keep list
+# below has its last group. Most of the 35 tier 2 among them are aerospace and
+# hardware roles scored before 2026-10-19, when he dropped that domain.
+#
+# Same shape as generalist_software: a kill word names a field, and a keep word
+# anywhere in the title rescues it, because a false kill is invisible. Kill
+# words match at the start of a word ("ios" must not catch "scenarios"); keep
+# words match anywhere.
+#
+# Deliberately NOT here, because each has produced tier 1 roles: hardware,
+# electrical engineering, systems engineering, manufacturing, silicon, network.
+[off_target_roles]
+
+kill_title = [
+    # Security, a separate career track.
+    "cybersecurity", "cyber security", "information security",
+    # Chip, firmware and embedded engineering.
+    "firmware", "embedded", "fpga", "asic", "analog", "rtl",
+    "design verification",
+    # Test, quality and process engineering.
+    "test engineer", "quality assurance", "process engineer",
+    # Mobile app development.
+    "ios", "android",
+    # Design, programme management, marketing, sales and IT support.
+    "product design", "program manag", "marketing", "sales",
+    "information technology",
+]
+
+keep_title = [
+    # The same domains generalist_software rescues on.
+    "machine learning", "artificial intelligence", "deep learning", "research",
+    "llm", "nlp", "computer vision", "forward deployed", "solutions engineer",
+    "applied ai", "quant", "data", "analytics", "agent", "workflow",
+    "ai automation", "genai", "generative", "inference", " ai ", "and ai",
+    # Rescues the three real postings the first draft killed: "AI/ML for
+    # Cybersecurity Intern", "Design Verification - Neural Engine", and a
+    # technical marketing engineer role at NVIDIA. "sales engineer" is the
+    # customer-facing technical role next to forward deployed, not sales.
+    "ai/", "/ai", " ml ", "neural", "technical marketing", "sales engineer",
 ]
 
 # --------------------------------------------------------- employer exclusions

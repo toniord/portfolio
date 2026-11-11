@@ -344,6 +344,30 @@ HARD_CASES = [
     ("an ML engineer title is untouched by the rule",
      posting(title="Machine Learning Engineer Intern"), PENDING),
 
+    # --- off-target role fields, added 2026-11-10 -------------------------
+    # Added to cut model spend. Both halves need cases, as with the generalist
+    # rule: a keep list that stopped working looks like a kill list working.
+    ("a cybersecurity intern dies", posting(title="Cybersecurity Intern"), KILL),
+    ("a firmware intern dies", posting(title="2027 Firmware Engineer Intern"), KILL),
+    ("an FPGA intern dies", posting(title="FPGA Intern (Summer 2027)"), KILL),
+    ("a test engineer intern dies", posting(title="Test Engineer Intern - Summer 2027"), KILL),
+    ("an iOS intern dies", posting(title="iOS Engineering Intern"), KILL),
+    ("a marketing intern dies", posting(title="Product Marketing Intern"), KILL),
+    ("ios does not catch scenarios",
+     posting(title="AI Scenarios Analyst Intern"), PENDING),
+    ("AI/ML rescues a security title",
+     posting(title="AI/ML for Cybersecurity Intern"), PENDING),
+    ("a neural engine rescues design verification",
+     posting(title="Engineering Intern - Design Verification - Neural Engine"), PENDING),
+    ("data rescues a security title",
+     posting(title="Cybersecurity Data Analyst Intern"), PENDING),
+    ("a sales engineer is customer-facing technical work and survives",
+     posting(title="Network Planning Sales Engineer Intern"), PENDING),
+    ("technical marketing engineering survives",
+     posting(title="Technical Marketing Engineer Intern"), PENDING),
+    ("hardware is deliberately not in the rule",
+     posting(title="Hardware Engineering Intern"), PENDING),
+
     # --- an explicit yes overrides the hard rules -------------------------
     # The label override exists because this rule would otherwise have killed
     # two postings the owner had personally marked interested, pruned them from
@@ -358,6 +382,48 @@ HARD_CASES = [
      posting(title="Software Engineer Intern", label="not_interested"), KILL),
     ("an unlabelled posting is not protected",
      posting(title="Software Engineer Intern", label=""), KILL),
+
+    # --- high hit-rate titles, added 2026-10-20 ----------------------------
+    # The agent was retargeted toward roles he is most likely to land, and
+    # these title families are where his odds are best. None of them may die
+    # on the student gate, the sales exclusions, or the generalist software rule.
+    ("a forward deployed intern survives",
+     posting(title="Forward Deployed Engineer Intern"), PENDING),
+    ("a software engineer intern, forward deployed, survives the generalist rule",
+     posting(title="Software Engineer Intern, Forward Deployed"), PENDING),
+    ("a deployment strategist intern survives",
+     posting(title="Deployment Strategist Intern"), PENDING),
+    ("a solutions engineer intern survives",
+     posting(title="Solutions Engineer Intern"), PENDING),
+    ("a solutions engineering intern survives the sales exclusions",
+     posting(title="Solutions Engineering Intern - Enterprise"), PENDING),
+    ("an AI engineer intern survives", posting(title="AI Engineer Intern"), PENDING),
+    ("an applied AI intern survives",
+     posting(title="Applied AI Engineering Intern"), PENDING),
+    ("a software engineer intern, applied AI, survives the generalist rule",
+     posting(title="Software Engineer Intern - Applied AI"), PENDING),
+    ("an AI automation intern survives", posting(title="AI Automation Intern"), PENDING),
+    ("a business development intern still dies",
+     posting(title="Business Development Intern"), KILL),
+    ("a sales development intern still dies",
+     posting(title="Sales Development Intern"), KILL),
+
+    # --- "campus" beside a forward deployed or applied AI title ------------
+    # [[student_role.title_include_with]], added 2026-10-20. "campus" alone
+    # stays out of the gate; it counts only beside one of these role words.
+    ("BCG's forward deployed campus role passes the gate",
+     posting(title="Forward Deployed AI Engineer - Campus"), PENDING),
+    ("a deployment strategist campus role passes",
+     posting(title="Deployment Strategist, Campus"), PENDING),
+    ("a campus recruiter still dies", posting(title="Campus Recruiter"), KILL),
+    ("a campus facilities job still dies",
+     posting(title="Campus Infrastructure Project Manager"), KILL),
+    ("a full-time campus AI research engineer still dies",
+     posting(title="Campus AI Research Engineer (Full-Time)"), KILL),
+    ("a solutions engineering manager for campus security still dies",
+     posting(title="Senior Manager, Solutions Engineering - Campus Security"), KILL),
+    ("forward deployed with no student word at all still dies",
+     posting(title="Forward Deployed Engineer"), KILL),
 ]
 
 # (label, posting, expected outcome, flags that must be present)

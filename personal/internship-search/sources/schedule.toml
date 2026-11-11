@@ -196,7 +196,17 @@ args = ["--quiet"]
 # Volume is unaffected. Each urgent trigger is stamped per posting, so a posting
 # raises each one once for its whole life, and one run sends at most one urgent
 # email however many postings triggered it.
-args_when_quiet = ["--no-digest"]
+#
+# --skip-ranking added 2026-11-03 to cut model spend. Scoring once a day instead
+# of on every run pays the prompt cache write (about 8,400 tokens on each of two
+# models) once rather than up to four times, and nothing is lost by waiting:
+# the daily digest is the only email that carries scored postings, and it scores
+# everything first on its own run. The quiet runs still poll, prefilter and
+# Stage 0 tag, so the evening run has only scoring left to do. The cost is the
+# urgent deadline trigger in sources/email.toml, which needs a tier and so now
+# fires at the evening run rather than the next quiet one, up to about 20 hours
+# later, against a 72 hour window. Delete the flag to score on every run again.
+args_when_quiet = ["--no-digest", "--skip-ranking"]
 # Added only on the digest job. Postings found by the three quiet runs are no
 # longer "new" by the time the digest runs, so without this they would be filed
 # and never emailed, which is the coverage miss this system exists to prevent.
@@ -210,9 +220,20 @@ args_when_quiet = ["--no-digest"]
 # postings found that day, 72 would have emailed all 1,133. Once the backlog is
 # stamped by tools.backlog_report the bound stops mattering, because a stamped
 # posting is never carried twice.
-args_when_digest = ["--carryover-hours", "36"]
+#
+# --max-rank-calls 300 added 2026-11-03, with --skip-ranking on the quiet runs.
+# The evening run now scores a whole day's surfaced postings in one go, which is
+# typically 100 to 150 and up to about 300 on a heavy day, and each costs one
+# Stage B call plus a Stage C call for roughly a third of them. The default of
+# 150 calls was sized for four scoring runs a day. A posting still unscored when
+# the digest builds rides along marked NOT YET SCORED (daily.include_unscored in
+# sources/email.toml), so a heavy day costs inbox tidiness, never coverage.
+args_when_digest = ["--carryover-hours", "36", "--max-rank-calls", "300"]
 required = true
-timeout_seconds = 1800
+# 2400, raised from 1800 on 2026-11-03 for the same change. Scoring runs about
+# three seconds a call, so 300 calls plus polling 199 sources sits close to 30
+# minutes. The ceiling is counted in awake time, so a closed lid does not use it.
+timeout_seconds = 2400
 
 [[steps]]
 name = "airtable"

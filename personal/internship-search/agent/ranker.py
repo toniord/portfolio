@@ -1,7 +1,7 @@
 """Stage B and Stage C, the ranker. PRD.md section 4, Milestone 6.
 
 Scores every posting the prefilter surfaced on two axes, fit and reach, and
-derives a tier from the result. Two stages, because the two questions cost very
+derives a tier from both. Two stages, because the two questions cost very
 different amounts to answer well.
 
     Stage B  the cheap model, on every survivor. Most postings are decided here.
@@ -338,7 +338,10 @@ def settle(posting: dict, answer: dict, stage: str, cfg: dict) -> dict:
     fit = answer["fit"] if fit is None else int(fit)
     reach = answer["reach"] if reach is None else int(reach)
 
-    band = rubric.tier_for(fit, cfg)
+    # Both scores decide the band since 2026-10-20, when a band could start
+    # requiring a minimum reach. His overrides feed in on both axes, so a reach
+    # he wrote himself moves the tier exactly as a fit he wrote does.
+    band = rubric.tier_for(fit, reach, cfg)
     tier = band["number"]
     delivery = band["delivery"]
     # The employer-category cap from rubric.md [[tier_cap]]. His own fit

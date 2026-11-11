@@ -156,12 +156,22 @@ STALE_TIER1_DAYS = 10
 # is a nudge about the oldest few, not an inventory.
 STALE_TIER1_MAX = 5
 
+
+def _stale_enabled() -> bool:
+    """`urgent.stale_enabled` in sources/email.toml, which owns this judgement."""
+    try:
+        with open(config.EMAIL_RULES_PATH, "rb") as fh:
+            return bool((tomllib.load(fh).get("urgent") or {}).get("stale_enabled", True))
+    except (OSError, tomllib.TOMLDecodeError):
+        return True
+
 # Statuses that are still waiting on somebody else. An offer needs a decision
 # and a rejection needs nothing, so neither earns a follow-up.
 FOLLOWUP_STATUSES = ("applied", "interviewing")
 
 
-def derived_windows(conn, today: dt.date | None = None) -> list[Window]:
+def derived_windows(conn, today: dt.date | None = None,
+                    stale: bool | None = None) -> list[Window]:
     """Calendar events computed from the database rather than read from TOML.
 
     PRD section 12 phase three. Built 2026-09-22, having been blocked since
@@ -211,6 +221,11 @@ def derived_windows(conn, today: dt.date | None = None) -> list[Window]:
                     "Chase it or mark the outcome in Airtable."),
             url=row["url"] or "",
         ))
+
+    if stale is None:
+        stale = _stale_enabled()
+    if not stale:
+        return out
 
     cutoff = (today - dt.timedelta(days=STALE_TIER1_DAYS)).isoformat()
     seen_companies: set[str] = set()

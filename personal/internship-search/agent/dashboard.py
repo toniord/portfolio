@@ -21,8 +21,10 @@ It is also free, which means it reruns on every poll rather than on a budget.
 What it is NOT is a second ranker. `agent/ranker.py` decides how good a posting
 is for him, reading `rubric.md`; this decides how urgent it is that he acts,
 which is a different question with different inputs: a tier 2 role closing on
-Friday outranks a tier 1 that is rolling. Tier is one input of six here and the
-rubric stays the only place fit is defined, per CLAUDE.md rule 3.
+Friday outranks a tier 1 that is rolling. Tier is one input of seven here and the
+rubric stays the only place fit is defined, per CLAUDE.md rule 3. Reach joined
+on 2026-10-20, when hit rate became the objective, and a referral was raised to
+weigh as much as a tier in the same change.
 """
 
 from __future__ import annotations
@@ -30,6 +32,7 @@ from __future__ import annotations
 import datetime as dt
 import sqlite3
 
+from . import contacts as contacts_mod
 from . import gcal
 
 # ---------------------------------------------------------------- the weights
@@ -56,10 +59,27 @@ WEIGHTS = {
     "interested": 30.0,      # he personally said yes, which beats a model saying yes
     "window_closing": 45.0,  # a company-wide application window about to shut
     "deadline_soon": 50.0,   # the posting states a date and it is close
-    "referral": 12.0,        # a contact at the company, per agent/contacts.py
+    # Raised from 12 on 2026-10-20, when hit rate became the objective. A
+    # referral is the biggest multiplier on getting an interview he has, so it
+    # is weighted with "tier 1" and "you marked this interested" rather than
+    # below them. The contact list is sources/contacts.toml.
+    "referral": 35.0,
     "fresh": 6.0,            # posted in the last few days, so the pool is empty
     "stale_penalty": -8.0,   # open a long time with nothing logged against it
+    # Per point of reach away from REACH_NEUTRAL, added 2026-10-20. Reach is the
+    # ranker's estimate of whether he would get an interview, so a role he can
+    # realistically win moves up and a long shot moves down, inside its tier as
+    # well as across tiers. At 4.0 a reach 9 adds 16 and a reach 2 takes 12, so
+    # a tier 2 role he is likely to land outranks a tier 2 long shot by 28,
+    # while neither crosses a tier 1. Unscored postings are left neutral.
+    "reach": 4.0,
 }
+
+# The reach that scores zero. Above it the reach weight adds, below it it takes
+# away. Five is the middle of the 1 to 10 scale and one below tier 1's
+# min_reach, so every tier 1 posting gains a little and every REACH-flagged one
+# loses a little.
+REACH_NEUTRAL = 5
 
 # A window or deadline inside this many days is "closing" and scores the full
 # weight; further out it decays linearly to nothing at DECAY_DAYS.
@@ -156,14 +176,29 @@ def _windows_by_company() -> dict[str, dict]:
     return out
 
 
-def _contacts_by_company(conn) -> set[str]:
+def _contact_companies(conn) -> list[str]:
+    """Every company someone in sources/contacts.toml works at.
+
+    Fixed 2026-10-20. This used to read `SELECT company FROM contacts`, a
+    column that table has never had (it stores company_id), and the except
+    below swallowed the error, so the referral weight had never once fired.
+    It now joins the way `agent/contacts.for_company` does, and matching goes
+    through the same `_same_company`, so the page and the digest agree on who
+    he knows where.
+    """
     try:
-        return {
-            (r[0] or "").strip().lower()
-            for r in conn.execute("SELECT company FROM contacts")
-        }
+        return [
+            r[0] for r in conn.execute(
+                "SELECT co.name FROM contacts c "
+                "JOIN companies co ON co.id = c.company_id"
+            ) if r[0]
+        ]
     except sqlite3.Error:
-        return set()
+        return []
+
+
+def _has_contact(company: str, known: list[str]) -> bool:
+    return any(contacts_mod._same_company(company, k) for k in known)
 
 
 def score_posting(row: dict, window: dict | None, has_contact: bool) -> dict:
@@ -189,6 +224,16 @@ def score_posting(row: dict, window: dict | None, has_contact: bool) -> dict:
     elif tier == 4:
         score += WEIGHTS["tier4"]
         reasons.append("tier 4, probably not worth it")
+
+    # His own reach override wins, exactly as it does for the tier.
+    reach = row.get("reach_override")
+    if reach is None:
+        reach = row.get("reach_score")
+    if reach is not None:
+        score += WEIGHTS["reach"] * (int(reach) - REACH_NEUTRAL)
+        reasons.append(
+            f"reach {reach}" + (", a long shot" if int(reach) <= REACH_NEUTRAL else "")
+        )
 
     if (row.get("label") or "") == "interested":
         score += WEIGHTS["interested"]
@@ -238,7 +283,7 @@ def do_next(conn, limit: int = DO_NEXT_LIMIT) -> list[dict]:
     dropping them would hide exactly the roles that are closing soonest.
     """
     windows = _windows_by_company()
-    contacts = _contacts_by_company(conn)
+    known = _contact_companies(conn)
     conn.row_factory = sqlite3.Row
     rows = [
         _row(r)
@@ -250,7 +295,7 @@ def do_next(conn, limit: int = DO_NEXT_LIMIT) -> list[dict]:
     scored = []
     for row in rows:
         key = (row.get("company") or "").strip().lower()
-        verdict = score_posting(row, windows.get(key), key in contacts)
+        verdict = score_posting(row, windows.get(key), _has_contact(row.get("company") or "", known))
         if verdict["score"] <= 0:
             continue
         row.update(verdict)

@@ -70,9 +70,11 @@ them and do not let them influence the numbers.
 **fit** is how much this candidate would want this role if it were handed to him today. It is
 about the work, not about whether he would get it.
 
-**reach** is how likely he is to clear the bar, where 10 means he clears it comfortably and 1
-means a long shot. Judge it against his profile, the posting's stated requirements, and the
-employer's known selectivity.
+**reach** is how likely he is to get an interview and then an offer, where 10 means he clears
+the bar comfortably and 1 means a long shot. Judge it against his profile, the posting's stated
+requirements, and how this kind of employer actually screens: who reads the resume, whether an
+online assessment and a resume filter stand in front of any human, and how many people apply.
+Reach now decides whether a role reaches his daily email, so score it as carefully as fit.
 
 The two are independent. A dream role at the most selective lab in the world is fit 10, reach
 2, and that is a useful, correct answer. Do not let a low reach pull the fit down or the other
@@ -121,16 +123,20 @@ work. Agentic workflow and AI automation roles at any employer, where the job is
 agents into a real business process; titles like AI automation, workflow automation or AI
 operations engineer count when the posting describes that work. Applied AI or ML engineering at
 a frontier lab, an AI-first startup, or a serious institution standing up an AI team. Forward
-deployed engineer roles anywhere, which value the economics plus technical profile and rarely
-require a CS degree.
+deployed engineer, deployment strategist and AI-focused solutions engineer roles anywhere,
+which value the economics plus technical profile and rarely require a CS degree.
+
+**8 to 10, named explicitly.** Three kinds of role score at least 8 whatever band their wording
+suggests: forward deployed roles, applied AI roles, and AI for finance, meaning LLM or agent
+work for investment research, private equity, diligence, banking or a fintech's own AI team.
+The last is the exact overlap of the AI and institutional investing experience. Score these high,
+not low, despite a finance employer.
 
 **7 to 8.** Strongly adjacent. AI or ML research and product internships. Software engineering
-at an AI-first company. AI and agent teams inside finance employers, which is a real and
-growing category that the institutional investing plus AI combination fits unusually well; score
-these high, not low, despite the finance employer. Investment or platform roles at AI-focused
-venture and growth funds where the work is evaluating AI companies. Data science, data
-engineering, analytics engineering and data pipeline roles at any credible employer, with or
-without AI content, because building and modelling with data is work he has already done.
+at an AI-first company. Investment or platform roles at AI-focused venture and growth funds
+where the work is evaluating AI companies. Data science, data engineering, analytics
+engineering and data pipeline roles at any credible employer, with or without AI content,
+because building and modelling with data is work he has already done.
 
 **5 to 6.** Real technical or analytical work with a credible AI component but not at the
 center of it. General software engineering at a strong technology or product employer with no
@@ -155,7 +161,7 @@ through this in order and stop at the first line that matches.
 
 1. Does the posting describe any AI or ML content, on any team, at any depth? If yes, this
    section does not apply at all. Score it on the bands above, where the AI and finance overlap
-   is explicitly 7 to 8.
+   is explicitly 8 to 10.
 2. Is the work data science, data engineering, analytics engineering or building data
    pipelines? Score 7 to 8, at any employer and in any industry. This is the second thing he
    named and where the a nonprofit work and econometrics land.
@@ -183,34 +189,53 @@ text at all is scored by the section below, never as if it said nothing.
 
 ## Reach, 1 to 10
 
-**9 to 10.** Explicitly open to second and third year students of any major. No requirement he
-does not already meet. A broad program or a smaller employer that hires widely.
+Reach is about how hiring really screens, not only about the requirements printed on the
+posting. The same stated requirements mean a different chance at a 40-person startup where a
+founder reads every application than at a program that receives tens of thousands and filters
+by resume keywords and an online assessment first.
 
-**7 to 8.** A standard undergraduate internship at a company that hires a real cohort. He
-meets the stated requirements on paper. Nothing in the posting is a hard blocker.
+**8 to 10.** Where his record is direct evidence and a person, not a filter, reads it.
+AI-native startups, roughly seed through Series C, hiring applied AI, AI engineering or forward
+deployed interns: shipped production agents and evals are exactly what they screen for.
+Vertical AI companies selling to finance, private equity, investment research or diligence,
+where the institutional investing plus AI combination is the closest thing to a domain match an
+undergraduate can have. Forward deployed and solutions engineering roles anywhere that value economics plus
+technical depth. Within this band, an explicit welcome for students of any major or year, and
+no requirement he does not meet, is 9 or 10.
 
-**5 to 6.** Competitive but plausible. He meets most requirements and misses preferred ones,
-for example a preference for CS coursework, a specific framework, or prior experience in the
-exact domain.
+**6 to 7.** Credible and competitive. AI or data teams inside fintechs and finance employers.
+Applied AI teams at mid-size technology companies. The AI arms of consulting firms. Structured
+forward deployed programs at larger employers, Palantir's being the model. A standard
+undergraduate internship at a company that hires a real cohort and where he meets the stated
+requirements on paper also starts here.
 
-**3 to 4.** Very selective, or he meets the requirements only partly. Small cohorts at the
-frontier labs. Roles asking for significant production engineering experience or a stack that
-does not appear anywhere in his background.
+**4 to 5.** Large, structured big-tech software or ML intern programs that screen at high volume
+with online assessments. Resume filters there favor CS majors and CS coursework, so his
+realistic reach is lower than the paper requirements suggest, even where he meets every one of
+them. Also: roles where he meets most requirements and misses preferred ones that the employer
+is likely to enforce, such as a specific framework or prior experience in an exact domain.
 
-**1 to 2.** A stated requirement he plainly does not meet, short of the ones that would have
-killed the posting earlier. Two or more years of professional experience. A graduate degree
-preferred so strongly that undergraduates are not realistically considered. A graduation year
-that excludes him. Or the very smallest and most selective programs.
+**2 to 3.** Frontier lab internships and research roles, which run tiny cohorts and prefer
+publications. Anything asking for significant production experience in a stack that appears
+nowhere in his background.
+
+**1.** A stated requirement he plainly does not meet, short of the ones that would have killed
+the posting earlier: two or more years of professional experience, a graduate degree preferred
+so strongly that undergraduates are not realistically considered, or a graduation year that
+excludes him.
 
 Rules that override the anchors:
 
-- Not being a CS major does not reduce reach on its own, for any role, including software and
-  ML roles. Reduce it only when the posting itself states a requirement he does not meet.
+- Not being a CS major does not reduce reach at startups or in forward deployed, solutions
+  engineering or applied AI roles, where shipped work is what is read. It may reduce reach by 1
+  or 2 at high-volume, assessment-gated big-tech programs, where a resume filter reads the major
+  before anyone reads the work. Nowhere else.
 - GPA is not a penalty unless the posting states a higher floor.
-- The finance, AI and CubeSat roles are real, substantive experience. Count them.
-  He is not a candidate with no track record.
+- The finance, AI and CubeSat roles are real, substantive experience, and the agent
+  work among them is shipped production engineering. Count them. He is not a candidate with no
+  track record.
 - When a posting states no requirements at all, do not assume the worst. Score the reach on
-  the employer's selectivity alone and stay near the middle.
+  the employer's type and selectivity using the anchors above.
 
 ## When there is no posting text
 
@@ -227,8 +252,10 @@ and the absence of a statement is not evidence of anything.
   Intern" does, score the middle of the range the employer makes plausible, not the bottom. In
   the engineering steps above, step 1 cannot be answered without text, so do not continue to
   steps 3 or 4: a finance employer with an open title is 5, not 3 to 4.
-- Score reach 5 or 6 unless the title itself states a blocker, such as PhD, senior, or a
-  graduation year that excludes him.
+- Score reach from the employer's type using the reach anchors, since how an employer screens
+  is common knowledge even when the posting is missing, but no higher than 7, because the
+  requirements are unknown. Lower it only if the title itself states a blocker, such as PhD,
+  senior, or a graduation year that excludes him.
 - Begin the reason with "No description:" so he can see which scores were made blind. Then name
   what the score rests on, for example "No description: AI-titled role at a quant fund."
 
@@ -278,15 +305,26 @@ is applied afterwards in code.
 min = 1
 max = 10
 
-# Tier is derived from fit, highest band first. The bands must descend and the
-# last one must reach scores.min, so every possible score lands in exactly one
-# tier. delivery is read by the Milestone 7 email logic:
+# Tier is derived from BOTH scores since 2026-10-20. Bands are matched in tier
+# number order and a posting takes the first band it clears: fit at or above
+# min_fit AND reach at or above min_reach. A band with no min_reach accepts any
+# reach. A posting that misses a band on either axis falls through to the next.
+# tools.rubric_check prints the full 10 by 10 grid and fails if any pair lands
+# in no tier or if a band can never be reached. delivery is read by the Milestone 7 email logic:
 #   daily   the daily digest
 #   sunday  the Sunday roundup
 #   never   stored in SQLite and never emailed
+#
+# Why reach is in the tier. On 2026-10-20 the owner retargeted the agent from
+# "roles I'd most want" to "roles I'm most likely to land": interviews and
+# offers are now the objective. Until then a fit 9 frontier-lab internship with
+# reach 2 was tier 1 and sat in the daily email beside roles he could actually
+# win. Now tier 1 is good fit he can realistically get, and a high-fit long
+# shot drops to tier 2, the Sunday roundup, carrying the REACH label.
 [[tier]]
 number = 1
-min_fit = 8
+min_fit = 7
+min_reach = 6
 delivery = "daily"
 
 [[tier]]
@@ -296,6 +334,8 @@ min_fit = 6
 # interrupt the owner. Tier 1 is that set;
 # tier 2 is the good-but-not-urgent band and it collects into the Sunday
 # roundup, where he reads it in one sitting instead of four times a week.
+# Since 2026-10-20 it also holds every fit 7 to 10 role that missed tier 1 on
+# reach, so it is where the long shots worth a look are.
 delivery = "sunday"
 
 [[tier]]
@@ -311,7 +351,13 @@ delivery = "never"
 [reach]
 # A posting that gets emailed with reach at or below this carries the `reach`
 # flag, which prints as REACH so the stretch is visible before he clicks.
-flag_at_or_below = 4
+#
+# 5, raised from 4 on 2026-10-20 to sit one below tier 1's min_reach. A fit 9
+# role with reach 5 now misses tier 1 on reach alone, and without the flag it
+# would arrive in the Sunday roundup looking like an ordinary tier 2 posting
+# with no hint of why it was held back. Keep this at tier 1's min_reach minus
+# one if either moves.
+flag_at_or_below = 5
 
 [[tier_cap]]
 # Added 2026-09-25 at the owner's instruction: at vehicle and autonomy employers,
@@ -370,8 +416,25 @@ unless_title = [
 # scores together clear stage_c_min_combined, or fit alone clears
 # stage_c_min_fit. The second exists so a high-fit long shot is never decided by
 # the cheap model just because its reach was low. Raise either to cut spend.
-stage_c_min_combined = 12
-stage_c_min_fit = 8
+#
+# 13, raised from 12 on 2026-11-03 to cut Sonnet spend, which is most of the
+# ranking bill. 13 is the lowest combined score tier 1 can have (fit 7, reach 6),
+# so a posting the cheap model already places below tier 1 is no longer sent to
+# the expensive model just to confirm it. Of the 517 postings Sonnet scored from
+# 2026-10-12, the 72 that finished at exactly 12 went 71 to tier 2 and 1 to tier
+# 3, and none reached tier 1 below 13. stage_c_min_fit is unchanged, so a fit 8
+# long shot still gets the expensive read whatever its reach.
+#
+# stage_c_min_fit 9, raised from 8 on 2026-11-10 at the owner's instruction to cut
+# spend again. Of the 154 postings Sonnet scored from 2026-11-04 to 2026-11-10,
+# 52 finished at a combined 12 or below. Those can only have been sent on the
+# fit rule, and none reached tier 1. A fit 8 posting with low reach lands in
+# tier 2 whichever model scores it, so the expensive read was only choosing
+# between tier 2 and tier 3, both Sunday roundup. stage_c_min_combined stays at
+# 13 on purpose, so every posting heading for the daily email still gets the
+# expensive model's confirmation.
+stage_c_min_combined = 13
+stage_c_min_fit = 9
 
 [queue]
 # Which surfaced postings the ranker is willing to spend on, added 2026-09-20.
@@ -398,7 +461,18 @@ stage_c_min_fit = 8
 # because a posting outside it is never scored, and since the same day an
 # unscored posting is also never emailed. The machinery stays because it is the
 # right shape if the cost ever moves.
-max_age_days = 0
+#
+# 7, set on 2026-11-03. The cost did move. Anthropic cut the API key off from
+# 2026-10-22 to 2026-11-01, nothing was scored for nine days, and 1,011 surfaced
+# postings were waiting when access returned, 693 of them more than a week old.
+# Every run since has spent its leftover calls on those, which is most of
+# November's first $2. The owner has said a posting older than about a week is
+# useless to him even at tier 1, so scoring them buys nothing. The hole the
+# paragraph above describes is closed from the other side: daily.include_unscored
+# in sources/email.toml went back on the same day, as CLAUDE.md rule 10 requires
+# for any window, so a posting that misses scoring is still emailed while it is
+# new. Labelled-interested postings are still scored at any age (below).
+max_age_days = 7
 
 # Newest first inside the window, so a capped run spends on the freshest thing
 # it can see. This reverses the old oldest-first order, which existed to drain a
@@ -433,7 +507,15 @@ always_score_labelled = ["interested"]
 # `tools.rank_report` runs against about $4.40 for scheduled runs. Measured
 # scheduled cost is $0.0055 to $0.008 a scored posting, and the 102 postings
 # waiting when it was raised were estimated at about $0.60 to clear.
-monthly_usd = 20.0
+#
+# 10, lowered from 20 on 2026-11-03 at the owner's instruction that monthly spend
+# must not approach $30. Ordinary October days ran $0.45 to $0.60, about $14 to
+# $18 a month, before three cuts made the same day (scoring once a day, the
+# Stage C bar at 13, the seven day queue window). This ceiling also has to trip
+# before the spend limit on the Anthropic account does: that limit cut the key
+# off on 2026-10-22 while this file still read $20, and an Anthropic cutoff stops
+# Stage 0 tagging as well as ranking, where this pause stops ranking only.
+monthly_usd = 10.0
 warn_fraction = 0.8
 stop_fraction = 1.0
 

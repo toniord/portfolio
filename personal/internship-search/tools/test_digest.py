@@ -101,7 +101,11 @@ def test_split_holds_back_the_right_things():
     for i, tier in enumerate([1, 2, 3, 4, None]):
         add(conn, n=i, hash=f"h{i}", identity=f"i{i}", tier=tier, fit_score=tier,
             title=f"Role {i}")
-    split = delivery.split_daily(rows(conn))
+    # The switch is pinned off here rather than read live, so this case keeps
+    # testing the exclusion whichever way sources/email.toml is set. It went back
+    # on 2026-11-03 with the seven day queue window; the "on" half is below.
+    rules_off = {"daily": {"include_unscored": False, "max_items": 36}}
+    split = delivery.split_daily(rows(conn), email_rules=rules_off)
     check("daily carries tier 1 alone", len(split["shown"]), 1)
     check("tiers 2 and 3 are held for the roundup", split["held_for_roundup"], 2)
     check("tier 4 is never emailed", split["not_emailed"], 1)
@@ -121,6 +125,18 @@ def test_split_holds_back_the_right_things():
         [r for r in split["shown"] if r.get("tier") in (None, 0)],
         [],
     )
+    on = delivery.split_daily(
+        rows(conn), email_rules={"daily": {"include_unscored": True, "max_items": 36}})
+    check("with the switch on the unscored posting rides along",
+          len([r for r in on["shown"] if r.get("tier") in (None, 0)]), 1)
+    check("and tier 1 still leads", on["shown"][0].get("tier"), 1)
+    # CLAUDE.md rule 10: a scoring window with this switch off strands every
+    # posting older than the window. Read the live files so the pairing fails
+    # here rather than silently in production.
+    window = int((rubric.settings().get("queue") or {}).get("max_age_days", 0) or 0)
+    live_on = bool((delivery.rules().get("daily") or {}).get("include_unscored"))
+    check("a queue window is never paired with include_unscored off",
+          window == 0 or live_on, True)
 
 
 def test_cap_does_not_consume_what_it_hides():
@@ -253,6 +269,16 @@ def test_urgent_triggers():
     # An empty tier list must match nothing, not everything.
     check("no urgent tiers means no urgent mail", len(db.urgent_by_age(conn2, [], 10)), 0)
 
+    # The stale trigger can be switched off on its own, leaving deadlines on.
+    conn3 = make_db()
+    add(conn3, n=0, hash="old", identity="a", tier=1, first_seen=ts(20))
+    add(conn3, n=1, hash="due", identity="b", tier=1, stated_deadline=soon)
+    on = delivery.urgent_content(conn3, {"urgent": {"tiers": [1]}})
+    check("stale fires by default", len(on["stale_rows"]), 1)
+    off = delivery.urgent_content(conn3, {"urgent": {"tiers": [1], "stale_enabled": False}})
+    check("stale_enabled false sends no stale rows", off["stale_rows"], [])
+    check("and leaves the deadline trigger on", [r["hash"] for r in off["deadline_rows"]], ["due"])
+
 
 def test_roundup_is_owed_by_the_week_not_by_the_day():
     """The trap: a laptop closed all Sunday must not lose the week's roundup.
@@ -378,6 +404,46 @@ def test_referrals_reach_the_email():
     referrals = delivery.referrals_for(conn, split["shown"])
     _, body = notify.build_digest(split, [], {}, referrals=referrals)
     check("a referral appears beside the role", "REFERRAL: Jordan Example" in body, True)
+
+
+def test_do_next_weighs_reach_and_referrals():
+    """Added 2026-10-20, when hit rate became the dashboard's objective too."""
+    from agent import dashboard
+
+    likely = dashboard.score_posting({"tier": 2, "reach_score": 8}, None, False)
+    long_shot = dashboard.score_posting({"tier": 2, "reach_score": 2}, None, False)
+    check("a tier 2 role he can win outranks a tier 2 long shot",
+          likely["score"] > long_shot["score"], True)
+    check("reach is printed among the reasons", "reach 8" in likely["reasons"], True)
+    check("a long shot says so", "reach 2, a long shot" in long_shot["reasons"], True)
+    check("his reach override wins over the model's",
+          "reach 9" in dashboard.score_posting(
+              {"tier": 2, "reach_score": 3, "reach_override": 9}, None, False)["reasons"],
+          True)
+    check("an unscored posting is neutral on reach",
+          dashboard.score_posting({}, None, False)["score"], 0.0)
+    tier1_long = dashboard.score_posting({"tier": 1, "reach_score": 1}, None, False)
+    check("reach reorders within a tier but a tier 1 still beats a tier 2",
+          tier1_long["score"] > dashboard.score_posting(
+              {"tier": 2, "reach_score": 6}, None, False)["score"], True)
+
+    # The referral weight never fired before this date: the page read a
+    # `company` column the contacts table does not have and swallowed the error.
+    conn = make_db()
+    conn.execute("INSERT INTO companies (name) VALUES ('Northwind Analytics Group')")
+    conn.execute("INSERT INTO contacts (name, company_id, relationship) "
+                 "VALUES ('Test Contact', 1, 'test fixture')")
+    conn.commit()
+    add(conn, n=1, hash="a", identity="a", tier=2, reach_score=6, fit_score=7,
+        company="Northwind Analytics Group", title="AI Analyst Intern")
+    add(conn, n=2, hash="b", identity="b", tier=2, reach_score=6, fit_score=7,
+        company="Acme", title="AI Analyst Intern")
+    top = dashboard.do_next(conn)
+    check("a posting where he knows someone ranks first",
+          top[0]["company"], "Northwind Analytics Group")
+    check("and says why", "you know someone here" in top[0]["reasons"], True)
+    check("the referral is a strong boost, at least a tier's worth",
+          top[0]["score"] - top[1]["score"] >= dashboard.WEIGHTS["tier2"], True)
 
 
 def test_killed_closures_are_counted_not_listed():
@@ -743,6 +809,67 @@ def test_vehicle_employers_keep_tier_1_for_ai():
           rubric.capped_tier(1, "", "Anything", {"tier_cap": [{"best_tier": 4}]}), 1)
 
 
+def test_reach_decides_the_tier_at_the_edges():
+    """Added 2026-10-20, when tier 1 started requiring a minimum reach.
+
+    The edge cases are read off the live rubric, so they pin the bands the owner
+    asked for and are expected to be edited when he edits them. The synthetic
+    configs at the end pin the validator, which must not move with the rubric.
+    """
+    from agent import ranker
+
+    cfg = rubric.settings()
+    t = lambda fit, reach: rubric.tier_for(fit, reach, cfg)["number"]
+    check("fit 7 reach 6 is the corner of tier 1", t(7, 6), 1)
+    check("fit 10 reach 10 is tier 1", t(10, 10), 1)
+    check("fit 7 reach 5 misses tier 1 on reach", t(7, 5), 2)
+    check("fit 10 reach 5 is a long shot, tier 2", t(10, 5), 2)
+    check("fit 10 reach 1 is tier 2, not dropped", t(10, 1), 2)
+    check("fit 6 reach 10 is tier 2, reach cannot lift fit", t(6, 10), 2)
+    check("fit 6 reach 1 is tier 2", t(6, 1), 2)
+    check("fit 5 reach 10 is tier 3", t(5, 10), 3)
+    check("fit 4 reach 1 is tier 3", t(4, 1), 3)
+    check("fit 3 reach 10 is tier 4", t(3, 10), 4)
+    check("fit 1 reach 1 is tier 4", t(1, 1), 4)
+    table = rubric.grid(cfg)
+    check("all 100 pairs land in a tier",
+          sum(1 for v in table.values() if v is not None), 100)
+
+    answer = {"fit": 9, "reach": 3, "reason": "x"}
+    settle = lambda **p: ranker.settle(
+        {"company": "Example", "title": "AI Engineer Intern", **p},
+        answer, "stage_c", cfg)
+    check("a fit 9 reach 3 answer settles in tier 2", settle()["tier"], 2)
+    check("and is delivered on Sunday", settle()["delivery"], "sunday")
+    check("and carries REACH", "reach" in settle()["flags"], True)
+    check("his reach override lifts it to tier 1", settle(reach_override=7)["tier"], 1)
+    check("the model's reach is still stored", settle(reach_override=7)["reach"], 3)
+    check("his fit override can drop it out of tier 1",
+          settle(fit_override=5, reach_override=8)["tier"], 3)
+    check("a cap still applies after reach decides the tier",
+          ranker.settle({"company": "Figure", "title": "Robotics Intern"},
+                        {"fit": 9, "reach": 8, "reason": "x"}, "stage_c", cfg)["tier"], 2)
+
+    base = {"scores": {"min": 1, "max": 10}, "reach": {"flag_at_or_below": 4},
+            "routing": {"stage_c_min_combined": 12, "stage_c_min_fit": 8},
+            "variance": {"sample_fraction": 0.1, "max_mean_delta": 1.0},
+            "few_shot": {"per_label": 1}}
+    def problems(*bands):
+        return rubric.validate({**base, "tier": [
+            {"number": n, "delivery": "daily", **b} for n, b in enumerate(bands, 1)]})
+    check("fit-only bands still validate",
+          problems({"min_fit": 8}, {"min_fit": 1}), [])
+    check("a reach band with no fallback for its own fit is a gap",
+          any("land in no tier" in p for p in problems(
+              {"min_fit": 7, "min_reach": 6}, {"min_fit": 1, "min_reach": 2})), True)
+    check("a band an earlier one shadows is unreachable",
+          any("unreachable" in p for p in problems(
+              {"min_fit": 1}, {"min_fit": 7, "min_reach": 6})), True)
+    check("min_reach outside the score range is refused",
+          any("min_reach 11" in p for p in problems(
+              {"min_fit": 7, "min_reach": 11}, {"min_fit": 1})), True)
+
+
 def test_a_board_down_for_days_is_named():
     """Added 2026-09-25, after DeepMind 404ed for three weeks in the footer."""
     from agent import emailhtml
@@ -806,12 +933,14 @@ def main() -> int:
         test_a_late_score_is_still_new,
         test_emails_build_and_suppress,
         test_referrals_reach_the_email,
+        test_do_next_weighs_reach_and_referrals,
         test_killed_closures_are_counted_not_listed,
         test_html_half_keeps_the_digest_readable,
         test_send_never_raises,
         test_html_keeps_every_line,
         test_monthly_budget_pauses_ranking_without_stranding,
         test_vehicle_employers_keep_tier_1_for_ai,
+        test_reach_decides_the_tier_at_the_edges,
         test_a_board_down_for_days_is_named,
         test_retired_sources_close_but_his_rows_stay,
     ]:

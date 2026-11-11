@@ -1208,6 +1208,132 @@ ats = "ashby"
 token = "basis-ai"
 category = "applied-ai"
 
+# ------------------------------------------- hit-rate targets, added 2026-10-20
+#
+# Added when the agent was retargeted from "roles he would most want" to "roles
+# he is most likely to land". These are the employers where the rubric's reach
+# anchors put him highest: vertical AI for finance, applied AI and forward
+# deployed work, and the AI and data teams inside fintechs. Every token was
+# probed live with tools.probe_tokens on 2026-10-20 and its sample postings
+# checked against the right company before it went in.
+#
+# Already on the map under other sections and deliberately not repeated: Rogo,
+# AlphaSense, Sierra, Decagon, Harvey, Glean, Palantir, Scale AI, Writer, Ramp.
+# Brightwave and Daloopa could not be reached; see needs-other-approach.md.
+
+[[company]]
+name = "Hebbia"
+ats = "ashby"
+token = "hebbia-ai"
+category = "ai-finance"
+notes = "AI research for finance. Posts Forward Deployed Banker and Investor roles. Was on the unreachable list until the hyphenated token was found 2026-10-20."
+
+[[company]]
+name = "Clay"
+ats = "ashby"
+token = "claylabs"
+category = "applied-ai"
+notes = "GTM data and agent platform. Posts Deployment Strategist roles. Was on the unreachable list until 2026-10-20."
+
+[[company]]
+name = "Brex"
+ats = "greenhouse"
+token = "brex"
+category = "fintech-ai"
+
+[[company]]
+name = "Mercury"
+ats = "greenhouse"
+token = "mercury"
+category = "fintech-ai"
+notes = "Greenhouse, not Ashby; the Ashby token of the same name resolves with 0 postings."
+
+[[company]]
+name = "Plaid"
+ats = "ashby"
+token = "plaid"
+category = "fintech-ai"
+
+# Approved by the owner 2026-10-22 from the startup list proposed on 2026-10-20.
+# Tokens re-probed and sample titles checked the same day. Hyperbound,
+# Mintlify, Attio and Legora were proposed and left out on purpose.
+
+[[company]]
+name = "Distyl AI"
+ats = "ashby"
+token = "distyl"
+category = "applied-ai"
+notes = "Forward deployed AI firm; posts AI Engineer and AI Strategist roles."
+
+[[company]]
+name = "Samaya AI"
+ats = "greenhouse"
+token = "samayaai"
+category = "ai-finance"
+notes = "AI for financial research. Had an ML Research Intern open on 2026-10-22."
+
+[[company]]
+name = "Rillet"
+ats = "ashby"
+token = "rillet"
+category = "ai-finance"
+notes = "AI accounting. Posts deployment team roles."
+
+[[company]]
+name = "Numeric"
+ats = "ashby"
+token = "numeric"
+category = "ai-finance"
+notes = "AI accounting close software."
+
+[[company]]
+name = "Campfire"
+ats = "ashby"
+token = "campfire"
+category = "ai-finance"
+notes = "AI accounting software."
+
+[[company]]
+name = "Tabs"
+ats = "ashby"
+token = "tabs"
+category = "ai-finance"
+notes = "AI billing for finance teams, NYC."
+
+[[company]]
+name = "Factory"
+ats = "ashby"
+token = "factory"
+category = "applied-ai"
+notes = "Coding agents. Posts Forward Deployed Engineer and Solutions Engineer roles."
+
+[[company]]
+name = "Sola"
+ats = "ashby"
+token = "sola"
+category = "applied-ai"
+notes = "AI process automation."
+
+[[company]]
+name = "Crosby"
+ats = "ashby"
+token = "crosby"
+category = "applied-ai"
+notes = "AI law firm."
+
+[[company]]
+name = "Invisible Technologies"
+ats = "greenhouse"
+token = "invisibletech"
+category = "applied-ai"
+
+[[company]]
+name = "Unify"
+ats = "ashby"
+token = "unify"
+category = "applied-ai"
+notes = "Sales and marketing agents. Ashby, not Lever: lever:unify is a different company."
+
 # ------------------------------------------------------------------- workday
 #
 # How Workday boards are polled, not which ones exist. Added 2026-08-19.

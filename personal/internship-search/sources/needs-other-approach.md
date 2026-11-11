@@ -44,8 +44,8 @@ under two source keys.
 
 ## Still uncovered, and still worth building for
 
-Bridgewater Associates, Balyasny Asset Management, Castelion, Hadrian, Clay, Greylock,
-Insight Partners.
+Bridgewater Associates, Balyasny Asset Management, Castelion, Hadrian, Greylock, Insight
+Partners. (Clay was here until 2026-10-20; it is on Ashby as `claylabs` and now mapped.)
 
 These appear in neither a supported board nor the feeds. They are a real gap. Hand-check
 them during peak season.
@@ -112,12 +112,13 @@ Space, Karman, Venus Aerospace, Boom Supersonic, Axiom Space, Zeno Power, Starfi
 Space, Aetherflux, Astro Mechanica, Voyager Technologies, Overland AI, Rune Technologies,
 Theseus, Firestorm Labs, Second Front Systems, Machina Labs, Freeform, Nominal.
 
-AI: Clay, Groq, Hugging Face, Weights & Biases, Windsurf (now part of Cognition, which is
-covered), Hebbia, EvenUp, Surge AI, Qdrant, Replicate, CrewAI, Hippocratic AI, Skild AI, Zipline,
+AI: Groq, Hugging Face, Weights & Biases, Windsurf (now part of Cognition, which is
+covered), EvenUp, Surge AI, Qdrant, Replicate, CrewAI, Hippocratic AI, Skild AI, Zipline,
 Kodiak Robotics, Gatik, Sakana AI, Decart, Captions, Higgsfield, Genesis AI.
 
-Castelion, Hadrian and Clay were already on the uncovered list above and remain there; the extra
-spellings tried on 2026-08-13 did not find them either.
+Castelion and Hadrian were already on the uncovered list above and remain there; the extra
+spellings tried on 2026-08-13 did not find them either. Clay and Hebbia were on this list
+until 2026-10-20, when `claylabs` and `hebbia-ai` on Ashby turned out to be their boards.
 
 ## Resolved, but deliberately not added
 
@@ -126,8 +127,9 @@ failure. Recorded so nobody re-probes them and assumes they were missed.
 
 Wayve, Waabi, Parloa, PolyAI and Langfuse are real and sit almost entirely outside the United
 States, so nearly every posting would die in the location filter. ClickHouse, Neon, Zilliz,
-Mercury, Brex, Vanta and Sardine resolve and are healthy but are database or fintech companies
-rather than AI ones, and the map is already long. Stability AI returns 5 postings, none
+Vanta and Sardine resolve and are healthy but are database or fintech companies rather than
+AI ones, and the map is already long. Mercury and Brex were here too until 2026-10-20, when
+the retarget toward hit rate made fintech AI and data teams worth watching and both were added. Stability AI returns 5 postings, none
 technical. Add any of them by copying an entry in `companies.toml`; nothing else is needed.
 
 ## Workday, built 2026-08-19, and what it did and did not reach
@@ -163,3 +165,14 @@ both return zero postings. A board that answers correctly with nothing behind it
 indistinguishable from a healthy one, which is exactly how Mistral, Optiver and Hudson
 River Trading stayed invisible for a day. They are not in `companies.toml` for that
 reason. If either starts returning postings, add it then.
+
+## Hit-rate targets that could not be reached, 2026-10-20
+
+Probed when the agent was retargeted toward roles he is most likely to land.
+
+- Daloopa. Its careers page embeds a Rippling job board (`ripplingcdn.com/ats/embeds`), which
+  none of the four fetchers speak. No Greenhouse, Lever or Ashby token answers. Hand-check
+  daloopa.com/careers during peak season.
+- Brightwave. No Greenhouse, Lever or Ashby token answers under brightwave, brightwaveai,
+  brightwave-ai, brightwaveio, brightwave-io, brightwavehq or brightwavelabs, and
+  brightwave.io/careers returns 404. Hand-check through its homepage or LinkedIn.

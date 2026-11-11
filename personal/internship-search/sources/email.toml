@@ -57,7 +57,14 @@ stale_source_days = 3
 #   3. The dashboard exists. `tools.dashboard` lists unscored postings in its
 #      leverage panel, so "not emailed" no longer means "invisible", which was
 #      the whole basis of rule 10's objection.
-include_unscored = false
+#
+# Back to true on 2026-11-03, because condition 2 stopped being true on purpose:
+# `queue.max_age_days` is now 7, to stop spending on postings the owner has said are
+# too old to matter. With a window, this switch is what keeps a new posting that
+# missed scoring from reaching nothing. In practice it rarely shows anything,
+# because the evening run scores the whole day (up to 300 calls) before the
+# digest builds; it shows only on a heavy day, which is exactly when it matters.
+include_unscored = true
 
 
 [actions]
@@ -177,6 +184,13 @@ deadline_within_hours = 72
 # him to ignore the urgent email, which is the only failure this feature has.
 stale_after_days = 10
 stale_needs_action = true
+
+# Off since 2026-10-22, at the owner's request: "tier 1 roles that are old are
+# useless. timing matters." This trigger only ever carries roles older than
+# stale_after_days, so it was sending exactly what he no longer wants. The
+# deadline trigger above is unaffected. Also switches off the matching "Tier 1
+# untouched" calendar events in agent/gcal.py, which are the same judgement.
+stale_enabled = false
 
 
 [collapse]
