@@ -360,6 +360,16 @@ def diff_against_published(name: str, built: Path, rules: dict) -> list[str]:
     return diffs
 
 
+def removed_since_published(name: str, built: Path, rules: dict) -> list[str]:
+    """Files in the published copy that the new build no longer contains."""
+    published = project_dir(rules) / name
+    if not published.exists():
+        return []
+    have = {p.relative_to(built).as_posix() for p in files_under(built)}
+    return sorted(p.relative_to(published).as_posix() for p in files_under(published)
+                  if p.relative_to(published).as_posix() not in have)
+
+
 def chunk(diffs: list[str], limit: int) -> list[str]:
     batches, current = [], ""
     for d in diffs:
@@ -542,13 +552,21 @@ def sync_one(name: str, src: Path, rules: dict, private: dict, args) -> None:
         built = Path(tmp)
         sha = build(name, src, rules, private, built)
         diffs = diff_against_published(name, built, rules)
-        if not diffs:
+        # A file dropped from the build (a new exclude) is a change too. It needs no
+        # review, since removing content cannot leak anything, but without this an
+        # exclude on its own never publishes and the file stays public.
+        removed = removed_since_published(name, built, rules)
+        if removed:
+            print(f"{name}: {len(removed)} file(s) will be removed: {', '.join(removed)}")
+        if not diffs and not removed:
             print(f"{name}: nothing changed since the last publish ({sha})")
             save_status(name, state="current", sha=sha)
             return
         digest = hashlib.sha256("\n".join(diffs).encode()).hexdigest()
         prior = load_status().get(name, {})
-        if args.approve_review and prior.get("state") == "blocked" and prior.get("digest") == digest:
+        if not diffs:
+            pass  # removals only: nothing for the review to read
+        elif args.approve_review and prior.get("state") == "blocked" and prior.get("digest") == digest:
             print(f"{name}: publishing the blocked change you approved")
         else:
             if args.approve_review:
