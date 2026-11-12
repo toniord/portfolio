@@ -121,7 +121,7 @@ path = "README.md"
 from = "tools/overlays/apartment-chores/README.md"
 
 [projects.internship-search]
-exclude = ["MY_SEARCH.md", "NEXT_STEPS.md", "PRD.md", "CHANGELOG.md"]
+exclude = ["MY_SEARCH.md", "NEXT_STEPS.md", "PRD.md", "CHANGELOG.md", "sources/needs-other-approach.md"]
 
 [[projects.internship-search.overlay]]
 path = "README.md"
