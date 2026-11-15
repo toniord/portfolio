@@ -33,7 +33,8 @@ data.
   firm with eight Claude Code skills and parallel subagents, labeling every claim with a
   confidence band and source type. A blocking audit sends each problem back for one retry,
   every model call is read-only with a spend cap, and its labeling scores 92% on a 50-claim
-  eval against 86% for a human scorer. 81 tests.
+  eval against 86% for a human scorer. 96 tests. Includes a
+  [sample dossier](qofai/pe-research-agent/sample-dossier-revelar-capital.md) on a real firm.
 
 <!-- projects:start -->
 

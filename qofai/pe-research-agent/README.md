@@ -8,6 +8,9 @@ load-bearing claim carries two labels: a confidence band (high, medium or low) a
 sends each problem back to the step that wrote it for one retry, and withholds the dossier if a
 problem survives.
 
+A full dossier the agent wrote on a real firm, Revelar Capital, is in
+[`sample-dossier-revelar-capital.md`](sample-dossier-revelar-capital.md). See Sample output below.
+
 The code is not published. A sanitized copy is under review by QofAI and stays private until
 QofAI approves its release. A live walkthrough is available on request.
 
@@ -37,6 +40,11 @@ resolved without saying so, and a missing section. Everything else is advisory. 
 critical flag goes back once to the step that wrote the content (the labeler, the firm profiler
 or the company profiler), the dossier is reassembled and audited again, and the run halts with
 both drafts and both audit reports if a flag remains.
+
+The first of those flags is also checked in code on every audit. Auditing the same dossier
+several times showed the model caught a high label resting only on the firm's own press release
+about one time in four, so a deterministic check now flags any high label whose named sources
+are all firm or company material and sends it through the same retry.
 
 Sources are matched to each company by full name and ranked before the company profiler sees
 them. Below 15 source documents the run writes a sourcing gap report and puts a warning at the
@@ -72,7 +80,22 @@ With a one-line summary of each claim's source, the pipeline's contract beats th
 and every miss is one band off. Without the summary both prompts fall to about 50%, so the input
 format matters more than the rubric wording. The prompts were not tuned to this eval set.
 
-## Example run
+## Sample output
+
+[`sample-dossier-revelar-capital.md`](sample-dossier-revelar-capital.md) is the agent's dossier on
+Revelar Capital (formerly Wellspring Capital Management Group), built from 22 public source
+documents I collected in June 2026. It is unedited pipeline output. It covers the firm, its
+leadership, 20 portfolio companies with revenue and EBITDA ranges where at least two public
+signals support one, and two years of deal activity. It surfaces the conflicts it found rather
+than resolving them: two different AUM figures, two headcounts, a portfolio company listed as
+active despite a recorded sale, and a firm claim about deal pace that its own deal dates do not
+support. Revenue and EBITDA ranges are estimates from public signals and are labeled as such.
+
+The run took 48 model calls for 2.39 USD. Its first audit failed with four critical flags: two
+claims labeled high on the firm's own press releases, each caught by both the model audit and
+the code check. The labeler relabeled both, and the re-audit passed for another 0.44 USD.
+
+## Example run on invented data
 
 The sanitized copy ships a full run on an invented firm, Sample Equity Partners, built from 18
 invented source documents with planted problems: two Form ADV filings with different figures, a
@@ -89,7 +112,7 @@ That run passed the audit on the first try with no critical flags, in 17 model c
 
 ## Testing
 
-81 tests cover flag validation, source matching, the JSON contracts, audit retry routing and a
+96 tests cover flag validation, source matching, the JSON contracts, audit retry routing and a
 full pipeline run against a fake model, so they need no API key. CI runs them and a lint on
 Python 3.11 and 3.12 for every change.
 
