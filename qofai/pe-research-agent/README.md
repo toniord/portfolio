@@ -41,11 +41,6 @@ critical flag goes back once to the step that wrote the content (the labeler, th
 or the company profiler), the dossier is reassembled and audited again, and the run halts with
 both drafts and both audit reports if a flag remains.
 
-The first of those flags is also checked in code on every audit. Auditing the same dossier
-several times showed the model caught a high label resting only on the firm's own press release
-about one time in four, so a deterministic check now flags any high label whose named sources
-are all firm or company material and sends it through the same retry.
-
 Sources are matched to each company by full name and ranked before the company profiler sees
 them. Below 15 source documents the run writes a sourcing gap report and puts a warning at the
 top of the dossier. Every run writes its plan, log, intermediate sections and per-call spend to
@@ -91,9 +86,7 @@ than resolving them: two different AUM figures, two headcounts, a portfolio comp
 active despite a recorded sale, and a firm claim about deal pace that its own deal dates do not
 support. Revenue and EBITDA ranges are estimates from public signals and are labeled as such.
 
-The run took 48 model calls for 2.39 USD. Its first audit failed with four critical flags: two
-claims labeled high on the firm's own press releases, each caught by both the model audit and
-the code check. The labeler relabeled both, and the re-audit passed for another 0.44 USD.
+The run took 48 model calls for 2.39 USD.
 
 ## Example run on invented data
 
