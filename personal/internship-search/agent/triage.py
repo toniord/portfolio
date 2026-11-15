@@ -21,7 +21,7 @@ pending and is picked up on the next run, so a capped run loses nothing.
 
 import time
 
-from . import config, db, fetchers, prefilter, sources, tagger
+from . import batches, config, db, fetchers, prefilter, sources, tagger
 
 # Tags are committed in batches this size, so an interrupted run keeps the model
 # calls it already paid for.
@@ -249,7 +249,9 @@ def tag_pass(conn, max_calls=None, verbose=False) -> dict:
              "input_tokens": 0, "output_tokens": 0, "cost": 0.0,
              "remaining": 0, "skipped": False, "errors": []}
 
-    if not untagged:
+    # A batch still out must be collected even when nothing new waits, or the
+    # spend it carries is never recorded and the monthly ceiling under-counts.
+    if not untagged and not (config.USE_BATCHES and batches.pending(conn, STAGE0)):
         return stats
 
     needs_call = [p for p in untagged if tagger.from_feed(p) is None]
@@ -263,6 +265,9 @@ def tag_pass(conn, max_calls=None, verbose=False) -> dict:
                   f"{len(needs_call)} posting(s) need a model call and will wait")
         stats["skipped"] = True
         budget = 0
+
+    if config.USE_BATCHES and not stats["skipped"]:
+        return _tag_batched(conn, untagged, budget, stats, verbose)
 
     errors: list = []
     for posting, tag in tagger.tag_batch(untagged, max_calls=budget,
@@ -283,6 +288,80 @@ def tag_pass(conn, max_calls=None, verbose=False) -> dict:
     stats["errors"] = errors
     # A failed posting stays untagged, so it is still owed a call next run.
     stats["remaining"] = max(0, len(needs_call) - stats["from_model"])
+    return stats
+
+
+STAGE0 = "stage0"
+
+
+def _apply_tags(conn, entry: dict, answers: dict, stats: dict, verbose: bool) -> None:
+    """Write Stage 0 batch answers. Tokens are counted whether or not the row
+    still wants the tag, because they were paid for either way."""
+    for cid, (kind, payload) in answers.items():
+        meta = entry["meta"].get(cid, {})
+        if kind != "succeeded":
+            stats["errors"].append((meta.get("company"), meta.get("title"), f"batch {kind}: {payload}"))
+            continue
+        try:
+            tag = tagger.parse(batches.text(payload), payload.usage.input_tokens,
+                               payload.usage.output_tokens)
+        except (ValueError, KeyError, TypeError) as exc:
+            stats["errors"].append((meta.get("company"), meta.get("title"), f"unreadable answer: {exc}"))
+            continue
+        stats["input_tokens"] += tag["input_tokens"]
+        stats["output_tokens"] += tag["output_tokens"]
+        posting = db.posting_by_id(conn, int(cid[1:]))
+        if posting is None or posting.get("tagged_at"):
+            continue
+        db.record_tag(conn, posting["id"], tag)
+        stats["tagged"] += 1
+        stats["from_model"] += 1
+        if verbose:
+            print(f"  tag  batch  {posting.get('company')}: {posting.get('title')} -> {tag['term']}")
+    conn.commit()
+
+
+def _tag_batched(conn, untagged: list[dict], budget: int, stats: dict, verbose: bool) -> dict:
+    """Stage 0 through the Batches API, at half price. Added 2026-11-15.
+
+    Feed-tagged postings are still settled here and now, since they cost nothing.
+    Everything owed a model call goes out as one batch, minus what an earlier
+    batch already carries, and the run waits a capped time for it. A posting not
+    answered in time stays untagged, which the timing pass already treats as
+    waiting, and the next run collects the answer.
+    """
+    for posting in untagged:
+        tag = tagger.from_feed(posting)
+        if tag is not None:
+            db.record_tag(conn, posting["id"], tag)
+            stats["tagged"] += 1
+            stats["from_feed"] += 1
+    conn.commit()
+
+    client = tagger._client()
+    for entry, answers in batches.collect(conn, client, STAGE0):
+        _apply_tags(conn, entry, answers, stats, verbose)
+
+    flying = batches.in_flight(conn, STAGE0)
+    todo = [p for p in db.pending(conn) if not p["tagged_at"]
+            and tagger.from_feed(p) is None and f"p{p['id']}" not in flying]
+    send = todo[: max(0, budget)]
+    stats["submitted"] = len(send)
+    if send:
+        requests = [{"custom_id": f"p{p['id']}", "params": tagger.params(p)} for p in send]
+        meta = {f"p{p['id']}": {"company": p.get("company"), "title": p.get("title")} for p in send}
+        batch_id = batches.submit(conn, client, STAGE0, requests, meta)
+        if verbose:
+            print(f"  Stage 0 batch {batch_id}: {len(send)} request(s), waiting up to "
+                  f"{config.STAGE0_BATCH_WAIT:.0f}s")
+        if batches.wait(client, batch_id, config.STAGE0_BATCH_WAIT, config.BATCH_POLL_SECONDS):
+            for entry, answers in batches.collect(conn, client, STAGE0, only=batch_id):
+                _apply_tags(conn, entry, answers, stats, verbose)
+
+    stats["cost"] = tagger.estimate_cost(stats["input_tokens"], stats["output_tokens"]) * config.BATCH_DISCOUNT
+    stats["in_flight"] = len(batches.in_flight(conn, STAGE0))
+    stats["remaining"] = len([p for p in db.pending(conn) if not p["tagged_at"]])
+    stats["batched"] = True
     return stats
 
 
@@ -383,6 +462,11 @@ def summary_lines(stats: dict) -> list[str]:
         lines.append(
             f"{tag['remaining']} posting(s) still need a model call and will be "
             f"tagged on the next run."
+        )
+    if tag.get("batched") and (tag.get("submitted") or tag.get("in_flight")):
+        lines.append(
+            f"Stage 0 batched at half price: {tag.get('submitted', 0)} request(s) sent, "
+            f"{tag.get('in_flight', 0)} still in a batch and collected next run."
         )
     if tag.get("errors"):
         # Named rather than counted. A tagging call that keeps failing on the

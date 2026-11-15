@@ -233,7 +233,14 @@ required = true
 # 2400, raised from 1800 on 2026-11-03 for the same change. Scoring runs about
 # three seconds a call, so 300 calls plus polling 199 sources sits close to 30
 # minutes. The ceiling is counted in awake time, so a closed lid does not use it.
-timeout_seconds = 2400
+#
+# 3000, raised from 2400 on 2026-11-15 when scoring and tagging moved to the
+# Batches API. A batch is not answered at once, so the run waits for it: up to
+# 360 seconds for Stage 0, 600 for Stage B and 420 for Stage C (agent/config.py),
+# 23 minutes in all, against polling that has taken up to 12. Measured batches
+# came back in 4 to 5 minutes. A batch that misses its wait is collected by the
+# next run, so the waits can be shortened safely; this ceiling must not be.
+timeout_seconds = 3000
 
 [[steps]]
 name = "airtable"

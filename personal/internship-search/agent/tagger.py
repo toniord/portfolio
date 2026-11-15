@@ -174,17 +174,26 @@ def _posting_text(posting: dict) -> str:
     return "\n".join(parts)
 
 
+def params(posting: dict) -> dict:
+    """The request body for one Stage 0 call, shared by the direct and batch paths."""
+    return {
+        "model": config.STAGE0_MODEL,
+        "max_tokens": config.STAGE0_MAX_TOKENS,
+        "system": load_prompt(),
+        "messages": [{"role": "user", "content": _posting_text(posting)}],
+        "output_config": {"format": {"type": "json_schema", "schema": SCHEMA}},
+    }
+
+
 def from_model(client, posting: dict) -> dict:
     """The paid path. One small Haiku call, structured JSON out."""
-    response = client.messages.create(
-        model=config.STAGE0_MODEL,
-        max_tokens=config.STAGE0_MAX_TOKENS,
-        system=load_prompt(),
-        messages=[{"role": "user", "content": _posting_text(posting)}],
-        output_config={"format": {"type": "json_schema", "schema": SCHEMA}},
-    )
-
+    response = client.messages.create(**params(posting))
     text = next((b.text for b in response.content if b.type == "text"), "{}")
+    return parse(text, response.usage.input_tokens, response.usage.output_tokens)
+
+
+def parse(text: str, input_tokens: int, output_tokens: int) -> dict:
+    """Turn the model's JSON into a tag record. Raises ValueError on bad JSON."""
     data = json.loads(text)
 
     stated = _clean(data.get("term_stated"))
@@ -201,8 +210,8 @@ def from_model(client, posting: dict) -> dict:
         "hours_evidence": _clean(data.get("hours_evidence")),
         "stated_deadline": _normalize_deadline(_clean(data.get("stated_deadline"))),
         "stage0_source": "model",
-        "input_tokens": response.usage.input_tokens,
-        "output_tokens": response.usage.output_tokens,
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
     }
 
 

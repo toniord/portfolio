@@ -175,6 +175,31 @@ CACHE_MIN_TOKENS = {
 }
 
 
+# Message Batches, added 2026-11-15 to halve model spend. Every Stage 0, B and C
+# call goes out in a batch, which Anthropic bills at half price and answers when
+# it gets to it, usually within minutes. A run waits up to the number of seconds
+# below for each batch; one that is not back by then is collected by the next
+# run, so waiting longer buys latency, never coverage. Set USE_BATCHES=0 to go
+# back to one call at a time at full price.
+#
+# The waits are sized to the watcher's 3000 second step timeout in
+# sources/schedule.toml: polling takes 400 to 720 seconds, and 360 + 600 + 420
+# leaves room under it. Raising one means checking the sum against that timeout.
+#
+# Measured 2026-11-15 on the live API: a 2 request batch came back in 289
+# seconds and a 20 request batch in 228, and 19 of the 20 read the cached
+# rubric, so caching survives batching. Stage B cost $0.00106 a call batched
+# against about $0.0019 one at a time. If cache reads ever drop to near zero in
+# the run log, batching costs MORE than direct calls (break-even is roughly 85
+# percent hits), and USE_BATCHES=0 is the way back.
+USE_BATCHES = os.getenv("USE_BATCHES", "1") not in ("0", "false", "no")
+BATCH_DISCOUNT = float(os.getenv("BATCH_DISCOUNT", "0.5"))
+STAGE0_BATCH_WAIT = float(os.getenv("STAGE0_BATCH_WAIT", "360"))
+RANK_B_BATCH_WAIT = float(os.getenv("RANK_B_BATCH_WAIT", "600"))
+RANK_C_BATCH_WAIT = float(os.getenv("RANK_C_BATCH_WAIT", "420"))
+BATCH_POLL_SECONDS = float(os.getenv("BATCH_POLL_SECONDS", "15"))
+
+
 def ranker_configured() -> bool:
     return bool(ANTHROPIC_API_KEY)
 

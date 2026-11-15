@@ -37,7 +37,7 @@ wrote one.
 import json
 import random
 
-from . import config, db, rubric, sources
+from . import batches, config, db, rubric, sources
 
 # Emitted on a posting whose scoring call failed outright, so a gap in the
 # scores is visible in the digest instead of looking like a tier 4 posting.
@@ -222,33 +222,40 @@ def _client():
     return anthropic.Anthropic(api_key=config.ANTHROPIC_API_KEY)
 
 
-def _request(client, posting: dict, system: list[dict], model: str,
-             max_tokens: int, cfg: dict, effort: str | None) -> dict:
-    """One scoring call. Returns the model's raw answer plus its token usage."""
+def _params(posting: dict, system: list[dict], model: str,
+            max_tokens: int, cfg: dict, effort: str | None) -> dict:
+    """The request body for one scoring call, shared by the direct and batch paths
+    so the two can never drift apart."""
     output_config: dict = {"format": {"type": "json_schema", "schema": schema(cfg)}}
     if effort:
         output_config["effort"] = effort
+    return {
+        "model": model,
+        "max_tokens": max_tokens,
+        "system": system,
+        "messages": [{"role": "user", "content": posting_text(posting)}],
+        "output_config": output_config,
+    }
 
-    response = client.messages.create(
-        model=model,
-        max_tokens=max_tokens,
-        system=system,
-        messages=[{"role": "user", "content": posting_text(posting)}],
-        output_config=output_config,
-    )
 
-    text = next((b.text for b in response.content if b.type == "text"), "{}")
+def _answer(text: str, usage: dict) -> dict:
+    """The model's JSON plus the token usage, in the shape the run accounts in."""
     data = json.loads(text)
-    usage = response.usage
     return {
         "fit": int(data["fit"]),
         "reach": int(data["reach"]),
         "reason": (data.get("reason") or "").strip(),
-        "input_tokens": usage.input_tokens,
-        "output_tokens": usage.output_tokens,
-        "cache_read_tokens": getattr(usage, "cache_read_input_tokens", 0) or 0,
-        "cache_write_tokens": getattr(usage, "cache_creation_input_tokens", 0) or 0,
+        **usage,
     }
+
+
+def _request(client, posting: dict, system: list[dict], model: str,
+             max_tokens: int, cfg: dict, effort: str | None) -> dict:
+    """One scoring call. Returns the model's raw answer plus its token usage."""
+    response = client.messages.create(
+        **_params(posting, system, model, max_tokens, cfg, effort)
+    )
+    return _answer(batches.text(response), batches.usage(response))
 
 
 def score_stage_b(client, posting: dict, system: list[dict], cfg: dict) -> dict:
@@ -391,6 +398,7 @@ def _blank_stats() -> dict:
         "cost": 0.0, "examples": 0, "prompt_tokens": 0,
         "cached_stages": [], "variance": None, "variance_samples": 0,
         "unstable": False, "tiers": {},
+        "batched": False, "submitted": 0, "in_flight": 0,
     }
 
 
@@ -450,7 +458,10 @@ def run(conn, max_calls: int | None = None, verbose: bool = False,
         always_labels=tuple(queue.get("always_score_labelled", []) or []),
     )
     stats["examined"] = len(postings)
-    if not postings:
+    # With batches, an answered batch can be waiting even when nothing is
+    # unscored, and its spend must still be collected and recorded.
+    out = config.USE_BATCHES and (batches.pending(conn, B) or batches.pending(conn, C))
+    if not postings and not out:
         stats["tiers"] = db.score_counts(conn)
         return stats
 
@@ -460,6 +471,13 @@ def run(conn, max_calls: int | None = None, verbose: bool = False,
     money = budget_state(conn, cfg)
     stats["budget"] = money
     if money["paused"]:
+        if out and config.ranker_configured():
+            # Already paid for, so collect and record it, and submit nothing.
+            # A posting owed a recheck keeps its cheap score (budget 0).
+            system_text, _ = build_prompt(conn, cfg)
+            systems = {"stage_b": system_param(system_text, config.STAGE_B_MODEL),
+                       "stage_c": system_param(system_text, config.STAGE_C_MODEL)}
+            _run_batched(conn, _client(), cfg, systems, stats, 0, verbose)
         if verbose:
             print(f"  Ranker: paused, ${money['spend']:.2f} spent this month against "
                   f"${money['limit']:.2f} in rubric.md. {len(postings)} posting(s) wait.")
@@ -494,6 +512,9 @@ def run(conn, max_calls: int | None = None, verbose: bool = False,
     ]
 
     client = _client()
+    if config.USE_BATCHES:
+        return _run_batched(conn, client, cfg, systems, stats, budget, verbose)
+
     # Sampled up front so the choice does not depend on how far the budget got,
     # which would bias the self-check toward whatever is at the front of the queue.
     fraction = cfg["variance"]["sample_fraction"]
@@ -583,6 +604,249 @@ def run(conn, max_calls: int | None = None, verbose: bool = False,
     return stats
 
 
+# ------------------------------------------------------ the batched run, 2026-11-15
+#
+# Same decisions as the loop above, made from batch answers instead of direct
+# calls. Two kinds of batch, because Stage C can only be asked once Stage B has
+# answered: "rank_b" holds the cheap pass plus the self-check repeats, "rank_c"
+# the expensive recheck. A posting's custom_id is "p<id>" in both, so one in
+# either kind is in flight and is never submitted again until it is collected.
+# The self-check repeat of a posting is "v<id>".
+#
+# An answer can land hours after it was asked for, so each one is checked
+# against the row as it is NOW before anything is written: a posting that has
+# closed, already been scored, or been retitled since is skipped. A retitled
+# posting is owed a score on its new title, which the next submission gives it.
+
+B, C = "rank_b", "rank_c"
+
+
+def _queue(conn, cfg: dict) -> list[dict]:
+    queue = cfg.get("queue") or {}
+    return db.unscored(
+        conn,
+        max_age_days=int(queue.get("max_age_days", 0) or 0),
+        newest_first=bool(queue.get("newest_first", False)),
+        always_labels=tuple(queue.get("always_score_labelled", []) or []),
+    )
+
+
+def _still_owed(conn, cid: str, meta: dict) -> dict | None:
+    """The posting a "p<id>" answer belongs to, if it still wants a score."""
+    posting = db.posting_by_id(conn, int(cid[1:]))
+    if posting is None or posting.get("closed_detected_at"):
+        return None
+    if posting.get("fit_score") is not None:
+        return None
+    if meta.get("title") is not None and meta["title"] != posting.get("title"):
+        return None
+    return posting
+
+
+def _store(conn, posting: dict, answer: dict, stage: str, cfg: dict,
+           stats: dict, verbose: bool) -> None:
+    score = settle(posting, answer, stage, cfg)
+    db.record_score(conn, posting["id"], score)
+    stats["scored"] += 1
+    stats[stage] += 1
+    if verbose:
+        print(
+            f"  score {stage[-1]}  {posting.get('company')}: "
+            f"{posting.get('title')} -> fit {score['fit']} reach "
+            f"{score['reach']}, tier {score['tier']} ({score['delivery']})"
+        )
+
+
+def _apply_b(conn, entry: dict, answers: dict, cfg: dict, stats: dict,
+             deltas: list, verbose: bool) -> list[tuple[dict, dict]]:
+    """Settle Stage B answers. Returns the (posting, answer) pairs owed Stage C."""
+    to_c: list[tuple[dict, dict]] = []
+    firsts: dict[str, dict] = {}
+    for cid, (kind, payload) in answers.items():
+        if not cid.startswith("p"):
+            continue
+        meta = entry["meta"].get(cid, {})
+        if kind != "succeeded":
+            # Left unscored on purpose, so the next run asks again.
+            stats["errors"].append((meta.get("company"), meta.get("title"), f"batch {kind}: {payload}"))
+            continue
+        try:
+            answer = _answer(batches.text(payload), batches.usage(payload))
+        except (ValueError, KeyError, TypeError) as exc:
+            stats["errors"].append((meta.get("company"), meta.get("title"), f"unreadable answer: {exc}"))
+            continue
+        _account(stats, answer, "stage_b")
+        firsts[cid] = answer
+        posting = _still_owed(conn, cid, meta)
+        if posting is None:
+            continue
+        if needs_stage_c(answer, posting, cfg):
+            to_c.append((posting, answer))
+        else:
+            _store(conn, posting, answer, "stage_b", cfg, stats, verbose)
+
+    # The self-check: the same posting asked twice in one batch.
+    for cid, (kind, payload) in answers.items():
+        if not cid.startswith("v") or kind != "succeeded":
+            continue
+        try:
+            second = _answer(batches.text(payload), batches.usage(payload))
+        except (ValueError, KeyError, TypeError):
+            continue
+        _account(stats, second, "stage_b")
+        first = firsts.get("p" + cid[1:])
+        if first:
+            deltas.append((abs(second["fit"] - first["fit"]),
+                           abs(second["reach"] - first["reach"])))
+    conn.commit()
+    return to_c
+
+
+def _apply_c(conn, entry: dict, answers: dict, cfg: dict, stats: dict,
+             verbose: bool) -> None:
+    """Settle Stage C answers. A failed recheck falls back to the Stage B answer,
+    which is a real score, exactly as in the direct path."""
+    for cid, meta in entry["meta"].items():
+        posting = _still_owed(conn, cid, meta)
+        kind, payload = answers.get(cid, ("missing", "no result"))
+        answer = None
+        if kind == "succeeded":
+            try:
+                answer = _answer(batches.text(payload), batches.usage(payload))
+                _account(stats, answer, "stage_c")
+            except (ValueError, KeyError, TypeError) as exc:
+                kind, payload = "unreadable", str(exc)
+        if posting is None:
+            continue
+        if answer is not None:
+            _store(conn, posting, answer, "stage_c", cfg, stats, verbose)
+        else:
+            stats["errors"].append((meta.get("company"), meta.get("title"), f"stage C {kind}: {payload}"))
+            fallback = {**meta["b"], "input_tokens": 0, "output_tokens": 0,
+                        "cache_read_tokens": 0, "cache_write_tokens": 0}
+            _store(conn, posting, fallback, "stage_b", cfg, stats, verbose)
+    conn.commit()
+
+
+def _submit_c(conn, client, to_c: list[tuple[dict, dict]], systems: dict,
+              cfg: dict, stats: dict, budget: int, verbose: bool) -> str | None:
+    """Send the rechecks. Past the call budget, the Stage B answer stands."""
+    if not to_c:
+        return None
+    send, overflow = to_c[:max(0, budget)], to_c[max(0, budget):]
+    for posting, answer in overflow:
+        _store(conn, posting, answer, "stage_b", cfg, stats, verbose)
+    conn.commit()
+    if not send:
+        return None
+    requests = [{
+        "custom_id": f"p{p['id']}",
+        "params": _params(p, systems["stage_c"], config.STAGE_C_MODEL,
+                          config.STAGE_C_MAX_TOKENS, cfg, config.STAGE_C_EFFORT),
+    } for p, _ in send]
+    meta = {f"p{p['id']}": {"title": p.get("title"), "company": p.get("company"),
+                            "b": {"fit": a["fit"], "reach": a["reach"], "reason": a["reason"]}}
+            for p, a in send}
+    stats["submitted"] += len(requests)
+    return batches.submit(conn, client, C, requests, meta)
+
+
+def _finish(conn, client, kind: str, batch_id: str | None, seconds: float) -> list:
+    """Wait for one batch, then collect it if it ended. [] if it did not."""
+    if not batch_id:
+        return []
+    if not batches.wait(client, batch_id, seconds, config.BATCH_POLL_SECONDS):
+        return []
+    return batches.collect(conn, client, kind, only=batch_id)
+
+
+def _run_batched(conn, client, cfg: dict, systems: dict, stats: dict,
+                 budget: int, verbose: bool) -> dict:
+    stats["submitted"] = 0
+    deltas: list[tuple[int, int]] = []
+    to_c: list[tuple[dict, dict]] = []
+
+    # 1. Whatever earlier runs asked for and is now answered. Free.
+    for entry, answers in batches.collect(conn, client, C):
+        _apply_c(conn, entry, answers, cfg, stats, verbose)
+    for entry, answers in batches.collect(conn, client, B):
+        to_c += _apply_b(conn, entry, answers, cfg, stats, deltas, verbose)
+
+    # 2. Stage B for everything still unscored and not already in a batch.
+    # Sized so the Stage C share fits in the same call budget: at most about
+    # four in ten Stage B answers have ever been routed on, and anything that
+    # overflows keeps its Stage B score rather than going unscored.
+    flying = batches.in_flight(conn, B) | batches.in_flight(conn, C)
+    todo = [p for p in _queue(conn, cfg) if f"p{p['id']}" not in flying]
+    fraction = cfg["variance"]["sample_fraction"]
+    per_posting = 1.4 + fraction
+    take = todo[: max(0, int((budget - len(to_c)) / per_posting))]
+    sample = set(random.sample(range(len(take)), int(len(take) * fraction))) if fraction else set()
+
+    b_id = None
+    if take:
+        requests, meta = [], {}
+        for i, p in enumerate(take):
+            params = _params(p, systems["stage_b"], config.STAGE_B_MODEL,
+                             config.STAGE_B_MAX_TOKENS, cfg, None)
+            requests.append({"custom_id": f"p{p['id']}", "params": params})
+            meta[f"p{p['id']}"] = {"title": p.get("title"), "company": p.get("company")}
+            if i in sample:
+                requests.append({"custom_id": f"v{p['id']}", "params": params})
+        stats["submitted"] += len(requests)
+        b_id = batches.submit(conn, client, B, requests, meta)
+        if verbose:
+            print(f"  Stage B batch {b_id}: {len(requests)} request(s), waiting up to "
+                  f"{config.RANK_B_BATCH_WAIT:.0f}s")
+
+    for entry, answers in _finish(conn, client, B, b_id, config.RANK_B_BATCH_WAIT):
+        to_c += _apply_b(conn, entry, answers, cfg, stats, deltas, verbose)
+
+    # 3. Stage C for everything routed on, from this run and from collected ones.
+    spent = stats["submitted"]
+    c_id = _submit_c(conn, client, to_c, systems, cfg, stats, budget - spent, verbose)
+    for entry, answers in _finish(conn, client, C, c_id, config.RANK_C_BATCH_WAIT):
+        _apply_c(conn, entry, answers, cfg, stats, verbose)
+
+    if deltas:
+        stats["variance_samples"] = len(deltas)
+        stats["variance"] = max(sum(d[0] for d in deltas) / len(deltas),
+                                sum(d[1] for d in deltas) / len(deltas))
+        stats["unstable"] = stats["variance"] > cfg["variance"]["max_mean_delta"]
+
+    stats["batched"] = True
+    stats["cost"] = estimate_cost(stats) * config.BATCH_DISCOUNT
+    stats["in_flight"] = len(batches.in_flight(conn, B) | batches.in_flight(conn, C))
+    stats["remaining"] = len(_queue(conn, cfg))
+    stats["tiers"] = db.score_counts(conn)
+    return stats
+
+
+def collect_finished(conn, verbose: bool = False) -> dict:
+    """For the quiet runs: write any Stage C answers that have landed. Free.
+
+    Only Stage C, on purpose. A collected Stage B answer can be owed a Stage C
+    call, and the quiet runs do not submit scoring work (the evening run does it
+    once, so the prompt cache is written once a day). Stage B batches therefore
+    wait for the evening run, which collects them first thing.
+    """
+    stats = _blank_stats()
+    stats["batched"] = True
+    if not (config.USE_BATCHES and config.ranker_configured()):
+        return stats
+    if not batches.pending(conn, C):
+        return stats
+    cfg = rubric.settings()
+    try:
+        client = _client()
+        for entry, answers in batches.collect(conn, client, C):
+            _apply_c(conn, entry, answers, cfg, stats, verbose)
+    except Exception as exc:  # noqa: BLE001  never stop a quiet run over this
+        stats["errors"].append(("", "", f"collecting Stage C batches: {exc}"))
+    stats["cost"] = estimate_cost(stats) * config.BATCH_DISCOUNT
+    return stats
+
+
 def summary_lines(stats: dict) -> list[str]:
     """Human-readable block, shared by the digest, the run output, and the report."""
     if stats.get("budget_paused"):
@@ -600,6 +864,11 @@ def summary_lines(stats: dict) -> list[str]:
         f"{stats['stage_c']} re-scored by the expensive one.",
         f"{stats['calls']} model call(s), estimated ${stats['cost']:.4f}.",
     ]
+    if stats.get("batched"):
+        lines.append(
+            f"Batched at half price: {stats['submitted']} request(s) sent this run, "
+            f"{stats['in_flight']} posting(s) still in a batch and collected next run."
+        )
 
     if stats["prompt_tokens"]:
         cached = ", ".join(stats["cached_stages"]) or "neither stage"

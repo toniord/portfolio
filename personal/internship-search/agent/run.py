@@ -292,8 +292,13 @@ def main() -> int:
     # Stage B and Stage C. Runs after the prefilter, on everything it surfaced
     # that has no score, so the ranking backlog drains across runs the same way
     # the tagging backlog does.
-    if args.skip_triage or args.skip_ranking:
+    if args.skip_triage:
         rank_stats = None
+    elif args.skip_ranking:
+        # A quiet run submits no scoring, but it writes any Stage C answers a
+        # batch has returned since the evening run. Free, and it means a posting
+        # Sonnet has already judged is not held back a whole day.
+        rank_stats = ranker.collect_finished(conn, verbose=not args.quiet)
     else:
         if not args.quiet:
             print("\nRanking surfaced postings (Stage B, Stage C)")

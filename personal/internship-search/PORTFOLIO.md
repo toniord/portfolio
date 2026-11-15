@@ -8,8 +8,8 @@ survivors against a fixed-anchor rubric on two axes, how much I would want the r
 likely I am to land it, and both decide the tier, so a good-fit role I can realistically win
 outranks a high-fit long shot. Haiku scores every posting, and only those above a
 routing threshold go to Claude Sonnet 5. Each prompt carries my 54 labelled postings as
-few-shot examples, cached at a tenth of the input price. Per-run call caps and a monthly
-budget bound spending. Output goes to a daily email, an Airtable base and a local dashboard,
+few-shot examples, cached at a tenth of the input price. Every model call goes through the
+Message Batches API at half price, and per-run call caps and a monthly budget bound spending. Output goes to a daily email, an Airtable base and a local dashboard,
 with health alerts checked by mutation testing. A read-only Gmail reader turns application
 confirmations into Applied status and rejections into Rejected, with a Haiku call deciding any
 email whose wording could be either, and creates the posting from the email when the agent

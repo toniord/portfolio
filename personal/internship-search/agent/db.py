@@ -1398,6 +1398,13 @@ def stale_sources(conn, days: float, ts: str | None = None) -> list[dict]:
     return sorted(out, key=lambda e: (-e["days"], e["name"]))
 
 
+def posting_by_id(conn: sqlite3.Connection, posting_id: int) -> dict | None:
+    """One posting row as a dict, or None. Read fresh when a batch answer lands,
+    because hours may have passed and the row may have closed or been scored."""
+    row = conn.execute("SELECT * FROM postings WHERE id = ?", (posting_id,)).fetchone()
+    return dict(row) if row else None
+
+
 def get_state(conn: sqlite3.Connection, key: str) -> str | None:
     row = conn.execute(
         "SELECT value FROM agent_state WHERE key = ?", (key,)
