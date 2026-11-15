@@ -31,7 +31,9 @@ data.
   approval queue. I took it over from a teammate and wrote 98% of the current code. 171 tests.
 - [pe-research-agent](qofai/pe-research-agent/) writes a sourced dossier on a private equity
   firm with eight Claude Code skills and parallel subagents, labeling every claim with a
-  confidence band and source type.
+  confidence band and source type. A blocking audit sends each problem back for one retry,
+  every model call is read-only with a spend cap, and its labeling scores 92% on a 50-claim
+  eval against 86% for a human scorer. 81 tests.
 
 <!-- projects:start -->
 
